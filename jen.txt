@@ -11,8 +11,7 @@ pipeline {
   stages {
     stage ('Prepare'){
       steps {
-      sh 'git clone https://github.com/gradle/gradle-site-plugin.git'
-      sh 'cd gradle-site-plugin'
+        sh 'git clone https://github.com/gradle/gradle-site-plugin.git'
         sh 'chmod +x ./gradlew'
       }
     }
@@ -26,6 +25,8 @@ pipeline {
       steps {
       
         // Finish building and packaging the APK
+        
+        sh 'cd gradle-site-plugin'
         sh './gradlew assembleDebug'
       }
     }
