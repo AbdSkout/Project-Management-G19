@@ -26,9 +26,8 @@ pipeline {
 
      
 
-      sh 'cd gradle-site-plugin
-      ls -l'
-        sh 'chmod +x ./gradlew'
+      sh 'cd gradle-site-plugin'
+        sh 'chmod +x ./gradle-site-plugin/gradlew'
 
       }
 
@@ -40,7 +39,7 @@ pipeline {
 
         // Compile the app and its dependencies
 
-        sh './gradlew compileDebugSources'
+        sh './gradle-site-plugin/gradlew compileDebugSources'
 
       }
 
@@ -54,7 +53,7 @@ pipeline {
 
         // Finish building and packaging the APK
 
-        sh './gradlew assembleDebug'
+        sh './gradle-site-plugin/gradlew assembleDebug'
 
       }
 
