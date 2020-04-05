@@ -54,7 +54,7 @@ pipeline {
 
         // Finish building and packaging the APK
 
-        sh './gradlew assembleDebug'
+        sh './gradle-site-plugin/gradlew assembleDebug'
 
       }
 
