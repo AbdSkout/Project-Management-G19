@@ -1,8 +1,11 @@
 pipeline {
 	agent any
-	stages('Bulid'){
+	stages{
+		
+		stage('Bulid'){
 		steps{
 		echo 'hello'
+}
 }
 }
 }
