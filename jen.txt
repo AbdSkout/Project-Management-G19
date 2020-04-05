@@ -39,7 +39,7 @@ pipeline {
 
         // Compile the app and its dependencies
 
-        sh './gradle-site-plugin/gradlew compileDebugSources'
+        sh './gradlew compileDebugSources'
 
       }
 
