@@ -24,6 +24,10 @@ pipeline {
 
       steps {
 
+     
+
+      sh 'cd gradle-site-plugin'
+
         sh 'chmod +x ./gradlew'
 
       }
@@ -45,6 +49,8 @@ pipeline {
     stage('Build APK') {
 
       steps {
+
+      
 
         // Finish building and packaging the APK
 
