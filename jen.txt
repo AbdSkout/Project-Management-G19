@@ -11,8 +11,7 @@ pipeline {
   stages {
     stage ('Prepare'){
       steps {
-           sh' ls | echo |'
-          sh 'chmod +x ./gradlew'
+          sh label: '', script: 'ls | echo '
       
         }
     }
