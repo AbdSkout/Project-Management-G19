@@ -26,8 +26,8 @@ pipeline {
 
      
 
-      sh 'cd gradle-site-plugin'
-      sh 'ls -l'
+      sh 'cd gradle-site-plugin
+      ls -l'
         sh 'chmod +x ./gradlew'
 
       }
