@@ -12,13 +12,15 @@ pipeline {
 
   options {
 
-       skipStagesAfterUnstable()
+    
+
+    skipStagesAfterUnstable()
 
   }
 
   stages {
 
-    stage ('PREPARE'){
+    stage ('Prepare'){
 
       steps {
 
@@ -28,9 +30,11 @@ pipeline {
 
     }
 
-    stage('COMPILE') {
+    stage('Compile') {
 
       steps {
+
+        
 
         sh './gradlew compileDebugSources'
 
@@ -38,22 +42,29 @@ pipeline {
 
     }
 
-    stage('UNIT TEST') {
+    stage('Unit test') {
 
       steps {
+
         
+
         sh './gradlew testDebugUnitTest testDebugUnitTest'
-  
+
+
+
+      
+
         junit '**/TEST-*.xml'
 
       }
 
     }
 
-    stage('Build APPLICATION') {
+    stage('Build APK') {
 
       steps {
-      
+
+    
         sh './gradlew assembleDebug'
 
       }
