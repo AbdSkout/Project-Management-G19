@@ -18,7 +18,7 @@ pipeline {
 
   stages {
 
-    stage ('Prepare'){
+    stage ('PREPARE'){
 
       steps {
 
@@ -28,7 +28,7 @@ pipeline {
 
     }
 
-    stage('Compile') {
+    stage('COMPILE') {
 
       steps {
 
@@ -38,7 +38,7 @@ pipeline {
 
     }
 
-    stage('Unit test') {
+    stage('UNIT TEST') {
 
       steps {
         
@@ -50,7 +50,7 @@ pipeline {
 
     }
 
-    stage('Build APK') {
+    stage('Build APPLICATION') {
 
       steps {
       
