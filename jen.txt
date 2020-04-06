@@ -12,7 +12,7 @@ pipeline {
 
   options {
 
-    
+    // Stop the build early in case of compile or test failures
 
     skipStagesAfterUnstable()
 
@@ -34,7 +34,7 @@ pipeline {
 
       steps {
 
-        
+        // Compile the app and its dependencies
 
         sh './gradlew compileDebugSources'
 
@@ -46,13 +46,13 @@ pipeline {
 
       steps {
 
-        
+        // Compile and run the unit tests for the app and its dependencies
 
         sh './gradlew testDebugUnitTest testDebugUnitTest'
 
 
 
-      
+        // Analyse the test results and update the build result as appropriate
 
         junit '**/TEST-*.xml'
 
@@ -64,7 +64,8 @@ pipeline {
 
       steps {
 
-    
+        // Finish building and packaging the APK
+
         sh './gradlew assembleDebug'
 
       }
