@@ -19,11 +19,14 @@ pipeline {
   }
 
   stages {
-	sh 'cd Project'
-    stage ('Prepare'){
+	
+       
+   
+  stage ('Prepare'){
 
       steps {
-
+ 
+         sh 'cd Project'
         sh 'chmod +x ./gradlew'
 
       }
