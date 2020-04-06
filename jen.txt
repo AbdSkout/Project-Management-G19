@@ -1,19 +1,6 @@
 pipeline {
-  agent {
-    docker {
-      image 'windsekirun/jenkins-android-docker:1.1.1'
-    }
+node {
+  withGradle {
+    sh './gradlew build'
   }
- 
-  
-  stages {
-    stage ('Prepare'){
-      
-      steps {
-          sh 'pwd'
-      
-        }
-   
-}
-}
 }
