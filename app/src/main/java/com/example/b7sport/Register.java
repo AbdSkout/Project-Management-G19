@@ -77,7 +77,7 @@ public class Register extends AppCompatActivity {
                 if(EmailRegex(email)) return;
                 if(CheckName(Name)) return;
                // Info info = new Info(email,PhoneNumber,Name,password);
-               // databaseReference.push().setValue(info);
+            //    databaseReference.push().setValue(info);
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -91,6 +91,10 @@ public class Register extends AppCompatActivity {
                             user.put("Email", email);
                             user.put("PhoneNumber", PhoneNumber);
                             user.put("Password", password);
+                             Info info = new Info(email,PhoneNumber,Name,password,UserID);
+
+                            databaseReference.push().setValue(info);
+
                             documentrefernce.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

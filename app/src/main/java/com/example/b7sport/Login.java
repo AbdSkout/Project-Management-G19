@@ -42,7 +42,9 @@ public class Login extends AppCompatActivity {
 
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
+
                 String email = mEmail.getText().toString().trim();
+
                 String password = mPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Required");
@@ -56,14 +58,19 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("Password Must be longer than 6 chars!");
                     return;
                 }
+                final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
+                myIntent.putExtra("email",email);
+
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+
                             Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            startActivity(myIntent);
+                            //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
-                            Toast.makeText(Login.this,"Error !" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
