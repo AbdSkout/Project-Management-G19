@@ -1,9 +1,11 @@
 package com.example.b7sport;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,13 @@ public class Login extends AppCompatActivity {
         mLoginButton = findViewById(R.id.LoginButton);
         mPasswordRecovery = findViewById(R.id.PasswordRecovery);
         fAuth = FirebaseAuth.getInstance();
+        Intent intent1 = new Intent(Login.this,MainActivity.class);
+        intent1.putExtra("email",mEmail.toString());
+
+        if(fAuth.getCurrentUser()!=null){
+            startActivity(intent1);
+            finish();
+        }
 
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -58,6 +67,7 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("Password Must be longer than 6 chars!");
                     return;
                 }
+
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("email",email);
 
