@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,12 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +37,10 @@ public class Register extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    FirebaseFirestore fStore;
+    String UserID;
+    public final String TAG = "TAG";
+
     String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
     @Override
@@ -45,9 +56,8 @@ public class Register extends AppCompatActivity {
         alreadyRegistered = findViewById(R.id.alreadyRegistred);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("EDMT_FIREBASE");
-
+        fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-
 //        if(fAuth.getCurrentUser()!=null){
 //            startActivity(new Intent(getApplicationContext(),MainActivity.class));
 //            finish();
@@ -57,29 +67,45 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                String Name = mFullName.getText().toString().trim();
-                String PhoneNumber = mPhonenumber.getText().toString().trim();
+                final String email = mEmail.getText().toString().trim();
+                final  String password = mPassword.getText().toString().trim();
+                final   String Name = mFullName.getText().toString().trim();
+                final  String PhoneNumber = mPhonenumber.getText().toString().trim();
                 if(EmailRequired(email)) return;
                 if(PasswordIsEmpty(password)) return;
                 if(PasswordLength(password)) return;
                 if(EmailRegex(email)) return;
                 if(CheckName(Name)) return;
-
-                Info info = new Info(email,PhoneNumber,Name,password);
-                databaseReference.push().setValue(info);
+               // Info info = new Info(email,PhoneNumber,Name,password);
+               // databaseReference.push().setValue(info);
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
+                            UserID = fAuth.getCurrentUser().getUid();
+                            DocumentReference documentrefernce = fStore.collection("users").document(UserID);
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("FullName", Name);
+                            user.put("Email", email);
+                            user.put("PhoneNumber", PhoneNumber);
+                            user.put("Password", password);
+                            documentrefernce.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG,"onSuccess : user Profile is created for" + UserID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: "+ e.toString());
+                                }
+                            });
 
-                            Toast.makeText(Register.this,"User Created.",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }
-                        else{
-                            Toast.makeText(Register.this,"Error !" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else {
+                            Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

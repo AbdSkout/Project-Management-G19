@@ -36,6 +36,7 @@ public class Info {
         Password = password;
     }
 
+
     public Info() {
     }
     public Info(String Email,String PhoneNumber,String Name,String Password) {
