@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         userID1 = bundle.getString("email");
 
-        mName = findViewById(R.id.FullName);
-        mEmail = findViewById(R.id.Email);
-        mPhonenumber = findViewById(R.id.PhoneNumber);
+        mName = findViewById(R.id.FullName1);
+        mEmail = findViewById(R.id.Email1);
+        mPhonenumber = findViewById(R.id.PhoneNumber1);
 
         database = FirebaseDatabase.getInstance();
         UserRef = database.getReference(USERS);

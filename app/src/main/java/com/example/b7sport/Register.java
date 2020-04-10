@@ -78,7 +78,8 @@ public class Register extends AppCompatActivity {
                 if(CheckName(Name)) return;
                // Info info = new Info(email,PhoneNumber,Name,password);
             //    databaseReference.push().setValue(info);
-
+                final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
+                myIntent.putExtra("email",email);
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -91,7 +92,7 @@ public class Register extends AppCompatActivity {
                             user.put("Email", email);
                             user.put("PhoneNumber", PhoneNumber);
                             user.put("Password", password);
-                             Info info = new Info(email,PhoneNumber,Name,password,UserID);
+                            Info info = new Info(email,PhoneNumber,Name,password,UserID);
 
                             databaseReference.push().setValue(info);
 
@@ -107,7 +108,9 @@ public class Register extends AppCompatActivity {
                                 }
                             });
 
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(myIntent);
+
+//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
