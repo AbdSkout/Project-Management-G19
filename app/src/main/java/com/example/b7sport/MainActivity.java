@@ -3,6 +3,7 @@ package com.example.b7sport;
         import androidx.annotation.NonNull;
         import androidx.appcompat.app.AppCompatActivity;
 
+        import android.app.ProgressDialog;
         import android.content.Intent;
         import android.os.Bundle;
         import android.view.MenuItem;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private String userID1;
 //    private static final String USERS = "EDMT_FIREBASE";
     FirebaseAuth fAuth;
+    ProgressDialog dialog;
+
 
 
     @Override
@@ -36,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
         mLogOutButton = findViewById(R.id.LogOutBtn);
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
-
+        dialog = new ProgressDialog(this);
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
                 FirebaseAuth.getInstance().signOut();
+                dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(),Login.class));
                 finish();
             }
