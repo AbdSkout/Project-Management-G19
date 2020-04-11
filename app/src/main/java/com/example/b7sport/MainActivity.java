@@ -6,6 +6,8 @@ package com.example.b7sport;
         import android.content.Intent;
         import android.os.Bundle;
         import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.Button;
         import android.widget.TextView;
 
         import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber;
 //    private FirebaseDatabase database;
 //    private DatabaseReference UserRef;
-
+    Button mLogOutButton;
     private String userID1;
 //    private static final String USERS = "EDMT_FIREBASE";
     FirebaseAuth fAuth;
@@ -31,9 +33,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mLogOutButton = findViewById(R.id.LogOutBtn);
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
+
+        mLogOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(),Login.class));
+                finish();
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         userID1 = bundle.getString("email");

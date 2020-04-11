@@ -1,14 +1,17 @@
 package com.example.b7sport;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +32,13 @@ public class Login extends AppCompatActivity {
     TextView mRegisterActivity,mPasswordRecovery;
     Button mLoginButton;
     FirebaseAuth fAuth;
+    ProgressDialog dialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        dialog = new ProgressDialog(this);
 
         mEmail = findViewById(R.id.EmailText);
         mPassword = findViewById(R.id.PasswordText);
@@ -67,7 +72,8 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("Password Must be longer than 6 chars!");
                     return;
                 }
-
+                dialog.setMessage("Loging in...");
+                dialog.show();
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("email",email);
 
@@ -75,11 +81,12 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-
+                            dialog.dismiss();
                             Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                             startActivity(myIntent);
                             //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
+                            dialog.dismiss();
                             Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -97,11 +104,11 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 final EditText resetEmail = new EditText((v.getContext()));
                 AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("Reset Password");
-                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setTitle("שחזור סיסמה");
+                passwordResetDialog.setMessage("כתוב את המייל שלך כדי לקבל מייל לשחזור סיסמה.");
                 passwordResetDialog.setView(resetEmail);
 
-                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setPositiveButton("שלח", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Extracting the email
@@ -109,7 +116,7 @@ public class Login extends AppCompatActivity {
                         fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(Login.this, "Reset Link Sent to email.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "קישור שחזור סיסמה נשלח למייל!", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -120,14 +127,18 @@ public class Login extends AppCompatActivity {
                         });
                     }
                 });
-                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setNegativeButton("בטל", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Close the dialog
 
                     }
                 });
+//                AlertDialog dialog = passwordResetDialog.create();
+//                dialog.getWindow().setGravity(Gravity.RIGHT);
+//                dialog.show();
                 passwordResetDialog.create().show();
+
             }
         });
 
