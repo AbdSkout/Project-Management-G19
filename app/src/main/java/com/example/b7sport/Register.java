@@ -68,7 +68,7 @@ public class Register extends AppCompatActivity {
                 if(EmailRegex(email)) return;
                 if(CheckName(Name)) return;
 
-                Info info = new Info(email,PhoneNumber,Name,password);
+                Info info = new Info(email,PhoneNumber,Name,password,"0","0");
                 databaseReference.push().setValue(info);
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
