@@ -41,18 +41,20 @@ public class blockuser extends AppCompatActivity {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                String name;
+                                int flag=0;
                              for (DataSnapshot d : dataSnapshot.getChildren())
                              {
                                     name=d.child("Email").getValue().toString();
-                                    if(name.equals(Name) && d.child("flag").equals("1"))
+                                    if(name.equals(Name) )
                                     {
-                                        Log.d("","user Blocked" );
+                                        flag=1;
 
 
                                     }
 
                              }
-
+                           if(flag==1)
+                               Log.d("","user is here");
 
                          }
 
