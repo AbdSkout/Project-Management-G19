@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class adminpage extends AppCompatActivity {
 
-    Button b=findViewById(R.id.button);
+    Button b ;
 
      protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminpage);
-
+        b= findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

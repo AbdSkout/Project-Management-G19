@@ -22,6 +22,7 @@ public class blockuser extends AppCompatActivity {
 
     EditText Name;
     Button but_block;
+    Button btn_delete;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,33 +30,42 @@ public class blockuser extends AppCompatActivity {
 
            Name=findViewById(R.id.nblock);
            but_block=findViewById(R.id.Bblock);
+           btn_delete=findViewById(R.id.deltebtn);
+           final DatabaseReference ref = database.getReference("EDMT_FIREBASE");
+          final DatabaseReference ref1 = database.getReference("EDMT_FIREBASE");
 
-           but_block.setOnClickListener(new View.OnClickListener(){
-
-
+        but_block.setOnClickListener(new View.OnClickListener(){
                @Override
                public void onClick(View v) {
-                   DatabaseReference ref = database.getReference("EDMT_FIREBASE");
-
-                     ref.addValueEventListener(new ValueEventListener() {
+                   ref.addValueEventListener(new ValueEventListener() {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                               String name;
+                                String Name1=Name.getText().toString().trim();
+                                String name1="";
+                                String name2;
                                 int flag=0;
                              for (DataSnapshot d : dataSnapshot.getChildren())
                              {
-                                    name=d.child("Email").getValue().toString();
-                                    if(name.equals(Name) )
+                                    name2=d.child("email").getValue().toString();
+
+                                    if(name2.equals(Name1) )
                                     {
                                         flag=1;
-
+                                        name1=d.getKey().toString();
 
                                     }
 
                              }
-                           if(flag==1)
-                               Log.d("","user is here");
+                           if(flag==1) {
 
+                              ref1.child(name1).child("flag").setValue("1");
+                               Log.d("", "user is here");
+
+
+                           }
+
+                               else
+                               Log.d("","falied");
                          }
 
 
@@ -70,9 +80,65 @@ public class blockuser extends AppCompatActivity {
 
 
 
+
                }
 
 
+           });
+
+
+
+
+           btn_delete.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+
+                   ref.addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           String Name1=Name.getText().toString().trim();
+                           String name1="";
+                           String name2;
+                           int flag=0;
+                           for (DataSnapshot d : dataSnapshot.getChildren())
+                           {
+                               name2=d.child("email").getValue().toString();
+
+                               if(name2.equals(Name1) )
+                               {
+                                   flag=1;
+                                   name1=d.getKey().toString();
+
+                               }
+
+                           }
+                           if(flag==1) {
+
+                               ref1.child(name1).removeValue();
+                               Log.d("", "user is here");
+
+
+                           }
+
+                           else
+                               Log.d("","falied");
+                       }
+
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                       }
+
+
+                   });
+
+
+
+
+
+
+               }
            });
 
 

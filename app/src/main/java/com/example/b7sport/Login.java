@@ -52,14 +52,22 @@ public class Login extends AppCompatActivity {
                     mPassword.setError("Password is Required");
                     return;
                 }
-                if (password.length() <= 6) {
-                    mPassword.setError("Password Must be longer than 6 chars!");
-                    return;
+                if(email.equals("admin")&&password.equals("admin")){
+                    Intent intent = new Intent(view.getContext(),adminpage.class);
+                    Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
                 }
+                else{
+
+//                if (password.length() <= 6) {
+//                    mPassword.setError("Password Must be longer than 6 chars!");
+//                    return;
+//                }
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+
                             Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
@@ -67,6 +75,8 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
+
+                }
             }
         });
         mRegisterActivity.setOnClickListener(new View.OnClickListener(){
