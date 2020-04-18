@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog dialog;
     FirebaseDatabase database;
     DatabaseReference reference;
-    DocumentReference noteRef;
-    CollectionReference usersRef;
+
 
     //Recycler View
     RecyclerView mRecyclerView;
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     FirebaseFirestore fStore;
     UsersAdapter adapeter;
-    //ProgressDialog pd;
+    ProgressDialog pd;
 
 
 
@@ -84,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        pd = new ProgressDialog(this);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("0");
         mLogOutButton = findViewById(R.id.LogOutBtn);
@@ -116,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-        userID1 = bundle.getString("email");
+        userID1 = bundle.getString("emailadd");
 
         final Intent myIntent = new Intent(MainActivity.this, Profile.class);
-        myIntent.putExtra("email", userID1);
+        myIntent.putExtra("emailadd", userID1);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -147,15 +148,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showdata() {
-  //      pd.setTitle("טוען נתונים...") ;
-   //     pd.show();
-   //     pd.setCancelable(false);
+        pd.setTitle("טוען נתונים...") ;
+        pd.show();
+        pd.setCancelable(false);
              fStore.collection("users")
                      .get()
                      .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                          @Override
                          public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       //    pd.dismiss();
+                           pd.dismiss();
                            for(DocumentSnapshot doc: task.getResult()){
                                InfoFromDataBase info = new InfoFromDataBase(doc.getString("Email"),
                                        doc.getString("PhoneNumber"),
@@ -170,12 +171,13 @@ public class MainActivity extends AppCompatActivity {
                      .addOnFailureListener(new OnFailureListener() {
                          @Override
                          public void onFailure(@NonNull Exception e) {
-                       //      pd.dismiss();
+                             pd.dismiss();
                                Toast.makeText(MainActivity.this,"Error Loading the Info!",Toast.LENGTH_SHORT).show();
                          }
                      }) ;
     }
     }
+
     /*
     public void loadNotes(final View v){
         final List<InfoFromDataBase> data=new ArrayList<>();

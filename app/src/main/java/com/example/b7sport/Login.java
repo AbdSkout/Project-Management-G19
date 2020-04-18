@@ -48,12 +48,13 @@ public class Login extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         Intent intent1 = new Intent(Login.this,MainActivity.class);
-        intent1.putExtra("email",mEmail.toString());
+        String emailas  = mEmail.getText().toString();
+        intent1.putExtra("emailadd",emailas);
 
-        if(fAuth.getCurrentUser()!=null){
-            startActivity(intent1);
-            finish();
-        }
+      //  if(fAuth.getCurrentUser()!=null){
+       //     startActivity(intent1);
+       //     finish();
+       // }
 
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -61,22 +62,14 @@ public class Login extends AppCompatActivity {
                 String email = mEmail.getText().toString().trim();
 
                 String password = mPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email is Required");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Required");
-                    return;
-                }
-                if (password.length() <= 6) {
-                    mPassword.setError("Password Must be longer than 6 chars!");
-                    return;
-                }
+                if (EmailisEmpty(email)) return;
+
+                if (PasswordIsEmpty(password)) return;
+
                 dialog.setMessage("Loging in...");
                 dialog.show();
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
-                myIntent.putExtra("email",email);
+                myIntent.putExtra("emailadd",email);
 
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -143,6 +136,20 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+    public boolean EmailisEmpty(String email){
+        if(TextUtils.isEmpty(email)){
+            mEmail.setError("חובה למלות שדה זה");
+            return true;
+        }
+        return false;
+    }
+    public boolean PasswordIsEmpty(String email){
+        if(TextUtils.isEmpty(email)){
+            mPassword.setError("חובה למלות שדה זה");
+            return true;
+        }
+        return false;
     }
 
 }
