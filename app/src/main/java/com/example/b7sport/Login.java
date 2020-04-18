@@ -46,6 +46,7 @@ public class Login extends AppCompatActivity {
         mLoginButton = findViewById(R.id.LoginButton);
         mPasswordRecovery = findViewById(R.id.PasswordRecovery);
         fAuth = FirebaseAuth.getInstance();
+
         Intent intent1 = new Intent(Login.this,MainActivity.class);
         intent1.putExtra("email",mEmail.toString());
 
