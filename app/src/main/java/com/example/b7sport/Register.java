@@ -31,7 +31,7 @@ public class Register extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-
+     Logic l=new Logic();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -62,11 +62,11 @@ public class Register extends AppCompatActivity {
                 String password = mPassword.getText().toString().trim();
                 String Name = mFullName.getText().toString().trim();
                 String PhoneNumber = mPhonenumber.getText().toString().trim();
-                if(EmailRequired(email)) return;
-                if(PasswordIsEmpty(password)) return;
-                if(PasswordLength(password)) return;
-                if(EmailRegex(email)) return;
-                if(CheckName(Name)) return;
+                if(l.EmailRequired(email)) return;
+                if(l.PasswordIsEmpty(password)) return;
+                if(l.PasswordLength(password)) return;
+                if(l.EmailRegex(email)) return;
+                if(l.CheckName(Name)) return;
 
                 Info info = new Info(email,PhoneNumber,Name,password,"0","0");
                 databaseReference.push().setValue(info);
@@ -95,46 +95,7 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public boolean PasswordIsEmpty(String Password){
-        if(TextUtils.isEmpty(Password)){
-            mPassword.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
 
-    public boolean PasswordLength(String Password){
-        if(Password.length()<=6){
-            mPassword.setError("על הסיסמה להיות לפחות 7 אותיות");
-            return true;
-        }
-        return false;
-    }
-    public boolean EmailRequired(String Email){
-        if(TextUtils.isEmpty(Email)){
-            mEmail.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
-
-    public boolean EmailRegex(String Email){
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(Email);
-
-        if(!matcher.matches()){
-            mEmail.setError("The Format of the email must be example@example.com");
-            return true;
-        }
-        return false;
-    }
-    public boolean CheckName(String name){
-        if(TextUtils.isEmpty(name)){
-            mFullName.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
 //    public void CheckAll(String Name,String Email,String Password){
 //        if(TextUtils.isEmpty(Name) && TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password)){
 //            mFullName.setError("חייב למלות שדה של שם");

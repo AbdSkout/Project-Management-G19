@@ -67,4 +67,5 @@ public class Info {
         this.flag=flag;
     }
 
+     public boolean  t(){return  true;}
 }
