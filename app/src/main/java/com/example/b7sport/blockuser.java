@@ -63,15 +63,14 @@ public class blockuser extends AppCompatActivity {
 
                               ref1.child(name1).child("flag").setValue("1");
 
-                               Toast.makeText(blockuser.this, "User Blocked!", Toast.LENGTH_SHORT).show();
-                              // Toast.makeText(blockuser.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                               Log.d("", "user is here");
+
+                               Toast.makeText(blockuser.this, "User Blocked!", Toast.LENGTH_LONG).show();
 
 
                            }
 
                                else
-                               Log.d("","falied");
+                               Toast.makeText(blockuser.this, "falied to block user", Toast.LENGTH_SHORT).show();
 
 
                              startActivity(new Intent(getApplicationContext(),adminpage.class));
@@ -123,14 +122,13 @@ public class blockuser extends AppCompatActivity {
                            }
                            if(flag==1) {
 
-                               ref1.child(name1).removeValue();
-                               Log.d("", "user is here");
-
+                               ref1.child(name1).child("flag").setValue("2");
+                               Toast.makeText(getApplicationContext(),"user is delted",Toast.LENGTH_LONG).show();
 
                            }
 
                            else
-                               Log.d("","falied");
+                               Toast.makeText(getApplicationContext(),"failed to  delte user",Toast.LENGTH_LONG).show();
 
 
                            startActivity(new Intent(getApplicationContext(),adminpage.class));
