@@ -1,5 +1,6 @@
 package com.example.b7sport;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +72,9 @@ public class blockuser extends AppCompatActivity {
 
                                else
                                Log.d("","falied");
+
+
+                             startActivity(new Intent(getApplicationContext(),adminpage.class));
                          }
 
 
@@ -127,6 +131,11 @@ public class blockuser extends AppCompatActivity {
 
                            else
                                Log.d("","falied");
+
+
+                           startActivity(new Intent(getApplicationContext(),adminpage.class));
+
+
                        }
 
 
