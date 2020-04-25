@@ -71,11 +71,31 @@ public class Login extends AppCompatActivity {
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("emailadd",email);
 
+                if (TextUtils.isEmpty(email)) {
+                    mEmail.setError("Email is Required");
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    mPassword.setError("Password is Required");
+                    return;
+                }
+                if(email.equals("admin")&&password.equals("admin")){
+                    Intent intent = new Intent(view.getContext(),adminpage.class);
+                    Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                }
+                else{
+
+//                if (password.length() <= 6) {
+//                    mPassword.setError("Password Must be longer than 6 chars!");
+//                    return;
+//                }
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             dialog.dismiss();
+
                             Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                             startActivity(myIntent);
                             //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -85,6 +105,8 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
+
+                }
             }
         });
         mRegisterActivity.setOnClickListener(new View.OnClickListener(){

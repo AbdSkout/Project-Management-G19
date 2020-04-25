@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity {
     public final String TAG = "TAG";
 
     String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-
+     Logic l=new Logic();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,6 +55,7 @@ public class Register extends AppCompatActivity {
         mPhonenumber = findViewById(R.id.phoneNumber);
         mRegisterbtn = findViewById(R.id.Registerbtn);
         alreadyRegistered = findViewById(R.id.alreadyRegistred);
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("EDMT_FIREBASE");
         fStore = FirebaseFirestore.getInstance();
@@ -68,19 +69,24 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                final String email = mEmail.getText().toString().trim();
-                final  String password = mPassword.getText().toString().trim();
-                final   String Name = mFullName.getText().toString().trim();
-                final  String PhoneNumber = mPhonenumber.getText().toString().trim();
-                if(EmailRequired(email)) return;
-                if(PasswordIsEmpty(password)) return;
-                if(PasswordLength(password)) return;
-                if(EmailRegex(email)) return;
-                if(CheckName(Name)) return;
                // Info info = new Info(email,PhoneNumber,Name,password);
             //    databaseReference.push().setValue(info);
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
+                final String email = mEmail.getText().toString().trim();
+                final String password = mPassword.getText().toString().trim();
+                final String Name = mFullName.getText().toString().trim();
+                final String PhoneNumber = mPhonenumber.getText().toString().trim();
                 myIntent.putExtra("email",email);
+                if(l.EmailRequired(email)) return;
+                if(l.PasswordIsEmpty(password)) return;
+                if(l.PasswordLength(password)) return;
+                if(l.EmailRegex(email)) return;
+                if(l.CheckName(Name)) return;
+
+                Info info = new Info(email,PhoneNumber,Name,password,"0","0");
+                databaseReference.push().setValue(info);
+
+
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -93,9 +99,7 @@ public class Register extends AppCompatActivity {
                             user.put("Email", email);
                             user.put("PhoneNumber", PhoneNumber);
                             user.put("Password", password);
-                           // Info info = new Info(email,PhoneNumber,Name,password,UserID);
 
-                           // databaseReference.push().setValue(info);
 
                             documentrefernce.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -128,54 +132,5 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public boolean PasswordIsEmpty(String Password){
-        if(TextUtils.isEmpty(Password)){
-            mPassword.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
-
-    public boolean PasswordLength(String Password){
-        if(Password.length()<=6){
-            mPassword.setError("על הסיסמה להיות לפחות 7 אותיות");
-            return true;
-        }
-        return false;
-    }
-    public boolean EmailRequired(String Email){
-        if(TextUtils.isEmpty(Email)){
-            mEmail.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
-
-    public boolean EmailRegex(String Email){
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(Email);
-
-        if(!matcher.matches()){
-            mEmail.setError("The Format of the email must be example@example.com");
-            return true;
-        }
-        return false;
-    }
-    public boolean CheckName(String name){
-        if(TextUtils.isEmpty(name)){
-            mFullName.setError("חובה למלות שדה זה");
-            return true;
-        }
-        return false;
-    }
-//    public void CheckAll(String Name,String Email,String Password){
-//        if(TextUtils.isEmpty(Name) && TextUtils.isEmpty(Email) && TextUtils.isEmpty(Password)){
-//            mFullName.setError("חייב למלות שדה של שם");
-//            mEmail.setError("המייל דרוש");
-//            mPassword.setError("סיסמה דרושה");
-//            return;
-//        }
-//
-//    }
 
 }
