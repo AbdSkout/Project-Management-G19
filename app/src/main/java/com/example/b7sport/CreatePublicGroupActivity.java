@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +27,6 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_public_group);
-
         textName = findViewById(R.id.gr_name1);
         textType = findViewById(R.id.gr_type1);
         textStreet = findViewById(R.id.gr_street1);
@@ -61,6 +63,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                 Group g = Group.makeGroup(name,name,number,false,arena);
                 firebaseDatabase.push().setValue(g);
                 Toast.makeText(CreatePublicGroupActivity.this,"Data inserted successfully",Toast.LENGTH_LONG).show();
+
             }
         });
 

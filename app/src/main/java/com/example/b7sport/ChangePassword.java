@@ -2,9 +2,11 @@ package com.example.b7sport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+//import com.example.b7sport.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.PrintStreamPrinter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
+import java.io.PrintStream;
+import java.time.Clock;
 
 public class ChangePassword extends AppCompatActivity {
     EditText NewPass, ConfirmNewPass;
@@ -66,7 +69,6 @@ public class ChangePassword extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-
                                     Toast.makeText(ChangePassword.this, "Your password has been changed.." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
                                     System.out.println("error");
