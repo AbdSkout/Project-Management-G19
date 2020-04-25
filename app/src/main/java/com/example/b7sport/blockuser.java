@@ -32,8 +32,8 @@ public class blockuser extends AppCompatActivity {
            Name=findViewById(R.id.nblock);
            but_block=findViewById(R.id.Bblock);
            btn_delete=findViewById(R.id.deltebtn);
-           final DatabaseReference ref = data.getReference("b7sport-50daf/EDMT_FIREBASE");
-          final DatabaseReference ref1 = data.getReference("b7sport-50daf");
+           final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
+           final DatabaseReference ref1 = data.getReference("EDMT_FIREBASE");
 
 
         but_block.setOnClickListener(new View.OnClickListener(){
