@@ -59,11 +59,14 @@ package com.example.b7sport;
         import android.content.Intent;
         import android.os.Bundle;
         import android.view.View;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     private TextView mName,mEmail,mPhonenumber;
     Button mLogOutButton;
     private String userID1;
@@ -82,11 +85,15 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog pd;
 
 
+=======
+    TextView mChange;
+>>>>>>> Yaser
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
 
         pd = new ProgressDialog(this);
@@ -117,10 +124,18 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
+=======
+        mChange = findViewById(R.id.chanpassmainv);
+      mChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ChangePassword.class));
+>>>>>>> Yaser
             }
         });
 
 
+<<<<<<< HEAD
         Bundle bundle = getIntent().getExtras();
         userID1 = bundle.getString("emailadd");
 
@@ -212,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
                     mAdapter = new Info (MainActivity.this,data);
                     recyclerView.setAdapter(mAdapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+=======
+
+
+
+
+>>>>>>> Yaser
     }
 
         public void logout (View view){

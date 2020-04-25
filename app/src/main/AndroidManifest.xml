@@ -3,11 +3,14 @@
     package="com.example.b7sport">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+=======
+>>>>>>> Yaser
 
     <application
         android:allowBackup="true"
@@ -16,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".Profile"></activity>
         <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
 
@@ -31,6 +35,26 @@
         <activity android:name=".blockuser"></activity>
 
 
+=======
+
+        <activity android:name=".ChangePassword" />
+
+        <activity android:name=".CreatePublicGroupActivity" />
+
+        <activity android:name=".Login" />
+
+        <activity android:name=".Register" />
+
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RecyclerViewArena">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+>>>>>>> Yaser
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

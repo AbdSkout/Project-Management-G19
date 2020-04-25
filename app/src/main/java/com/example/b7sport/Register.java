@@ -60,6 +60,10 @@ public class Register extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("EDMT_FIREBASE");
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
+<<<<<<< HEAD
+=======
+
+>>>>>>> Yaser
 //        if(fAuth.getCurrentUser()!=null){
 //            startActivity(new Intent(getApplicationContext(),MainActivity.class));
 //            finish();
