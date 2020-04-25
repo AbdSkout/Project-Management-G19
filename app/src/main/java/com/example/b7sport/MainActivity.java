@@ -100,8 +100,18 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         showdata();
+<<<<<<< Updated upstream
 
 
+=======
+                         mChange = findViewById(R.id.chanpassmainv);
+                         mChange.setOnClickListener(new View.OnClickListener() {
+                              @Override                                                                           
+                              public void onClick(View v) {                                                       
+                                  startActivity(new Intent(getApplicationContext(), ChangePassword.class));       
+                              }                                                                                   
+                          });
+>>>>>>> Stashed changes
 
         dialog = new ProgressDialog(this);
         mLogOutButton.setOnClickListener(new View.OnClickListener() {

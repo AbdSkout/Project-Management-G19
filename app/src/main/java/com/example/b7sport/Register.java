@@ -81,6 +81,20 @@ public class Register extends AppCompatActivity {
             //    databaseReference.push().setValue(info);
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("email",email);
+<<<<<<< Updated upstream
+=======
+                if(l.EmailRequired(email)) return;
+                if(l.PasswordIsEmpty(password)) return;
+                if(l.PasswordLength(password)) return;
+                if(l.EmailRegex(email)) return;
+                if(l.CheckName(Name)) return;
+
+
+                Info info = new Info(email,PhoneNumber,Name,password,"0","0");
+                databaseReference.push().setValue(info);
+
+
+>>>>>>> Stashed changes
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
