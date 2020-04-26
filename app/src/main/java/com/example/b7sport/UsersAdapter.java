@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<ViewHolder>{
-    MainActivity listActivity;
+    AllUsers listActivity;
     List<InfoFromDataBase> infolist;
 
-    public UsersAdapter(MainActivity listActivity,List<InfoFromDataBase> infolist){
+    public UsersAdapter(AllUsers listActivity,List<InfoFromDataBase> infolist){
         this.infolist = infolist;
         this.listActivity = listActivity;
     }

@@ -76,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        showdata();
+        //showdata();
 
 
+<<<<<<< Updated upstream
                           mChange = findViewById(R.id.chanpassmainv);                                             
                           mChange.setOnClickListener(new View.OnClickListener() {                                 
                               @Override                                                                           
@@ -87,6 +88,15 @@ public class MainActivity extends AppCompatActivity {
                               }                                                                                   
                           });                                                                                     
 
+=======
+        mChange = findViewById(R.id.chanpassmainv);
+        mChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ChangePassword.class));
+            }
+        });
+>>>>>>> Stashed changes
 
 
 
@@ -143,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void showdata() {
+  /*  private void showdata() {
         pd.setTitle("טוען נתונים...");
         pd.show();
         pd.setCancelable(false);
@@ -171,6 +181,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Error Loading the Info!", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
+    }*/
 
 }

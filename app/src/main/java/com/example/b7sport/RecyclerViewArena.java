@@ -3,6 +3,7 @@ package com.example.b7sport;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -57,6 +58,7 @@ public class RecyclerViewArena extends AppCompatActivity {
     private void getData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -91,6 +93,7 @@ public class RecyclerViewArena extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RecyclerViewArena.this,"Error loading data.",Toast.LENGTH_SHORT).show();
                 Log.e("Volley", error.toString());
                 progressDialog.dismiss();
             }
