@@ -58,5 +58,15 @@ public class ExampleUnitTest {
       {
           assertEquals(l.CheckName("abd"),false);
       }
+        @Test
+    public void CheckGrName()
+    {
+        assertEquals(l.CheckGrName(""),false);
+    }
 
+    public void CheckNumber()
+    {
+        assertEquals(l.CheckNumber(-3),false);
+
+    }
 }
