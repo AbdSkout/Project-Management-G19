@@ -47,4 +47,27 @@ public class Logic {
         }
         return false;
     }
+    public boolean CheckNumber(int n)
+    {
+        if(n > 0)
+            return true;
+        else
+        {
+//            group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+            return false;
+        }
+
+    }
+    public boolean CheckGrName(String name)
+    {
+        if(name.equals(""))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
 }

@@ -30,13 +30,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mName,mEmail,mPhonenumber;
-    Button mLogOutButton;
+    Button mLogOutButton,mCreateGroupBtn;
     private String userID1;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         mLogOutButton = findViewById(R.id.LogOutBtn);
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
-
+        mCreateGroupBtn=findViewById(R.id.Creaegroupbtn);
         //Init Database
         fStore = FirebaseFirestore.getInstance();
 
@@ -85,9 +86,17 @@ public class MainActivity extends AppCompatActivity {
                               public void onClick(View v) {                                                       
                                   startActivity(new Intent(getApplicationContext(), ChangePassword.class));       
                               }                                                                                   
-                          });                                                                                     
+                          });
 
 
+            mCreateGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(getApplicationContext(),CreatePublicGroupActivity.class);
+                startActivity(new Intent(getApplicationContext(),RecyclerViewArena.class));
+               // startActivity(intent);
+            }
+        });
 
 
 
@@ -97,17 +106,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dialog.show();
 
-
-
-
-
-
-
                 FirebaseAuth.getInstance().signOut();
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
             }});
+
 
 
         Bundle bundle = getIntent().getExtras();

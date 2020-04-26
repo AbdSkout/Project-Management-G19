@@ -30,10 +30,10 @@
         <activity android:name=".adminpage"></activity>
         <activity android:name=".blockuser"></activity>
 
-
+        <activity android:name=".CreatePublicGroupActivity"></activity>
+        <activity android:name=".RecyclerViewArena"/>
         <activity android:name=".ChangePassword" />
 
-        <activity android:name=".CreatePublicGroupActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
