@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //showdata();
 
 
-<<<<<<< Updated upstream
-                          mChange = findViewById(R.id.chanpassmainv);                                             
+                          mChange = findViewById(R.id.chanpassmainv);
                           mChange.setOnClickListener(new View.OnClickListener() {                                 
                               @Override                                                                           
                               public void onClick(View v) {                                                       
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                               }                                                                                   
                           });                                                                                     
 
-=======
         mChange = findViewById(R.id.chanpassmainv);
         mChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), ChangePassword.class));
             }
         });
->>>>>>> Stashed changes
 
 
 
