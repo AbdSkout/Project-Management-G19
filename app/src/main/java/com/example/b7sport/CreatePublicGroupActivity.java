@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import java.util.Random;
 
 public class CreatePublicGroupActivity extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
-    public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType;//I dont know if I must add the lat and lon
+    public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,secretcode;
     Button selctgrbtn;
     TextView secretTextView;
     EditText group_p_number,group_name;
@@ -42,7 +43,6 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         selctgrbtn= findViewById(R.id.createg1);
         group_name = findViewById(R.id.group_name);
         group_p_number = findViewById(R.id.players_number);
-
         //put the values ...
 
 
@@ -65,14 +65,17 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name =group_name.getText().toString().trim();
                 int number = Integer.parseInt( group_p_number.getText().toString().trim());
-                if(CheckGrName(name)==true && CheckNumber(number)==true) {
-                    Group g = Group.makeGroup(name, name, number, false, arena);
+                boolean isprivate = privateG.isChecked();
+                if(CheckGrName(name) == true && CheckNumber(number) == true) {
+                    Group g = Group.makeGroup(name, name, number, isprivate, arena);
                     firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
                     Intent intent =new Intent(getApplicationContext(),MainActivity.class);
                 }
             }
         });
+
+
 
     }
     public boolean CheckGrName(String name)
