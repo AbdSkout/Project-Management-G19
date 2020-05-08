@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,8 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
     Button selctgrbtn;
     TextView secretTextView;
     EditText group_p_number,group_name;
+    RadioButton privateG;
+    RadioButton publicG;
     Arena arena;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +47,25 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         selctgrbtn= findViewById(R.id.createg1);
         group_name = findViewById(R.id.group_name);
         group_p_number = findViewById(R.id.players_number);
+        privateG= findViewById(R.id.radioprivate);
+        publicG= findViewById(R.id.radiopublic);
+        secretcode=findViewById(R.id.secretcode);
+        secretTextView= findViewById(R.id.secrettext);
         //put the values ...
+        privateG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked) {
+                    secretcode.setVisibility(View.INVISIBLE);
+                    secretTextView.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    secretcode.setVisibility(View.VISIBLE);
+                    secretTextView.setVisibility(View.VISIBLE);
+                }
 
-
+            }
+        });
         arena= RecyclerViewArena.groundList.get(ArenaAdapter.id);
         textName.setText("שם מגרש : " + arena.getName());
         textType.setText("סוג מגרש : " +String.valueOf(arena.getType()));
