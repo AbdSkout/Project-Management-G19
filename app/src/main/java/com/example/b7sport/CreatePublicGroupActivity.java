@@ -27,6 +27,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
     Button selctgrbtn;
     TextView secretTextView;
     EditText group_p_number,group_name;
+
     RadioButton privateG;
     RadioButton publicG;
     Arena arena;
@@ -66,6 +67,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
             }
         });
+
         arena= RecyclerViewArena.groundList.get(ArenaAdapter.id);
         textName.setText("שם מגרש : " + arena.getName());
         textType.setText("סוג מגרש : " +String.valueOf(arena.getType()));
@@ -91,6 +93,11 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                     firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
                     Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+
+                if(CheckGrName(name) && CheckNumber(number)) {
+                    Group g = Group.makeGroup(name, name, number, false, arena);
+                    firebaseDatabase.push().setValue(g);
+                    Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -103,6 +110,31 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         if(name.equals(""))
         {
             group_name.setError("חובה למלות שדה זה");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+
+    public boolean CheckNumber(int n)
+    {
+        if(n > 0)
+            return true;
+        else
+        {
+            group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+            return false;
+        }
+
+    }
+    public boolean CheckGrName(String name)
+    {
+        if(name.equals(""))
+        {
+            textName.setError("חובה למלות שדה זה");
             return false;
         }
         else

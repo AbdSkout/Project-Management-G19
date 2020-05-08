@@ -38,8 +38,12 @@ public class RecyclerViewArena extends AppCompatActivity {
     private ArenaAdapter adapter;
 //    private RecyclerView.Adapter adapter;
     //    private ArenaAdapter adapter;
+
     //https://opendataprod.br7.org.il/dataset/9a88499f-e775-493d-af47-61a3ebb34510/resource/58f26a74-af55-4823-81d8-17715883acc6/download/sport.json
     private String url = "https://opendataprod.br7.org.il/dataset/9a88499f-e775-493d-af47-61a3ebb34510/resource/58f26a74-af55-4823-81d8-17715883acc6/download/sport.json";
+
+    //https://www.beer-sheva.muni.il/OpenData/Lists/Packages/CustomDispForm.aspx?ID=149
+    private String url = "https://br7ckan.blob.core.windows.net/ckanstorage-prod/resources/58f26a74-af55-4823-81d8-17715883acc6/sport.json?sr=b&sp=r&sig=zNYX2WS1VIWfyLEBkORO1JKOjWVevo9kpwIkPIUaU9I%3D&sv=2017-04-17&se=2020-04-26T00%3A30%3A44Z";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
