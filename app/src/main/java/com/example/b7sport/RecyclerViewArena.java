@@ -3,6 +3,11 @@ package com.example.b7sport;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.InflateException;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -61,6 +66,9 @@ public class RecyclerViewArena extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        groundList.add(new Arena("aaaa", "", "", 12, "", "","" , 12,12));
+        groundList.add(new Arena("bbbb", "", "", 12, "", "","" , 12,12));
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override

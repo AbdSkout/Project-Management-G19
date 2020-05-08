@@ -2,32 +2,40 @@ package com.example.b7sport;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.ConsumerIrManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.awt.font.TextAttribute;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
-public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>{
+public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder> implements Filterable {
     public AppCompatActivity z= new AppCompatActivity();
     private Context context;
+    private List<Arena> listfull;
     private List<Arena> list;
     private Arena arena;
     static int id;
 
-
-    public ArenaAdapter(Context context, List<Arena> list) {
+    public ArenaAdapter(Context context, List<Arena> listfull) {
         this.context = context;
-        this.list = list;
-
+        this.listfull = listfull;
+        list=new ArrayList<>(listfull);
 
     }
 
@@ -39,7 +47,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        arena = list.get(position);
+        arena = listfull.get(position);
 //
 //        holder.textName.setText(arena.getName());
 //        holder.textType.setText(String.valueOf(arena.getType()));
@@ -60,6 +68,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent  = new Intent(context,CreatePublicGroupActivity.class);
                 int x =Integer.parseInt(holder.textid.getText().toString());
                 Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
@@ -74,7 +83,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return listfull.size();
     }
 
 
@@ -102,4 +111,35 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
 
 
+    @Override
+    public Filter getFilter() {
+        return arenaFilter;
+    }
+    private Filter arenaFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Arena> filteredlist = new ArrayList<>();
+            if (constraint == null || constraint.length()==0) {
+                filteredlist.addAll(listfull);
+            }else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Arena item: listfull){
+                    if(item.getName().toLowerCase().contains(filterPattern)){
+                        filteredlist.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values=filteredlist;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends Arena>) results.values);
+
+            notifyDataSetChanged();
+        }
+    };
 }
