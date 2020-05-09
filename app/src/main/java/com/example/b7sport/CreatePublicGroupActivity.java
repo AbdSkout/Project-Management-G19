@@ -8,10 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,13 +20,10 @@ import java.util.Random;
 
 public class CreatePublicGroupActivity extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
-    public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,secretcode;
+    public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType;//I dont know if I must add the lat and lon
     Button selctgrbtn;
     TextView secretTextView;
     EditText group_p_number,group_name;
-
-    RadioButton privateG;
-    RadioButton publicG;
     Arena arena;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +42,9 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         selctgrbtn= findViewById(R.id.createg1);
         group_name = findViewById(R.id.group_name);
         group_p_number = findViewById(R.id.players_number);
-        privateG= findViewById(R.id.radioprivate);
-        publicG= findViewById(R.id.radiopublic);
-        secretcode=findViewById(R.id.secretcode);
-        secretTextView= findViewById(R.id.secrettext);
-        //put the values ...
-        privateG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isChecked) {
-                    secretcode.setVisibility(View.INVISIBLE);
-                    secretTextView.setVisibility(View.INVISIBLE);
-                }
-                else{
-                    secretcode.setVisibility(View.VISIBLE);
-                    secretTextView.setVisibility(View.VISIBLE);
-                }
 
-            }
-        });
+        //put the values ...
+
 
         arena= RecyclerViewArena.groundList.get(ArenaAdapter.id);
         textName.setText("שם מגרש : " + arena.getName());
@@ -87,22 +65,14 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name =group_name.getText().toString().trim();
                 int number = Integer.parseInt( group_p_number.getText().toString().trim());
-                boolean isprivate = privateG.isChecked();
-                if(CheckGrName(name) == true && CheckNumber(number) == true) {
-                    Group g = Group.makeGroup(name, name, number, isprivate, arena);
-                    firebaseDatabase.push().setValue(g);
-                    Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
-                    Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-
-                if(CheckGrName(name) && CheckNumber(number)) {
+                if(CheckGrName(name)==true && CheckNumber(number)==true) {
                     Group g = Group.makeGroup(name, name, number, false, arena);
                     firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
+                    Intent intent =new Intent(getApplicationContext(),MainActivity.class);
                 }
             }
         });
-
-
 
     }
     public boolean CheckGrName(String name)
@@ -110,31 +80,6 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         if(name.equals(""))
         {
             group_name.setError("חובה למלות שדה זה");
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-
-    }
-
-    public boolean CheckNumber(int n)
-    {
-        if(n > 0)
-            return true;
-        else
-        {
-            group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
-            return false;
-        }
-
-    }
-    public boolean CheckGrName(String name)
-    {
-        if(name.equals(""))
-        {
-            textName.setError("חובה למלות שדה זה");
             return false;
         }
         else

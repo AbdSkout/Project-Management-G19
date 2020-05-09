@@ -3,14 +3,8 @@ package com.example.b7sport;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.InflateException;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +21,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class RecyclerViewArena extends AppCompatActivity {
     private RecyclerView mList;
@@ -35,13 +28,8 @@ public class RecyclerViewArena extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
     static List<Arena> groundList;
-    private ArenaAdapter adapter;
-//    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
     //    private ArenaAdapter adapter;
-
-    //https://opendataprod.br7.org.il/dataset/9a88499f-e775-493d-af47-61a3ebb34510/resource/58f26a74-af55-4823-81d8-17715883acc6/download/sport.json
-    private String url = "https://opendataprod.br7.org.il/dataset/9a88499f-e775-493d-af47-61a3ebb34510/resource/58f26a74-af55-4823-81d8-17715883acc6/download/sport.json";
-
     //https://www.beer-sheva.muni.il/OpenData/Lists/Packages/CustomDispForm.aspx?ID=149
     private String url = "https://br7ckan.blob.core.windows.net/ckanstorage-prod/resources/58f26a74-af55-4823-81d8-17715883acc6/sport.json?sr=b&sp=r&sig=zNYX2WS1VIWfyLEBkORO1JKOjWVevo9kpwIkPIUaU9I%3D&sv=2017-04-17&se=2020-04-26T00%3A30%3A44Z";
     @Override
@@ -51,7 +39,7 @@ public class RecyclerViewArena extends AppCompatActivity {
         mList = findViewById(R.id.main_list);
 
         groundList = new ArrayList<>();
-  //      adapter = new ArenaAdapter(getApplicationContext(),groundList);
+//        adapter = new ArenaAdapter(getApplicationContext(),groundList);
         adapter = new ArenaAdapter(this ,groundList);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -70,9 +58,6 @@ public class RecyclerViewArena extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        groundList.add(new Arena("aaaa", "", "", 12, "", "","" , 12,12));
-        groundList.add(new Arena("bbbb", "", "", 12, "", "","" , 12,12));
-
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -113,6 +98,7 @@ public class RecyclerViewArena extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
 
 }
 

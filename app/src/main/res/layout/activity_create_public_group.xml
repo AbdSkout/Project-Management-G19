@@ -140,40 +140,15 @@
                 android:ems="10"
                 android:hint="מספר שחקנים"
                 android:inputType="number" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="סוג קובצה"/>
-            <RadioGroup
-                android:id="@+id/radiogrouptype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radiopublic"
-                    android:checked="true"
-                    android:textSize="24sp"
-                    android:text="ציבורית"/>
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioprivate"
-                    android:textSize="24sp"
-                    android:text="פרטית"/>
-
-
-            </RadioGroup>
 
             <TextView
                 android:id="@+id/secrettext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="true"
+                android:enabled="false"
                 android:text="קוד קבוצה"
                 android:textSize="24sp"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/secretcode"
@@ -183,11 +158,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="0dp"
                 android:ems="10"
-                android:enabled="true"
+                android:enabled="false"
                 android:hint="מספר סודי"
                 android:inputType="number"
-                android:visibility="invisible"/>
-
+                android:visibility="invisible" />
 
 
             <Button
