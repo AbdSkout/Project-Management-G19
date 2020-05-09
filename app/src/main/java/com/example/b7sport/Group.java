@@ -17,6 +17,16 @@ public class Group {
     private double arenalat;
     private boolean isprivate;
 
+    public String getSecretcode() {
+        return secretcode;
+    }
+
+    public void setSecretcode(String secretcode) {
+        this.secretcode = secretcode;
+    }
+
+    public String secretcode;
+
     public Group(String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
         this.groupname = groupname;
         this.groupid = groupid;
