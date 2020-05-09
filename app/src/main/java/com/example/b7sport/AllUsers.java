@@ -39,9 +39,9 @@ public class AllUsers extends AppCompatActivity {
         setContentView(R.layout.activity_all_users);
 
 
-        mBackbtn = findViewById(R.id.backbtn);
         pd = new ProgressDialog(this);
-        fStore = FirebaseFirestore.getInstance();
+
+        mBackbtn = findViewById(R.id.backbtn);
         //Intialazing
         mRecyclerView= findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -61,6 +61,8 @@ public class AllUsers extends AppCompatActivity {
     }
 
     private void showdata() {
+        fStore = FirebaseFirestore.getInstance();
+
         pd.setTitle("טוען נתונים...");
         pd.show();
         pd.setCancelable(false);

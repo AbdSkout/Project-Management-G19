@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< Updated upstream
         <activity android:name=".Register"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".adminpage"></activity>
@@ -36,16 +35,9 @@
 
         <activity android:name=".CreatePublicGroupActivity" />
 
-=======
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".adminpage" />
-        <activity android:name=".blockuser" />
-        <activity android:name=".CreatePublicGroupActivity" />
-        <activity android:name=".RecyclerViewArena" />
-        <activity android:name=".ChangePassword" />
 
->>>>>>> Stashed changes
+        <activity android:name=".RecyclerViewArena" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -15,17 +15,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class Profile extends AppCompatActivity {
-    private TextView mName,mEmail,mPhonenumber;
+    private TextView mName,mEmail,mPhonenumber,mAddress;
     private FirebaseDatabase database;
     private DatabaseReference UserRef;
     FirebaseFirestore fStore;
@@ -51,6 +49,7 @@ public class Profile extends AppCompatActivity {
         mName = findViewById(R.id.FullName1);
         mEmail = findViewById(R.id.Email1);
         mPhonenumber = findViewById(R.id.PhoneNumber1);
+        mAddress = findViewById(R.id.Address1);
 
 
         database = FirebaseDatabase.getInstance();
@@ -62,37 +61,19 @@ public class Profile extends AppCompatActivity {
         pd.setTitle("טוען נתונים...") ;
         pd.show();
         pd.setCancelable(false);
-        //
-        //
-        /*
-        UserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.child("Email").getValue().equals(userID1)){
-                        mName.setText(ds.child("FullName").getValue(String.class));
-                        mEmail.setText(ds.child("Email").getValue(String.class));
-                        mPhonenumber.setText(ds.child("PhoneNumber").getValue(String.class));
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });*/
         fStore.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        //pd.dismiss();
                         for(DocumentSnapshot doc: task.getResult()){
                             String dbuser = doc.getString("Email");
                             if(dbuser.equals(userID1)){
                                 mName.setText(doc.getString("FullName"));
                                 mEmail.setText(doc.getString("Email"));
                                 mPhonenumber.setText(doc.getString("PhoneNumber"));
+                                mAddress.setText(doc.getString("Address"));
                                 pd.dismiss();
                                 break;
                             }
@@ -104,33 +85,10 @@ public class Profile extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();
-                        Toast.makeText(Profile.this,"Error Loading the Info!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this,"שגיאה בטעינת נתונים!",Toast.LENGTH_SHORT).show();
                     }
                 }) ;
-        //
-        //
 
-      //showdata();
-        /*database = FirebaseDatabase.getInstance();
-        UserRef = database.getReference(USERS);
-        UserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.child("email").getValue().equals(userID1)){
-                        mName.setText(ds.child("name").getValue(String.class));
-                        mEmail.setText(ds.child("email").getValue(String.class));
-                        mPhonenumber.setText(ds.child("phoneNumber").getValue(String.class));
-                        pd.dismiss();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.profile);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -155,33 +113,4 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    /*private void showdata() {
-
-        fStore.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        pd.dismiss();
-                        for(DocumentSnapshot doc: task.getResult()){
-                            String dbuser = doc.getString("Email");
-                            if(userID1.equals(dbuser)){
-                                mName.setText(doc.getString("FullName"));
-                                mEmail.setText(doc.getString("Email"));
-                                mPhonenumber.setText(doc.getString("PhoneNumber"));
-                                pd.dismiss();
-
-                            }
-                        }
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(Profile.this,"Error Loading the Info!",Toast.LENGTH_SHORT).show();
-                    }
-                }) ;
-    }*/
 }

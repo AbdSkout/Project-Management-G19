@@ -30,12 +30,10 @@
         android:fontFamily="@font/david_libre"
         android:text="מספר תלפון :"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Email"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/Email" />
 
     <TextView
         android:id="@+id/FullName"
@@ -57,7 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="a"
+        android:fontFamily="@font/david_libre"
+        android:text="טוען..."
         app:layout_constraintBaseline_toBaselineOf="@+id/FullName"
         app:layout_constraintEnd_toStartOf="@+id/FullName"
         app:layout_constraintHorizontal_bias="1.0"
@@ -68,7 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="a"
+        android:fontFamily="@font/david_libre"
+        android:text="טוען..."
         app:layout_constraintBaseline_toBaselineOf="@+id/Email"
         app:layout_constraintEnd_toStartOf="@+id/Email"
         app:layout_constraintHorizontal_bias="1.0"
@@ -79,7 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="a"
+        android:fontFamily="@font/david_libre"
+        android:text="טוען..."
         app:layout_constraintBaseline_toBaselineOf="@+id/PhoneNumber"
         app:layout_constraintEnd_toStartOf="@+id/PhoneNumber"
         app:layout_constraintHorizontal_bias="1.0"
@@ -115,5 +116,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu_navigation" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/david_libre"
+        android:text=" כתובת :"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
+
+    <TextView
+        android:id="@+id/Address1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/david_libre"
+        android:text="טוען..."
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
+        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
