@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,6 +23,7 @@ import java.util.Random;
 
 public class CreatePublicGroupActivity extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
+
     public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,secretcode;//I dont know if I must add the lat and lon
     Button selctgrbtn;
     TextView secretTextView;
@@ -92,6 +94,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                 int number = Integer.parseInt( group_p_number.getText().toString().trim());
                 if(CheckGrName(name)==true && CheckNumber(number)==true) {
                     Group g = Group.makeGroup(name, name, number, isPrivate, arena);
+//                    synchronized (firebaseDatabase) {}
                     if(isPrivate)
                         g.setSecretcode(secretcode.getText().toString());
                     else g.setSecretcode(null);
@@ -129,6 +132,13 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    public String getId()
+    {
+
+
+        return null;
     }
 
 }
