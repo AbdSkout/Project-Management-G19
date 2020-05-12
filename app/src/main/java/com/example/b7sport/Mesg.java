@@ -1,5 +1,6 @@
 package com.example.b7sport;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,7 @@ public class Mesg extends AppCompatActivity {
             public void onClick(View v) {
                 String msg= mesg.getText().toString();
                 ref.setValue(msg);
-
+                startActivity(new Intent(getApplicationContext(),adminpage.class));
 
 
             }
