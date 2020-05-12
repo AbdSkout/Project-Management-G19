@@ -10,6 +10,10 @@ public class Arena {
     private Double housenumber;
     private String neighbor;
     private String activity;
+    private String lighing;
+    private String sport_type;
+    private double lon;
+    private double lat;
 
     public int getId() {
         return id;
@@ -26,10 +30,6 @@ public class Arena {
         this.activity = activity;
     }
 
-    private String lighing;
-    private String sport_type;
-    private double lon;
-    private double lat;
 
 
     public String getName() {
