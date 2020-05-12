@@ -1,5 +1,6 @@
 package com.example.b7sport;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -32,6 +35,8 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
     RadioButton privateG;
     RadioButton publicG;
     Arena arena;
+    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,32 +90,35 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
 
-
         selctgrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name =group_name.getText().toString().trim();
-                boolean isPrivate=privateG.isChecked();
-                int number = Integer.parseInt( group_p_number.getText().toString().trim());
-                if(CheckGrName(name)==true && CheckNumber(number)==true) {
-                    Group g = Group.makeGroup(name, name, number, isPrivate, arena);
-//                    synchronized (firebaseDatabase) {}
+                String name =group_name.getText().toString();
+                String n = group_p_number.getText().toString();
+                if(CheckGrName(name)==true && CheckNumber(n)==true) {
+                    getId();
+                    int number = Integer.parseInt( group_p_number.getText().toString());
+                    boolean isPrivate=!(publicG.isChecked());
+                    Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
+
+                    //                    synchronized (firebaseDatabase) {}
                     if(isPrivate)
                         g.setSecretcode(secretcode.getText().toString());
-                    else g.setSecretcode(null);
+                    else g.setSecretcode("");
 
                     firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
                     Intent intent =new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                 }
+//                else startActivity();
             }
         });
 
     }
     public boolean CheckGrName(String name)
     {
-        if(name.equals(""))
+        if(name.equals("") || name == null)
         {
             group_name.setError("חובה למלות שדה זה");
             return false;
@@ -122,13 +130,21 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
     }
 
-    public boolean CheckNumber(int n)
+    public boolean CheckNumber(String num)
     {
-        if(n > 0)
-            return true;
-        else
+        if(!num.equals("") && num !=null)
         {
-            group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+            int n = Integer.parseInt(num);
+            if(n > 0)
+                return true;
+            else
+            {
+                group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+                return false;
+            }
+        }
+        else {
+            group_p_number.setError("חייב למלא השדה הזה ");
             return false;
         }
 
@@ -136,10 +152,31 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
     public String getId()
     {
+        final FirebaseDatabase data = FirebaseDatabase.getInstance();
+        final DatabaseReference ref1 = data.getReference("Groups");
+        final DatabaseReference ref = data.getReference("Groups");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    id = Integer.parseInt(d.child("id").getValue().toString());
+                }
+                ref.child("id").setValue(Integer.toString(id));
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
         return null;
     }
 
 }
+
 

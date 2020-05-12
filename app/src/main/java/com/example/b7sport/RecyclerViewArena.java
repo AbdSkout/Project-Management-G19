@@ -115,60 +115,61 @@ public class RecyclerViewArena extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        final DatabaseReference ref = data.getReference("sport");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            final DatabaseReference ref = data.getReference("sport");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Arena arena;
-                int id;
-                String name;
-                String type;
-                String street;
-                Double housenumber;
-                String neighbor;
-                String activity, sportType, lighting;
-                double lat, lon;
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    arena = new Arena(Integer.parseInt(d.getKey()));
-                    name = d.child("Name").getValue().toString();
-                    neighbor = d.child("neighborho").getValue().toString();
-                    type = d.child("Type").getValue().toString();
-                    activity = d.child("Activity").getValue().toString();
-                    street = d.child("street").getValue().toString();
-                    lat = Double.parseDouble(d.child("lat").getValue().toString());
-                    lon = Double.parseDouble(d.child("lon").getValue().toString());
-                    lighting = d.child("lighting").getValue().toString();
+                    Arena arena;
+                    int id;
+                    String name;
+                    String type;
+                    String street;
+                    Double housenumber;
+                    String neighbor;
+                    String activity, sportType, lighting;
+                    double lat, lon;
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        arena = new Arena(Integer.parseInt(d.getKey()));
+                        name = d.child("Name").getValue().toString();
+                        neighbor = d.child("neighborho").getValue().toString();
+                        type = d.child("Type").getValue().toString();
+                        activity = d.child("Activity").getValue().toString();
+                        street = d.child("street").getValue().toString();
+                        lat = Double.parseDouble(d.child("lat").getValue().toString());
+                        lon = Double.parseDouble(d.child("lon").getValue().toString());
+                        lighting = d.child("lighting").getValue().toString();
 
 
-                    arena.setName(d.child("Name").getValue().toString());
-                    sportType = d.child("SportType").getValue().toString();
-                    housenumber = Double.parseDouble(d.child("HouseNumbe").getValue().toString());
+                        arena.setName(d.child("Name").getValue().toString());
+                        sportType = d.child("SportType").getValue().toString();
+                        housenumber = Double.parseDouble(d.child("HouseNumbe").getValue().toString());
 
-//                arena.setId(id);
+    //                arena.setId(id);
 
-                    arena.setName(name);
-                    arena.setType(type);
-                    arena.setStreet(street);
-                    arena.setNeighbor(neighbor);
-                    arena.setHousenumber(housenumber);
-                    arena.setLighing(activity);
-                    arena.setSport_type(sportType);
-                    arena.setLat(lat);
-                    arena.setLon(lon);
-                    arena.setActivity(activity);
-                    groundList.add(arena);
+                        arena.setName(name);
+                        arena.setType(type);
+                        arena.setStreet(street);
+                        arena.setNeighbor(neighbor);
+                        arena.setHousenumber(housenumber);
+                        arena.setLighing(activity);
+                        arena.setSport_type(sportType);
+                        arena.setLat(lat);
+                        arena.setLon(lon);
+                        arena.setActivity(activity);
+                        groundList.add(arena);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
                 }
 
-                adapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
 
-            }
+            });
 
-        });
     }
 }
