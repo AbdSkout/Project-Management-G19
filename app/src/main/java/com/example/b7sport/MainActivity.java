@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +23,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog dialog;
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference ref;
 
 
     //Recycler View
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     UsersAdapter adapeter;
     ProgressDialog pd;
-
+    TextView msg;
 
     TextView mChange;
 
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        msg=findViewById(R.id.msg_admin);
         pd = new ProgressDialog(this);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("0");
@@ -143,7 +148,17 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+       get_msg();
+
     }
+
+
+
+
+
+
+
 
 
 
@@ -176,5 +191,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    private  void get_msg()
+    {
+         ref=database.getReference("Message");
+         ref.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 msg.setText(dataSnapshot.getValue().toString());
+             }
 
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
+
+
+    }
 }
