@@ -15,7 +15,7 @@ public class message extends AppCompatActivity {
     EditText mesg;
     Button Send;
     final FirebaseDatabase data = FirebaseDatabase.getInstance();
-    final DatabaseReference ref = data.getReference("b7sport-50daf/Message");
+    final DatabaseReference ref = data.getReference("b7sport-50daf");
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
