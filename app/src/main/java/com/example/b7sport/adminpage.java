@@ -15,7 +15,7 @@ public class adminpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminpage);
         b= findViewById(R.id.button);
-        mesg=findViewById(R.id.message);
+        mesg=findViewById(R.id.M);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,7 +27,9 @@ public class adminpage extends AppCompatActivity {
         mesg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),message.class));
+
+
+                startActivity(new Intent(getApplicationContext(), Mesg.class));
             }
         });
 

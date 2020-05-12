@@ -11,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class message extends AppCompatActivity {
+public class Mesg extends AppCompatActivity {
     EditText mesg;
     Button Send;
     final FirebaseDatabase data = FirebaseDatabase.getInstance();
-    final DatabaseReference ref = data.getReference("b7sport-50daf");
+    final DatabaseReference ref = data.getReference("Message");
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        mesg=findViewById(R.id.mesg_text);
+        mesg=findViewById(R.id.M);
         Send=findViewById(R.id.send);
 
         Send.setOnClickListener(new View.OnClickListener() {

@@ -20,20 +20,28 @@
         <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
 
         <activity android:name=".Login" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+
+<!--        <intent-filter>-->
+<!--          <action android:name="android.intent.action.MAIN" />-->
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+<!--       -->
         </activity>
         <activity android:name=".Register"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".adminpage"></activity>
+        <activity android:name=".adminpage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".blockuser"></activity>
 
         <activity android:name=".CreatePublicGroupActivity"></activity>
         <activity android:name=".RecyclerViewArena"/>
         <activity android:name=".ChangePassword" />
-
+        <activity android:name=".Mesg"/>
 
         <meta-data
             android:name="preloaded_fonts"
