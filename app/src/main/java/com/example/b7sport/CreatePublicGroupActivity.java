@@ -150,19 +150,19 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
     }
 
-    public String getId()
+    public void getId()
     {
         final FirebaseDatabase data = FirebaseDatabase.getInstance();
-        final DatabaseReference ref1 = data.getReference("Groups");
-        final DatabaseReference ref = data.getReference("Groups");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        //final DatabaseReference ref1 = data.getReference("Groups");
+        final DatabaseReference ref = data.getReference("Groups/id");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    id = Integer.parseInt(d.child("id").getValue().toString());
-                }
-                ref.child("id").setValue(Integer.toString(id));
+
+                    id = Integer.parseInt(dataSnapshot.getValue().toString());
+
+
 
 
             }
@@ -173,8 +173,8 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             }
 
         });
+        ref.setValue(Integer.toString(id+1));
 
-        return null;
     }
 
 }
