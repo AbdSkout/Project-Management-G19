@@ -16,34 +16,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Profile"></activity>
-        <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
+        <activity android:name=".Card"></activity>
+        <activity android:name=".showReport" />
+        <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
+        <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".Login" >
-
-        <intent-filter>
-          <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Register"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".Register" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".adminpage">
-<!--
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
--->
+            -->
 
         </activity>
-        <activity android:name=".blockuser"></activity>
-
-        <activity android:name=".CreatePublicGroupActivity"></activity>
-        <activity android:name=".RecyclerViewArena"/>
+        <activity android:name=".blockuser" />
+        <activity android:name=".CreatePublicGroupActivity" />
+        <activity android:name=".RecyclerViewArena" />
         <activity android:name=".ChangePassword" />
-        <activity android:name=".Mesg"/>
+        <activity android:name=".Mesg" />
 
         <meta-data
             android:name="preloaded_fonts"
