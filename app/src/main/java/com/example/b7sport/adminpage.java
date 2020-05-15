@@ -11,11 +11,14 @@ public class adminpage extends AppCompatActivity {
 
     Button b ;
     Button mesg;
-     protected void onCreate(Bundle savedInstanceState) {
+    Button re;
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminpage);
         b= findViewById(R.id.button);
         mesg=findViewById(R.id.M);
+        re=findViewById(R.id.Report);
+
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -23,6 +26,8 @@ public class adminpage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),blockuser.class));
             }
         });
+
+
 
         mesg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +38,17 @@ public class adminpage extends AppCompatActivity {
             }
         });
 
+     re.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             startActivity(new Intent(getApplicationContext(), Card.class));
+
+         }
+     });
 
 
-    }
+
+
+
+     }
 }
