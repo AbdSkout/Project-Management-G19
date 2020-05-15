@@ -16,9 +16,7 @@ android:padding="10dp"
     android:text="Name"
     android:textSize="18sp"
     android:padding="4dp"
-    android:layout_marginLeft="5dp"
-
-    />
+    android:layout_marginLeft="5dp" />
 
 
 <TextView

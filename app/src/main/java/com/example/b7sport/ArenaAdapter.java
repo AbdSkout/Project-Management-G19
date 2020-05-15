@@ -40,14 +40,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         arena = list.get(position);
-//
-//        holder.textName.setText(arena.getName());
-//        holder.textType.setText(String.valueOf(arena.getType()));
-//        holder.textStreet.setText(String.valueOf(arena.getStreet()));
-//        holder.textNeighborh.setText(arena.getNeighbor());
-//        holder.textActivity.setText(arena.getActivity());
-//        holder.textLighting.setText(arena.getLighing());
-//        holder.textSportType.setText(arena.getSport_type());
         holder.textid.setText(String.valueOf(arena.getId()));
         holder.textName.setText("שם מגרש : " + arena.getName());
         holder.textType.setText("סוג מגרש : " +String.valueOf(arena.getType()));
@@ -62,7 +54,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
             public void onClick(View v) {
                 Intent intent  = new Intent(context,CreatePublicGroupActivity.class);
                 int x =Integer.parseInt(holder.textid.getText().toString());
-                Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_LONG).show();
                 id=x;
                 context.startActivity(intent);
 
