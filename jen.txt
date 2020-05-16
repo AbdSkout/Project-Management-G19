@@ -75,7 +75,7 @@ pipeline {
 
           // Notify if the upload succeeded
 
-          mail to: 'yaserni@ac.sce.ac.il', subject: 'New build available!', body: 'Check it out! Enter the link :  ${env.BUILD_URL}'
+          mail to: 'yaserni@ac.sce.ac.il', subject: 'New build available!', body: "Build ${env.BUILD_NUMBER} Check it out! Enter the link :  ${env.BUILD_URL}"
 
         }
   }
