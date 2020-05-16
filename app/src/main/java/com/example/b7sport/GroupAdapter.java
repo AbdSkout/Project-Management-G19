@@ -23,7 +23,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     private List<Group> list;
     private Group group;
     static int id;
-
+    static Group selected_group;
 
     public GroupAdapter(Context context, List<Group> list) {
         this.context = context;
@@ -55,14 +55,20 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
         holder.groupname.setText("שם קבוצה: " + group.getGroupname());
         holder.numberofplayers.setText("מספר שחקנים בקבוצה: " + group.getPlayersnumber());
 
+        if(group.isIsprivate())
+            holder.isprivate.setText("קבוצה פרטית");
+        else
+            holder.isprivate.setText("קבוצה ציבורית");
+
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int x =Integer.parseInt(holder.textid.getText().toString());
                 Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
                 id=x;
-//                Intent intent  = new Intent(context,CreatePublicGroupActivity.class);
-//                context.startActivity(intent);
+                selected_group=group;
+                Intent intent  = new Intent(context,GroupProfile.class);
+                context.startActivity(intent);
 
             }
         });
@@ -78,24 +84,24 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,groupname ,numberofplayers;//I dont know if I must add the lat and lon
+        public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,groupname ,numberofplayers, isprivate;//I dont know if I must add the lat and lon
         LinearLayout linear1;
 
         public ViewHolder(View itemView ) {
             super(itemView);
 
-            textName = itemView.findViewById(R.id.gr_name2);
-            linear1 = itemView.findViewById(R.id.linear2);
-            textType = itemView.findViewById(R.id.gr_type2);
-            textStreet = itemView.findViewById(R.id.gr_street2);
-            textNeighborh = itemView.findViewById(R.id.gr_gr_neighbor2);
-            textActivity = itemView.findViewById(R.id.gr_activity2);
-            textSportType = itemView.findViewById(R.id.gr_sporttype2);
-            textLighting = itemView.findViewById(R.id.gr_lighting2);
-            textid = itemView.findViewById(R.id.gr_id2);
-            groupname = itemView.findViewById(R.id.sg_grname);
-            numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
-
+                textName = itemView.findViewById(R.id.gr_name2);
+                linear1 = itemView.findViewById(R.id.linear2);
+                textType = itemView.findViewById(R.id.gr_type2);
+                textStreet = itemView.findViewById(R.id.gr_street2);
+                textNeighborh = itemView.findViewById(R.id.gr_gr_neighbor2);
+                textActivity = itemView.findViewById(R.id.gr_activity2);
+                textSportType = itemView.findViewById(R.id.gr_sporttype2);
+                textLighting = itemView.findViewById(R.id.gr_lighting2);
+                textid = itemView.findViewById(R.id.gr_id2);
+                groupname = itemView.findViewById(R.id.sg_grname);
+                numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
+                isprivate=itemView.findViewById(R.id.sg_isprivate);
 
         }
     }

@@ -20,6 +20,13 @@
         android:id="@+id/sg_playersnumber"
         android:textColor="#1418EA"
         android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sg_isprivate"
+        android:textColor="#1418EA"
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/gr_name2"
         android:layout_gravity="center"
