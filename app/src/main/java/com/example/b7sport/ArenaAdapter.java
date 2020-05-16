@@ -48,7 +48,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
         holder.textActivity.setText("פעילות : " +arena.getActivity());
         holder.textLighting.setText("תאורה : " +arena.getLighing());
         holder.textSportType.setText("סוג ספורט : " +arena.getSport_type());
-
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +56,8 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
                 Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_LONG).show();
                 id=x;
                 context.startActivity(intent);
-
             }
         });
-
-
     }
 
     @Override
@@ -71,7 +67,9 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
 
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType;//I dont know if I must add the lat and lon
         LinearLayout linear1;
 
@@ -87,11 +85,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
             textSportType = itemView.findViewById(R.id.gr_sporttype);
             textLighting = itemView.findViewById(R.id.gr_lighting);
             textid=itemView.findViewById(R.id.gr_id);
-
-
         }
     }
-
-
-
 }
