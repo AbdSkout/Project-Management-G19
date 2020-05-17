@@ -41,7 +41,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mName,mEmail,mPhonenumber;
-    Button mLogOutButton,mCreateGroupBtn;
+    Button mLogOutButton,mCreateGroupBtn,mShowGroupsbtn;
     private String userID1;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog pd;
     TextView msg;
 
-    TextView mChange;
+    Button mChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
         mCreateGroupBtn=findViewById(R.id.Creaegroupbtn);
+        mShowGroupsbtn=findViewById(R.id.showGroups);
         //Init Database
         fStore = FirebaseFirestore.getInstance();
 
@@ -85,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
         showdata();
 
 
-                          mChange = findViewById(R.id.chanpassmainv);                                             
-                          mChange.setOnClickListener(new View.OnClickListener() {                                 
-                              @Override                                                                           
-                              public void onClick(View v) {                                                       
-                                  startActivity(new Intent(getApplicationContext(), ChangePassword.class));       
-                              }                                                                                   
-                          });
+          mChange = findViewById(R.id.chanpassmainv);
+          mChange.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  startActivity(new Intent(getApplicationContext(), ChangePassword.class));
+              }
+          });
 
 
             mCreateGroupBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +117,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
             }});
-
+        mShowGroupsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getApplicationContext(),RecyclerViewGroup.class);
+                startActivity(intent);
+            }
+        });
 
 
         Bundle bundle = getIntent().getExtras();

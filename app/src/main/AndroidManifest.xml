@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Card"></activity>
+        <activity android:name=".GroupProfile"></activity>
+        <activity android:name=".RecyclerViewGroup" />
+        <activity android:name=".Card" />
         <activity android:name=".showReport" />
         <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
         <activity android:name=".Login">

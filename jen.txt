@@ -38,17 +38,17 @@ pipeline {
 
     }
 
-    stage('Unit test') {
+ 
+  stage('Unit test') {
 
-      steps {
-        
-        sh './gradlew testDebugUnitTest testDebugUnitTest'
-  
-        junit '**/TEST-*.xml'
+            steps {
 
-      }
+                sh './gradlew testDebugUnitTest' 
+//                junit '*/TEST-*.xml'
+                }
+            }
 
-    }
+   
 
     stage('Build APK') {
 
@@ -60,6 +60,24 @@ pipeline {
 
     }
 
+  }
+  
+   post {
+
+
+    failure {
+
+      // Notify developer team of the failure
+
+      mail to: 'yaserni@ac.sce.ac.il,abdalsk@ac.sce.ac.il,odaiwa@ac.sce.ac.il', subject: 'Oops!', body: "Build ${env.BUILD_NUMBER} failed; ${env.BUILD_URL}"
+    }
+    success {
+
+          // Notify if the upload succeeded
+
+          mail to: 'yaserni@ac.sce.ac.il,abdalsk@ac.sce.ac.il,odaiwa@ac.sce.ac.il', subject: 'New build available!', body: "Build ${env.BUILD_NUMBER} Check it out! Enter the link :  ${env.BUILD_URL}"
+
+        }
   }
 
 }
