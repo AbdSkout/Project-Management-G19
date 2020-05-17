@@ -36,6 +36,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mName,mEmail,mPhonenumber;
+    TextView mComplaint;
     Button mLogOutButton;
     private String userID1;
     FirebaseAuth fAuth;
@@ -67,15 +68,17 @@ public class MainActivity extends AppCompatActivity {
         mLogOutButton = findViewById(R.id.LogOutBtn);
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
-
+        mComplaint = findViewById(R.id.textView10);
         //Init Database
         fStore = FirebaseFirestore.getInstance();
 
+
+
         //Intialazing
-        mRecyclerView= findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        //mRecyclerView= findViewById(R.id.recyclerView);
+        //mRecyclerView.setHasFixedSize(true);
+        //layoutManager = new LinearLayoutManager(this);
+        //mRecyclerView.setLayoutManager(layoutManager);
         //showdata();
 
 
@@ -95,7 +98,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Bundle bundle = getIntent().getExtras();
+        userID1 = bundle.getString("emailadd");
 
+        final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
+        intent1.putExtra("emailadd",userID1);
+
+        mComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent1);
+            }
+        });
 
 
         dialog = new ProgressDialog(this);
@@ -103,13 +117,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.show();
-
-
-
-
-
-
-
                 FirebaseAuth.getInstance().signOut();
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
@@ -117,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
             }});
 
 
-        Bundle bundle = getIntent().getExtras();
-        userID1 = bundle.getString("emailadd");
+
 
         final Intent myIntent = new Intent(MainActivity.this, Profile.class);
         myIntent.putExtra("emailadd", userID1);

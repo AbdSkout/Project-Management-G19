@@ -99,7 +99,6 @@ public class Update_Adress extends AppCompatActivity {
                     return false;
             }
         }
-
         return true;
     }
 }
