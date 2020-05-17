@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +35,9 @@ public class Login extends AppCompatActivity {
     Button mLoginButton;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
+    Logic l = new Logic();
+    final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +67,12 @@ public class Login extends AppCompatActivity {
                 String email = mEmail.getText().toString().trim();
 
                 String password = mPassword.getText().toString().trim();
-                if (EmailisEmpty(email)) return;
-
-                if (PasswordIsEmpty(password)) return;
+                if (EmailisEmpty(email) && PasswordIsEmpty(password)) return;
+               /* if(l.EmailRegex(email)){
+                    mEmail.setError("The Format of the email must be example@example.com");
+                    return;
+                }*/
+                //if (PasswordIsEmpty(password)) return;
 
                 dialog.setMessage("Loging in...");
                 dialog.show();
@@ -75,10 +83,8 @@ public class Login extends AppCompatActivity {
                     mEmail.setError("Email is Required");
                     return;
                 }
-                if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Required");
-                    return;
-                }
+
+
                 if(email.equals("admin")&&password.equals("admin")){
                     Intent intent = new Intent(view.getContext(),adminpage.class);
                     Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
@@ -162,6 +168,15 @@ public class Login extends AppCompatActivity {
     public boolean EmailisEmpty(String email){
         if(TextUtils.isEmpty(email)){
             mEmail.setError("חובה למלות שדה זה");
+            return true;
+        }
+        return false;
+    }
+    public boolean EmailRegexCheck(String email){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if(!matcher.matches()){
+            mEmail.setError("The Format of the email must be example@example.com");
             return true;
         }
         return false;
