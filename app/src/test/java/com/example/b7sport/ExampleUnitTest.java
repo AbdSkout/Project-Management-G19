@@ -15,19 +15,7 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
-/*
-    @Test
 
-    public void blocktest()
-    {
-         blockuser b=new blockuser();
-         boolean result=b.check_database("abdalsk");
-         assertEquals("test",true,result);
-
-
-
-    }
-    */
 
       @Test
     public void test_password()
