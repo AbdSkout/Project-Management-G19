@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.awt.font.TextAttribute;
 import java.io.FileNotFoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class blockuser extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class blockuser extends AppCompatActivity {
     Button but_block;
     Button btn_delete;
     Button btn_unblock;
-
+    String Name1;
     final FirebaseDatabase data = FirebaseDatabase.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class blockuser extends AppCompatActivity {
                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String Name1=Name.getText().toString().trim();
+                                Name1=Name.getText().toString().trim();
                                 String name1="";
                                 String name2;
                                 int flag=0;
@@ -96,7 +98,7 @@ public class blockuser extends AppCompatActivity {
                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           String Name1=Name.getText().toString().trim();
+                            Name1=Name.getText().toString().trim();
                            String name1="";
                            String name2;
                            int flag=0;
@@ -154,7 +156,7 @@ public class blockuser extends AppCompatActivity {
                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           String Name1=Name.getText().toString().trim();
+                            Name1=Name.getText().toString().trim();
                            String name1="";
                            String name2;
                            int flag=0;
@@ -199,50 +201,6 @@ public class blockuser extends AppCompatActivity {
     }
 
 
-
-    public  boolean check_database(final String name)
-  {
-      final int[] flag1 = new int[1];
-      final FirebaseDatabase database = FirebaseDatabase.getInstance();
-      final DatabaseReference ref = database.getReference("b7sport-50daf");
-      ref.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-              //String Name1=Name.getText().toString().trim();
-              String name1="";
-              String name2;
-              int flag=0;
-              for (DataSnapshot d : dataSnapshot.getChildren())
-              {
-                  name2=d.child("Type").getValue().toString();
-
-                  if(name2.equals(name) )
-                  {
-                     flag1[0] =1;
-                  }
-
-              }
-
-
-          }
-
-          @Override
-          public void onCancelled(@NonNull DatabaseError databaseError) {
-
-          };
-
-
-      });
-
-
-      if(flag1[0]==1)
-          return  true;
-      else
-          return  false;
-
-
-  }
 
 
 
