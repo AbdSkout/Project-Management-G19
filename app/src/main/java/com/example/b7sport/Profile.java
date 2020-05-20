@@ -118,6 +118,7 @@ public class Profile extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.home:
                         startActivity(myIntent);
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
 //                    case R.id.games:

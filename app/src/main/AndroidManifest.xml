@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Complaint"></activity>
+        <activity android:name=".RecyclerViewGroup">
+
+        </activity>
+        <activity android:name=".Complaint" />
         <activity android:name=".Update_Adress" />
+        <activity android:name=".GroupProfile" />
         <activity android:name=".AllUsers" />
         <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
         <activity android:name=".Login">
@@ -32,12 +36,12 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

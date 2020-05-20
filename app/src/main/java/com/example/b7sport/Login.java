@@ -53,13 +53,16 @@ public class Login extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         Intent intent1 = new Intent(Login.this,MainActivity.class);
+        Intent intent2 = new Intent(Login.this,MainActivity.class);
+
         String emailas  = mEmail.getText().toString();
         intent1.putExtra("emailadd",emailas);
 
-      //  if(fAuth.getCurrentUser()!=null){
-       //     startActivity(intent1);
-       //     finish();
-       // }
+        if(fAuth.getCurrentUser()!=null){
+            intent2.putExtra("emailadd",fAuth.getCurrentUser().getEmail().toString());
+            startActivity(intent2);
+            finish();
+        }
 
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -89,6 +92,7 @@ public class Login extends AppCompatActivity {
                     Intent intent = new Intent(view.getContext(),adminpage.class);
                     Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    finish();
                 }
                 else{
 
@@ -104,6 +108,8 @@ public class Login extends AppCompatActivity {
 
                             Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                             startActivity(myIntent);
+                            finish();
+
                             //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
                             dialog.dismiss();
@@ -119,6 +125,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 startActivity(new Intent(getApplicationContext(),Register.class));
+                finish();
+
             }
         });
         mPasswordRecovery.setOnClickListener(new View.OnClickListener() {

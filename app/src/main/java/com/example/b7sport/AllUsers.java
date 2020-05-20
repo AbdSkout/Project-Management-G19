@@ -112,10 +112,10 @@ public class AllUsers extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-
                     InfoFromDataBase data1 = data.getValue(InfoFromDataBase.class);
                     usersinfo.add(data1);
                 }
+
                 adapeter = new UsersAdapter(AllUsers.this, usersinfo);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 mRecyclerView.setAdapter(adapeter);

@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,6 +45,8 @@ public class Complaint extends AppCompatActivity {
         mSendmsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
+
                 String messsage = mEntireMsg.getText().toString().trim();
                 if(TextUtils.isEmpty(messsage)){
                     mEntireMsg.setError("הודעה ריקה,נא לכתוב משהו!");
@@ -58,6 +59,17 @@ public class Complaint extends AppCompatActivity {
                 databaseReference.push().setValue(map);
                 Toast.makeText(Complaint.this,"תלונה נשלחה בהצלחה!",Toast.LENGTH_SHORT).show();
                 startActivity(intent1);
+                //finish();
+                }catch(Exception e){
+                    Toast.makeText(Complaint.this,"",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mCancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent1);
+                finish();
             }
         });
 
