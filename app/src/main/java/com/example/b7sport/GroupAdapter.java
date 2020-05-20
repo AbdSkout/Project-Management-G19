@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,20 +16,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder> {
+public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder> implements Filterable {
     public AppCompatActivity z = new AppCompatActivity();
     private Context context;
-    private List<Group> list;
+    private ArrayList<Group> list;
+    private ArrayList<Group> fulllist;
+
     private Group group;
     static int id;
     static Group selected_group;
 
-    public GroupAdapter(Context context, List<Group> list) {
+    public GroupAdapter(Context context, ArrayList<Group> list) {
         this.context = context;
         this.list = list;
+        fulllist=new ArrayList<>(list);
 
 
     }
@@ -83,6 +89,44 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
     }
 
+
+    @Override
+    public Filter getFilter() {
+        return arenaFilter;
+    }
+    private Filter arenaFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Group> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(fulllist);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Group item : fulllist) {
+                    if (item.getGroupname().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+    public void setfullValue(ArrayList<Group> groundList)
+    {
+        fulllist=new ArrayList<>(groundList);
+    }
+
+
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,groupname ,numberofplayers, isprivate;//I dont know if I must add the lat and lon
         LinearLayout linear1;
@@ -90,21 +134,23 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
         public ViewHolder(View itemView ) {
             super(itemView);
 
-                textName = itemView.findViewById(R.id.gr_name2);
-                linear1 = itemView.findViewById(R.id.linear2);
-                textType = itemView.findViewById(R.id.gr_type2);
-                textStreet = itemView.findViewById(R.id.gr_street2);
-                textNeighborh = itemView.findViewById(R.id.gr_gr_neighbor2);
-                textActivity = itemView.findViewById(R.id.gr_activity2);
-                textSportType = itemView.findViewById(R.id.gr_sporttype2);
-                textLighting = itemView.findViewById(R.id.gr_lighting2);
-                textid = itemView.findViewById(R.id.gr_id2);
-                groupname = itemView.findViewById(R.id.sg_grname);
-                numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
-                isprivate=itemView.findViewById(R.id.sg_isprivate);
+            textName = itemView.findViewById(R.id.gr_name2);
+            linear1 = itemView.findViewById(R.id.linear2);
+            textType = itemView.findViewById(R.id.gr_type2);
+            textStreet = itemView.findViewById(R.id.gr_street2);
+            textNeighborh = itemView.findViewById(R.id.gr_gr_neighbor2);
+            textActivity = itemView.findViewById(R.id.gr_activity2);
+            textSportType = itemView.findViewById(R.id.gr_sporttype2);
+            textLighting = itemView.findViewById(R.id.gr_lighting2);
+            textid = itemView.findViewById(R.id.gr_id2);
+            groupname = itemView.findViewById(R.id.sg_grname);
+            numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
+            isprivate=itemView.findViewById(R.id.sg_isprivate);
 
         }
     }
+
+
 
 }
 //package com.example.b7sport;
