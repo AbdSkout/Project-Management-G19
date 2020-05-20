@@ -9,13 +9,8 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class LoginTest {
     Logic l=new Logic();
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-
 
       @Test
     public void test_password()
@@ -24,18 +19,39 @@ public class ExampleUnitTest {
           boolean result=l.PasswordIsEmpty("");
           assertEquals(result,true);
       }
+    @Test
+
+    public void test_password_notempty()
+    {
+
+        boolean result=l.PasswordIsEmpty("as");
+        assertEquals(result,false);
+    }
       @Test
       public  void PasswordLength()
       {
           assertEquals(l.PasswordLength("1234456"),false);
 
       }
+    @Test
+    public  void PasswordLength_lowerthan6()
+    {
+        assertEquals(l.PasswordLength("1234"),true);
+
+    }
+
       @Test
-    public  void EmailRequired(){
+    public void EmailRequired(){
 
           assertEquals(l.EmailRequired("a@m.com"),false);
 
       }
+    @Test
+      public void EmailRequired_empty(){
+
+        assertEquals(l.EmailRequired(""),true);
+
+    }
       @Test
     public void  Emailregx()
       {
