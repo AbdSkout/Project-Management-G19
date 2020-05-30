@@ -120,7 +120,6 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
     {
         if(name.equals("") || name == null)
         {
-            group_name.setError("חובה למלות שדה זה");
             return false;
         }
         else
@@ -139,12 +138,10 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                 return true;
             else
             {
-                group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
                 return false;
             }
         }
         else {
-            group_p_number.setError("חייב למלא השדה הזה ");
             return false;
         }
 
