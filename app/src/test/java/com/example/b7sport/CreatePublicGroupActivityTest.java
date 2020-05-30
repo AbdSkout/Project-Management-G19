@@ -1,6 +1,10 @@
 package com.example.b7sport;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import org.junit.Before;
+>>>>>>> 449b1d3bca7ac48fc53cb5499df19523384bec25
 =======
 import org.junit.Before;
 >>>>>>> 449b1d3bca7ac48fc53cb5499df19523384bec25
@@ -9,6 +13,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 public class CreatePublicGroupActivityTest {
 
@@ -24,6 +29,8 @@ public class CreatePublicGroupActivityTest {
 }
 
 =======
+=======
+>>>>>>> 449b1d3bca7ac48fc53cb5499df19523384bec25
 
 public class CreatePublicGroupActivityTest {
     CreatePublicGroupActivity cr;
@@ -65,6 +72,9 @@ public class CreatePublicGroupActivityTest {
         boolean result = cr.CheckNumber("-1");
         assertThat(result,is(false));
     }
+<<<<<<< HEAD
+>>>>>>> 449b1d3bca7ac48fc53cb5499df19523384bec25
+=======
 >>>>>>> 449b1d3bca7ac48fc53cb5499df19523384bec25
 
 }
