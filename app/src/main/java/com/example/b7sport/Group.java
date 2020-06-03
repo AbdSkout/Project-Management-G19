@@ -16,6 +16,7 @@ public class Group {
     private double arenalon;
     private double arenalat;
     private boolean isprivate;
+    private String nodeKey;
 
     public String getSecretcode() {
         return secretcode;
@@ -52,6 +53,13 @@ public class Group {
 
     public String getGroupname() {
         return groupname;
+    }
+
+    public String getNodeKey() {
+        return nodeKey;
+    }
+    public void setNodeKey(String nodekey) {
+        this.nodeKey = nodekey;
     }
 
     public void setGroupname(String groupname) {
@@ -169,4 +177,6 @@ public class Group {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
+
 }
+

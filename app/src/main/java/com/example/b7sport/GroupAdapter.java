@@ -153,10 +153,3 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
 
 }
-//package com.example.b7sport;
-//
-//public class GroupAdapter {
-//}
-
-
-

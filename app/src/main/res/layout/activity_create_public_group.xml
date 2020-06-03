@@ -153,24 +153,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/radiopublic"
-                android:checked="true"
-                android:textSize="24sp"
-                android:layout_marginBottom="10dp"
-                android:text="ציבורית"/>
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioprivate"
-                android:textSize="24sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp"
-                android:text="פרטית"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radiopublic"
+                    android:checked="true"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="10dp"
+                    android:text="ציבורית"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioprivate"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="פרטית"/>
 
-        </RadioGroup>
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/secrettext"
