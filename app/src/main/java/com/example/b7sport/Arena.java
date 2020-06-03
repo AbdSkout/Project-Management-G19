@@ -1,6 +1,8 @@
 package com.example.b7sport;
 
 
+import java.util.Map;
+
 public class Arena {
 
     private int id;
@@ -10,6 +12,7 @@ public class Arena {
     private Double housenumber;
     private String neighbor;
     private String activity;
+    private Map<String,Object> participants;
 
     public int getId() {
         return id;

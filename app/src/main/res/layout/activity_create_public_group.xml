@@ -135,17 +135,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2sp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
                 android:ems="10"
-                android:hint="מספר שחקנים"
+                android:hint="מספר שחקנים:"
                 android:inputType="number" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="סוג קבוצה"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="24sp" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radiopublic"
+                    android:checked="true"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="10dp"
+                    android:text="ציבורית"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioprivate"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="פרטית"/>
+
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/secrettext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:text="קוד קבוצה"
                 android:textSize="24sp"
                 android:visibility="invisible" />
@@ -158,7 +188,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="0dp"
                 android:ems="10"
-                android:enabled="false"
                 android:hint="מספר סודי"
                 android:inputType="number"
                 android:visibility="invisible" />
@@ -169,10 +198,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:text="ייצר"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/material_on_primary_emphasis_medium"
                 android:textSize="24sp"
-                android:id="@+id/createg1"
-                />
+                android:id="@+id/createg1"/>
         </LinearLayout>
 
     </ScrollView>

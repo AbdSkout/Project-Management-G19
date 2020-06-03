@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.b7sport">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllUsers"></activity>
+        <activity android:name=".RecyclerViewGroup">
+
+        </activity>
+        <activity android:name=".Complaint" />
+        <activity android:name=".Update_Adress" />
+        <activity android:name=".GroupProfile" />
+        <activity android:name=".AllUsers" />
         <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
         <activity android:name=".Login">
             <intent-filter>
@@ -25,22 +24,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".adminpage"></activity>
-        <activity android:name=".blockuser"></activity>
-
-
+        <activity android:name=".Register" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".adminpage" />
+        <activity android:name=".blockuser" />
         <activity android:name=".ChangePassword" />
-
         <activity android:name=".CreatePublicGroupActivity" />
-
-
         <activity android:name=".RecyclerViewArena" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

@@ -2,7 +2,6 @@ package com.example.b7sport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -14,21 +13,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +34,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mName,mEmail,mPhonenumber;
-    Button mLogOutButton;
+    TextView mComplaint;
+    Button mLogOutButton,mCreateGroupBtn,mShowGroupsbtn;
     private String userID1;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference reference,ref;
 
 
     //Recycler View
@@ -51,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     UsersAdapter adapeter;
     ProgressDialog pd;
-
-
+    TextView msg;
+    static String emailID;
     TextView mChange;
 
     @Override
@@ -60,22 +59,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        msg=findViewById(R.id.msg_admin);
         pd = new ProgressDialog(this);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("0");
         mLogOutButton = findViewById(R.id.LogOutBtn);
         fAuth = FirebaseAuth.getInstance();
         mName = findViewById(R.id.textView5);
-
+        mComplaint = findViewById(R.id.textView10);
+        mCreateGroupBtn=findViewById(R.id.Creaegroupbtn);
+        mShowGroupsbtn=findViewById(R.id.showGroups);
         //Init Database
         fStore = FirebaseFirestore.getInstance();
 
+
+
         //Intialazing
-        mRecyclerView= findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        //mRecyclerView= findViewById(R.id.recyclerView);
+        //mRecyclerView.setHasFixedSize(true);
+        //layoutManager = new LinearLayoutManager(this);
+        //mRecyclerView.setLayoutManager(layoutManager);
         //showdata();
 
 
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                               @Override                                                                           
                               public void onClick(View v) {                                                       
                                   startActivity(new Intent(getApplicationContext(), ChangePassword.class));       
-                              }                                                                                   
+                              }
                           });                                                                                     
 
         mChange = findViewById(R.id.chanpassmainv);
@@ -95,7 +98,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mCreateGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(getApplicationContext(),CreatePublicGroupActivity.class);
+                startActivity(new Intent(getApplicationContext(),RecyclerViewArena.class));
+                // startActivity(intent);
+            }
+        });
 
+        Bundle bundle = getIntent().getExtras();
+        userID1 = bundle.getString("emailadd");
+        emailID = userID1;
+        final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
+        intent1.putExtra("emailadd",userID1);
+        final Intent intentJoinGroup = new Intent(MainActivity.this,RecyclerViewGroup.class);
+        intentJoinGroup.putExtra("emailadd",userID1);
+
+        mComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent1);
+            }
+        });
 
 
         dialog = new ProgressDialog(this);
@@ -103,22 +128,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.show();
-
-
-
-
-
-
-
                 FirebaseAuth.getInstance().signOut();
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
             }});
 
+        mShowGroupsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //   Intent intent= new Intent(getApplicationContext(),RecyclerViewGroup.class);
+                startActivity(intentJoinGroup);
+            }
+        });
 
-        Bundle bundle = getIntent().getExtras();
-        userID1 = bundle.getString("emailadd");
 
         final Intent myIntent = new Intent(MainActivity.this, Profile.class);
         myIntent.putExtra("emailadd", userID1);
@@ -146,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        get_msg();
+
     }
 
 
@@ -179,5 +204,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }*/
+  private  void get_msg()
+  {
+      ref=database.getReference("Message");
+      ref.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              msg.setText(dataSnapshot.getValue().toString());
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+          }
+      });
+
+
+  }
 
 }

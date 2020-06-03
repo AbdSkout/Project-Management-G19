@@ -50,14 +50,11 @@ public class blockuser extends AppCompatActivity {
                              for (DataSnapshot d : dataSnapshot.getChildren())
                              {
                                     name2=d.child("email").getValue().toString();
-
                                     if(name2.equals(Name1) )
                                     {
                                         flag=1;
                                         name1=d.getKey().toString();
-
                                     }
-
                              }
                            if(flag==1) {
 
@@ -66,30 +63,15 @@ public class blockuser extends AppCompatActivity {
                                Toast.makeText(blockuser.this, "User Blocked!", Toast.LENGTH_SHORT).show();
                               // Toast.makeText(blockuser.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                Log.d("", "user is here");
-
-
                            }
-
                                else
                                Log.d("","falied");
-
-
                              startActivity(new Intent(getApplicationContext(),adminpage.class));
                          }
-
-
                          @Override
                          public void onCancelled(@NonNull DatabaseError databaseError) {
-
                          }
-
-
                      });
-
-
-
-
-
                }
 
 

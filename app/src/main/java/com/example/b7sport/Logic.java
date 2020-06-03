@@ -33,9 +33,7 @@ public class Logic {
     public boolean EmailRegex(String Email){
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(Email);
-
         if(!matcher.matches()){
-           // mEmail.setError("The Format of the email must be example@example.com");
             return true;
         }
         return false;
