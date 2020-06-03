@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog pd;
     TextView msg;
     static String emailID;
+
     TextView mChange;
 
     @Override
@@ -113,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
         intent1.putExtra("emailadd",userID1);
         final Intent intentJoinGroup = new Intent(MainActivity.this,RecyclerViewGroup.class);
+
+        final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
+        intent1.putExtra("emailadd",userID1);
+        final Intent intentJoinGroup = new Intent(MainActivity.this,GroupProfile.class);
         intentJoinGroup.putExtra("emailadd",userID1);
 
         mComplaint.setOnClickListener(new View.OnClickListener() {

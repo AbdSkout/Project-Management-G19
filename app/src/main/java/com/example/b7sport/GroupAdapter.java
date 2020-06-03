@@ -49,6 +49,8 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         group = list.get(position);
 
         holder.textid.setText(String.valueOf(group.getArenaid()));
@@ -68,8 +70,6 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             holder.isprivate.setText("קבוצה ציבורית");
 
 
-
-
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +79,11 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
                 selected_group=group;
                 Intent intent  = new Intent(context,GroupProfile.class);
                 //intent.putExtra("GroupID",hol)
+
+                Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
+                id=x;
+                selected_group=group;
+                Intent intent  = new Intent(context,GroupProfile.class);
                 context.startActivity(intent);
 
             }
@@ -86,6 +91,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
 
     }
+
 
 
 

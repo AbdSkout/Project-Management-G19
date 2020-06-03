@@ -1,6 +1,7 @@
 package com.example.b7sport;
 
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class GroupProfile extends AppCompatActivity {
     public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,groupname ,numberofplayers,isprivate;//I dont know if I must add the lat and lon
     Button mJoinGroup,mCancelJpinGroup;
@@ -28,6 +30,7 @@ public class GroupProfile extends AppCompatActivity {
     static String key;
     DatabaseReference databaseReference;
     DatabaseReference databaseReference1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class GroupProfile extends AppCompatActivity {
 
         textName =findViewById(R.id.gr_name3);
 //        linear1 = findViewById(R.id.linear3);
+
+        textName =findViewById(R.id.gr_name3);
+
         textType = findViewById(R.id.gr_type3);
         textStreet = findViewById(R.id.gr_street3);
         textNeighborh =findViewById(R.id.gr_gr_neighbor3);
@@ -56,6 +62,9 @@ public class GroupProfile extends AppCompatActivity {
         numberofplayers = findViewById(R.id.sg_playersnumber3);
         isprivate = findViewById(R.id.sg_isprivate3);
 
+        mJoinGroup = findViewById(R.id.JoinpGroup);
+
+
         textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
         textName.setText("שם מגרש : " + GroupAdapter.selected_group.getArenaname());
         textType.setText("סוג מגרש : " +String.valueOf(GroupAdapter.selected_group.getArenatype()));
@@ -66,6 +75,14 @@ public class GroupProfile extends AppCompatActivity {
         textSportType.setText("סוג ספורט : " +GroupAdapter.selected_group.getArenasport_type());
         groupname.setText("שם קבוצה: " + GroupAdapter.selected_group.getGroupname());
         numberofplayers.setText("מספר שחקנים בקבוצה: " + GroupAdapter.selected_group.getPlayersnumber());
+
+
+        Bundle bundle = getIntent().getExtras();
+        userID1 = bundle.getString("emailadd");
+
+        final Intent myIntent = new Intent(GroupProfile.this, MainActivity.class);
+        myIntent.putExtra("emailadd", userID1);
+
 
         if(GroupAdapter.selected_group.isIsprivate())
             isprivate.setText("קבוצה פרטית");
@@ -116,6 +133,19 @@ public class GroupProfile extends AppCompatActivity {
 
 
 
+
+
+        mCancelJpinGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(myIntent);
+            }
+        });
+
+        mJoinGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -141,4 +171,5 @@ public class GroupProfile extends AppCompatActivity {
             }
         });
     }
+
 }

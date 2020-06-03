@@ -111,6 +111,7 @@ public class AllUsers extends AppCompatActivity {
         pd.setTitle("טוען נתונים...");
         pd.show();
         pd.setCancelable(false);
+
         reference = FirebaseDatabase.getInstance().getReference().child("EDMT_FIREBASE");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,13 +124,13 @@ public class AllUsers extends AppCompatActivity {
                 adapeter = new UsersAdapter(AllUsers.this, usersinfo);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 mRecyclerView.setAdapter(adapeter);
-                pd.dismiss();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(AllUsers.this, "Error Loading the Info!", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

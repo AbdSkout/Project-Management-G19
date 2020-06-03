@@ -84,6 +84,8 @@ public class RecyclerViewGroup extends AppCompatActivity {
 
                     arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
 
+
+                    arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
                     name = d.child("arenaname").getValue().toString();
                     neighbor = d.child("arenaneighbor").getValue().toString();
                     type = d.child("arenatype").getValue().toString();
@@ -115,6 +117,8 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     arena.setActivity(activity);
                     group = Group.makeGroup(grname, d.child("groupid").getValue().toString(), playernum, isPrivate, arena);
                     group.setNodeKey(d.getKey().toString());
+
+
                     groupList.add(group);
                 }
 
@@ -155,4 +159,5 @@ public class RecyclerViewGroup extends AppCompatActivity {
     }
 
 
+}
 }
