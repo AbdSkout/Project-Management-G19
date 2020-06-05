@@ -17,6 +17,7 @@ public class Info {
     public void setAddress(String address) {
         Address = address;
     }
+//    String Email,PhoneNumber,Name,Password,UserID,flag;
 
     public String getEmail() {
         return Email;
@@ -70,7 +71,8 @@ public class Info {
 
     public Info() {
     }
-    public Info(String Email,String PhoneNumber,String Name,String Password,String Address,String UserID,String flag) {
+//    public Info(String Email,String PhoneNumber,String Name,String Password,String Address,String UserID,String flag) {
+    public Info(String Email,String PhoneNumber,String Name,String Password,String UserID,String flag) {
         this.Email = Email;
         this.Name = Name;
         this.Password = Password;
@@ -78,6 +80,7 @@ public class Info {
         this.UserID = UserID;
         this.flag=flag;
         this.Address = Address;
+
     }
 
      public boolean  t(){return  true;}

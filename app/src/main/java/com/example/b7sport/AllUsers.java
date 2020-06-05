@@ -124,7 +124,7 @@ public class AllUsers extends AppCompatActivity {
                 adapeter = new UsersAdapter(AllUsers.this, usersinfo);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 mRecyclerView.setAdapter(adapeter);
-
+                pd.dismiss();
             }
 
             @Override

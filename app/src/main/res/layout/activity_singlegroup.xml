@@ -37,6 +37,7 @@
         />
 
 
+
     <TextView
         android:id="@+id/gr_type2"
         android:layout_width="match_parent"

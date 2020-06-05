@@ -2,6 +2,8 @@ package com.example.b7sport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -28,6 +30,28 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mName,mEmail,mPhonenumber;
     TextView mComplaint;
+
     Button mLogOutButton,mCreateGroupBtn,mShowGroupsbtn;
     private String userID1;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
     FirebaseDatabase database;
     DatabaseReference reference,ref;
+    //DatabaseReference reference;
+  //  DatabaseReference ref;
 
 
     //Recycler View
@@ -54,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     static String emailID;
 
     TextView mChange;
+
+//    Button mChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +131,10 @@ public class MainActivity extends AppCompatActivity {
         mCreateGroupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getApplicationContext(),CreatePublicGroupActivity.class);
+              //  Intent intentGroup = new Intent(getApplicationContext(),CreatePublicGroupActivity.class);
+             //   intentGroup.putExtra("emailadd",userID1);
                 startActivity(new Intent(getApplicationContext(),RecyclerViewArena.class));
-                // startActivity(intent);
+             //   startActivity(intentGroup);
             }
         });
 
@@ -113,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
         emailID = userID1;
         final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
         intent1.putExtra("emailadd",userID1);
-        final Intent intentJoinGroup = new Intent(MainActivity.this,RecyclerViewGroup.class);
+        //final Intent intentJoinGroup = new Intent(MainActivity.this,RecyclerViewGroup.class);
 
-        final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
-        intent1.putExtra("emailadd",userID1);
+      //  final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
+      //  intent1.putExtra("emailadd",userID1);
         final Intent intentJoinGroup = new Intent(MainActivity.this,GroupProfile.class);
         intentJoinGroup.putExtra("emailadd",userID1);
 
@@ -127,12 +157,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+          mChange = findViewById(R.id.chanpassmainv);
+          mChange.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  startActivity(new Intent(getApplicationContext(), ChangePassword.class));
+              }
+          });
+
+
+            mCreateGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(getApplicationContext(),CreatePublicGroupActivity.class);
+                startActivity(new Intent(getApplicationContext(),RecyclerViewArena.class));
+               // startActivity(intent);
+            }
+        });
+
+
 
         dialog = new ProgressDialog(this);
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.show();
+
                 FirebaseAuth.getInstance().signOut();
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
@@ -143,6 +193,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
             //   Intent intent= new Intent(getApplicationContext(),RecyclerViewGroup.class);
                 startActivity(intentJoinGroup);
+                finish();
+            }});
+        mShowGroupsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getApplicationContext(),RecyclerViewGroup.class);
+                startActivity(intent);
             }
         });
 
@@ -174,13 +231,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        get_msg();
+        //get_msg();
+       get_msg();
 
     }
 
 
 
   /*  private void showdata() {
+
+
+
+
+
+
+
+    private void showdata() {
+>>>>>>> master
         pd.setTitle("טוען נתונים...");
         pd.show();
         pd.setCancelable(false);
@@ -226,5 +293,24 @@ public class MainActivity extends AppCompatActivity {
 
 
   }
+/*
+    }
+    private  void get_msg()
+    {
+         ref=database.getReference("Message");
+         ref.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 msg.setText(dataSnapshot.getValue().toString());
+             }
 
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
+
+
+    }
+*/
 }

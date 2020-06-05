@@ -30,7 +30,6 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     static int id;
     static Group selected_group;
 
-    static String Node_Key;
     public GroupAdapter(Context context, ArrayList<Group> list) {
         this.context = context;
         this.list = list;
@@ -48,8 +47,6 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         group = list.get(position);
 
@@ -69,17 +66,10 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
         else
             holder.isprivate.setText("קבוצה ציבורית");
 
-
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int x =Integer.parseInt(holder.textid.getText().toString());
-                Toast.makeText(context, "Item Number "+x +" selected.", Toast.LENGTH_SHORT).show();
-                id=x;
-                selected_group=group;
-                Intent intent  = new Intent(context,GroupProfile.class);
-                //intent.putExtra("GroupID",hol)
-
                 Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
                 id=x;
                 selected_group=group;
@@ -91,9 +81,6 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
 
     }
-
-
-
 
 
     @Override
@@ -166,10 +153,3 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
 
 }
-//package com.example.b7sport;
-//
-//public class GroupAdapter {
-//}
-
-
-

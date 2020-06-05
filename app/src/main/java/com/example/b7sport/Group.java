@@ -61,6 +61,7 @@ public class Group {
     public void setNodeKey(String nodekey) {
         this.nodeKey = nodekey;
     }
+
     public void setGroupname(String groupname) {
         this.groupname = groupname;
     }
@@ -176,4 +177,6 @@ public class Group {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
+
 }
+

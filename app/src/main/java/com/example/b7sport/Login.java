@@ -87,12 +87,16 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-
+                if (TextUtils.isEmpty(password)) {
+                    mPassword.setError("Password is Required");
+                    return;
+                }
                 if(email.equals("admin")&&password.equals("admin")){
                     Intent intent = new Intent(view.getContext(),adminpage.class);
                     Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                     finish();
+
                 }
                 else{
 

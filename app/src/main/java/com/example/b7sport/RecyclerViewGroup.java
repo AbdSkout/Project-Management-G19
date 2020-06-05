@@ -85,6 +85,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
 
 
+
                     arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
                     name = d.child("arenaname").getValue().toString();
                     neighbor = d.child("arenaneighbor").getValue().toString();
@@ -160,4 +161,4 @@ public class RecyclerViewGroup extends AppCompatActivity {
 
 
 }
-}
+//}

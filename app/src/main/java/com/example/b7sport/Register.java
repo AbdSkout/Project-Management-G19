@@ -74,6 +74,7 @@ public class Register extends AppCompatActivity {
                 final String Name = mFullName.getText().toString().trim();
                 final String PhoneNumber = mPhonenumber.getText().toString().trim();
                 final String Address = mAddress.getText().toString().trim();
+
                 myIntent.putExtra("email",email);
                 if(l.EmailRequired(email)) return;
                 if(l.PasswordIsEmpty(password)) return;
@@ -85,22 +86,28 @@ public class Register extends AppCompatActivity {
                 if(l.CheckName(Name)) return;
 
                 //Info info = new Info(email,PhoneNumber,Name,password,Address,"0","0");
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("email",email);
-                map.put("PhoneNumber",PhoneNumber);
-                map.put("FullName",Name);
-                map.put("password",password);
-                map.put("address",Address);
-                map.put("UserID",0);
-                map.put("flag",0);
 
-                databaseReference.push().setValue(map);
+                if(l.EmailRegex(email)) return;
+                if(l.CheckName(Name)) return;
+
 
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+//                            Info info = new Info(email,PhoneNumber,Name,password,"0","0");
+//                            databaseReference.push().setValue(info);
+                            Map<String,Object> map = new HashMap<String,Object>();
+                            map.put("email",email);
+                            map.put("PhoneNumber",PhoneNumber);
+                            map.put("FullName",Name);
+                            map.put("password",password);
+                            map.put("address",Address);
+                            map.put("UserID",0);
+                            map.put("flag",0);
+
+                            databaseReference.push().setValue(map);
                             Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
                             UserID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentrefernce = fStore.collection("users").document(UserID);

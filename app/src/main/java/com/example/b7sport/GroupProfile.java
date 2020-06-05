@@ -32,8 +32,11 @@ public class GroupProfile extends AppCompatActivity {
     DatabaseReference databaseReference1;
 
 
+    Button showpart,showmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_profile);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -41,7 +44,6 @@ public class GroupProfile extends AppCompatActivity {
 /*
         Bundle bundle = getIntent().getExtras();
         userID1 = bundle.getString("emailadd");
-
         final Intent myIntent = new Intent(GroupProfile.this, MainActivity.class);
         myIntent.putExtra("emailadd", userID1);
 */
@@ -63,7 +65,8 @@ public class GroupProfile extends AppCompatActivity {
         isprivate = findViewById(R.id.sg_isprivate3);
 
         mJoinGroup = findViewById(R.id.JoinpGroup);
-
+        showpart =findViewById(R.id.showParticipants);
+        showmap =findViewById(R.id.showmap);
 
         textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
         textName.setText("שם מגרש : " + GroupAdapter.selected_group.getArenaname());
@@ -76,12 +79,12 @@ public class GroupProfile extends AppCompatActivity {
         groupname.setText("שם קבוצה: " + GroupAdapter.selected_group.getGroupname());
         numberofplayers.setText("מספר שחקנים בקבוצה: " + GroupAdapter.selected_group.getPlayersnumber());
 
-
+/*
         Bundle bundle = getIntent().getExtras();
         userID1 = bundle.getString("emailadd");
-
-        final Intent myIntent = new Intent(GroupProfile.this, MainActivity.class);
-        myIntent.putExtra("emailadd", userID1);
+*/
+        final Intent myIntent = new Intent(GroupProfile.this, RecyclerViewGroup.class);
+        myIntent.putExtra("emailadd", MainActivity.emailID);
 
 
         if(GroupAdapter.selected_group.isIsprivate())
@@ -100,22 +103,23 @@ public class GroupProfile extends AppCompatActivity {
         mCancelJpinGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(myIntent);
+                 startActivity(myIntent);
+                 finish();
             }
         });
         mJoinGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String groupid =String.valueOf(GroupAdapter.selected_group.getArenaid());
-               final  Map<String,Object> map = new HashMap<String,Object>();
-                map.put("UserEmail",MainActivity.emailID);
+                String groupid = String.valueOf(GroupAdapter.selected_group.getArenaid());
+                final Map<String, Object> map = new HashMap<String, Object>();
+                map.put("UserEmail", MainActivity.emailID);
 
                 databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data1:dataSnapshot.getChildren()){
-                            if(MainActivity.emailID.equals( data1.child("UserEmail").getValue().toString())){
+                        for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                            if (MainActivity.emailID.equals(data1.child("UserEmail").getValue().toString())) {
                                 Toast.makeText(GroupProfile.this, "Already in Group!", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -132,44 +136,85 @@ public class GroupProfile extends AppCompatActivity {
                 });
 
 
+                mCancelJpinGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      //  startActivity(myIntent);
+                    }
+                });
+
+                mJoinGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String groupid =String.valueOf(GroupAdapter.selected_group.getArenaid());
+                        final  Map<String,Object> map = new HashMap<String,Object>();
+                        map.put("UserEmail",MainActivity.emailID);
+
+                        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot data1:dataSnapshot.getChildren()){
+                                    if(MainActivity.emailID.equals( data1.child("UserEmail").getValue().toString())){
+                                        Toast.makeText(GroupProfile.this, "Already in Group!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                databaseReference.child("Participants").push().setValue(map);
+                                Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
 
 
-        mCancelJpinGroup.setOnClickListener(new View.OnClickListener() {
+                    }
+                });
+
+
+
+            }
+        });
+
+
+        showpart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(myIntent);
+                     startActivity(new Intent(getApplicationContext(), ShowParticipants.class));
             }
         });
 
-        mJoinGroup.setOnClickListener(new View.OnClickListener() {
+
+        showmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-
-    }
-
-    public void getCurrentNodeKey(){
-        final String mGroupId = databaseReference.push().getKey();
-        //databaseReference.child(mGroupId).setValue(new Group());
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String new_adsress = MainActivity.emailID;
-                //key = dataSnapshot.get
-                Toast.makeText(GroupProfile.this, mGroupId, Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                startActivity(new Intent(getApplicationContext(), ArenaMapsActivity.class));
             }
         });
     }
+            public void getCurrentNodeKey(){
+                final String mGroupId = databaseReference.push().getKey();
+                //databaseReference.child(mGroupId).setValue(new Group());
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-}
+                        String new_adsress = MainActivity.emailID;
+                        //key = dataSnapshot.get
+                        Toast.makeText(GroupProfile.this, mGroupId, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+        }

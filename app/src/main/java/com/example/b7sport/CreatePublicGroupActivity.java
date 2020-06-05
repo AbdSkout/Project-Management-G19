@@ -1,19 +1,16 @@
 package com.example.b7sport;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -71,6 +67,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
        // UserRef = database.getReference("Groups");
+
         //put the values ...
         privateG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -100,6 +97,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         textid.setVisibility(View.INVISIBLE);
 
 
+
         //firebaseDatabase = FirebaseDatabase.getInstance().getReference("Groups");
 
         selctgrbtn.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +118,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                     FirebaseDatabase fbase = FirebaseDatabase.getInstance();
                     UserRef = FirebaseDatabase.getInstance().getReference("Groups");
                    // reference.addValueEventListener(new ValueEventListener() {
-                    ChechValidName(name);
+              //      ChechValidName(name);
              //       show(name);
                     /*
                     UserRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,12 +137,13 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                         }
                     });
 */
-
+                    CheckGroupName(name);
                     if(result){
                         firebaseDatabase = FirebaseDatabase.getInstance().getReference("Groups");
                         firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
                     Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("emailadd",MainActivity.emailID);
                     startActivity(intent);
                     }else{
                         Toast.makeText(CreatePublicGroupActivity.this, "Group with same name!", Toast.LENGTH_LONG).show();
@@ -156,12 +155,17 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         });
 
     }/*
+=======
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+>>>>>>> master
         selctgrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name =group_name.getText().toString();
                 String n = group_p_number.getText().toString();
                 if(CheckGrName(name)==true && CheckNumber(n)==true) {
+<<<<<<< HEAD
 
                     final FirebaseDatabase data = FirebaseDatabase.getInstance();
                     //final DatabaseReference ref1 = data.getReference("Groups");
@@ -185,6 +189,9 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
                     //ref.setValue(Integer.toString(id+1));
                   //  getId();
+=======
+                    getId();
+>>>>>>> master
                     int number = Integer.parseInt( group_p_number.getText().toString());
                     boolean isPrivate=!(publicG.isChecked());
                     Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
@@ -203,12 +210,15 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
     }*/
+
     public boolean CheckGrName(String name)
     {
         if(name.equals("") || name == null)
         {
             //   group_name.setError("חובה למלות שדה זה");
+         //   group_name.setError("חובה למלות שדה זה");
             return false;
         }
         else
@@ -228,6 +238,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
             else
             {
                 //     group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+           //     group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
                 return false;
             }
         }
@@ -259,6 +270,25 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                 databaseReference.child("Participants").push().setValue(map);
                 Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
 */
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void CheckGroupName(final String newname){
+        DatabaseReference ref;
+        ref=database.getReference("Groups");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    if(newname.equals(data.child("groupname").getValue().toString())){
+                        result = false;
+                    }
+                }
             }
 
             @Override
@@ -317,6 +347,8 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                     }
                 }
                 //startActivity(new Intent(getApplicationContext(),Profile.class));
+
+                    id = Integer.parseInt(dataSnapshot.getValue().toString());
             }
 
             @Override
@@ -326,4 +358,14 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         });
     }
 
-}
+
+
+    //    });
+    //    ref.setValue(Integer.toString(id+1));
+
+    }
+
+
+
+
+

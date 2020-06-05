@@ -35,7 +35,10 @@ pipeline {
         sh './gradlew assembleDebug'
       }
     }
-  }
+
+
+}
+
 post {
         always {
             echo 'Sending email.'

@@ -124,4 +124,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
             textid=itemView.findViewById(R.id.gr_id);
         }
     }
+
 }
+
