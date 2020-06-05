@@ -17,6 +17,7 @@ public class Group {
     private double arenalat;
     private boolean isprivate;
     private String nodeKey;
+    public String secretcode;
 
     public String getSecretcode() {
         return secretcode;
@@ -26,7 +27,6 @@ public class Group {
         this.secretcode = secretcode;
     }
 
-    public String secretcode;
 
     public Group(String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
         this.groupname = groupname;

@@ -103,7 +103,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     grname = d.child("groupname").getValue().toString();
                     grid = Integer.parseInt(d.child("groupid").getValue().toString());
                     playernum = Integer.parseInt(d.child("playersnumber").getValue().toString());
-                    isPrivate = Boolean.getBoolean(d.child("isprivate").getValue().toString());
+                    isPrivate = Boolean.parseBoolean(d.child("isprivate").getValue().toString());
                     //                arena.setId(id);
 
                     arena.setName(name);
@@ -116,6 +116,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     arena.setLat(lat);
                     arena.setLon(lon);
                     arena.setActivity(activity);
+
                     group = Group.makeGroup(grname, d.child("groupid").getValue().toString(), playernum, isPrivate, arena);
                     group.setNodeKey(d.getKey().toString());
 

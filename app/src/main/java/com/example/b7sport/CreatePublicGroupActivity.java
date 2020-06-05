@@ -111,8 +111,10 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                     Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
 
                     //                    synchronized (firebaseDatabase) {}
-                    if(isPrivate)
+                    if(isPrivate){
                         g.setSecretcode(secretcode.getText().toString());
+                      //  g.setIsprivate(true);
+                    }
                     else g.setSecretcode("");
 
                     FirebaseDatabase fbase = FirebaseDatabase.getInstance();
@@ -137,7 +139,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                         }
                     });
 */
-                    CheckGroupName(name);
+      //              CheckGroupName(name);
                     if(result){
                         firebaseDatabase = FirebaseDatabase.getInstance().getReference("Groups");
                         firebaseDatabase.push().setValue(g);
