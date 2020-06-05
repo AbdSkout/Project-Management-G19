@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.b7sport">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,23 +21,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ShowParticipants"></activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
-        <activity android:name=".ChangePassword" />
-
-        <activity android:name=".CreatePublicGroupActivity" />
-
-        <activity android:name=".Login" />
-
-        <activity android:name=".Register" />
-
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RecyclerViewArena">
+        <activity
+            android:name=".ArenaMapsActivity"
+            android:label="@string/title_activity_arena_maps" />
+        <activity android:name=".RecyclerViewGroup" />
+        <activity android:name=".Complaint" />
+        <activity android:name=".Update_Adress" />
+        <activity android:name=".GroupProfile" />
+        <activity android:name=".AllUsers" />
+        <activity android:name=".Profile" />
+        <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Register" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".adminpage" />
+        <activity android:name=".blockuser" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".CreatePublicGroupActivity" />
+        <activity android:name=".RecyclerViewArena" />
+
+        <activity android:name=".Card" />
+        <activity android:name=".showReport" />
+        <activity android:name=".Mesg" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -16,6 +16,17 @@ public class Group {
     private double arenalon;
     private double arenalat;
     private boolean isprivate;
+    private String nodeKey;
+
+    public String getSecretcode() {
+        return secretcode;
+    }
+
+    public void setSecretcode(String secretcode) {
+        this.secretcode = secretcode;
+    }
+
+    public String secretcode;
 
     public Group(String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
         this.groupname = groupname;
@@ -34,7 +45,6 @@ public class Group {
         this.arenalat = arenalat;
         this.isprivate = isprivate;
     }
-
     static Group makeGroup(String groupname, String groupid, int playersnumber , boolean isprivate , Arena arena)
     {
         return new Group(groupname,groupid,playersnumber,arena.getId(),arena.getName(),arena.getType(),arena.getStreet(),arena.getHousenumber(),arena.getNeighbor(),arena.getActivity(),arena.getLighing(),arena.getSport_type(),arena.getLon(),arena.getLat(),isprivate);
@@ -42,6 +52,13 @@ public class Group {
 
     public String getGroupname() {
         return groupname;
+    }
+
+    public String getNodeKey() {
+        return nodeKey;
+    }
+    public void setNodeKey(String nodekey) {
+        this.nodeKey = nodekey;
     }
 
     public void setGroupname(String groupname) {
@@ -159,4 +176,6 @@ public class Group {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
+
 }
+

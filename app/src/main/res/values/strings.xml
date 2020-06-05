@@ -1,9 +1,3 @@
 <resources>
-    <string name="app_name">B7Sport</string>
-    <string-array name="GroupType" >
-        <item>Public</item>
-        <item>Private</item>
-    </string-array>
-
-
+    <string name="title_activity_arena_maps">Map</string>
 </resources>

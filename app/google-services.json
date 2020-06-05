@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "95657850764-r0nvs0ke661j2fi1dkce7t4ph30ol3o8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.b7sport",
+            "certificate_hash": "44ac1bf6a0a8bb7c2ea1c4db9b529b61f7fbc67d"
+          }
+        },
+        {
           "client_id": "95657850764-shg6hg4f2661969col0smt9b8lfcpjhk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
