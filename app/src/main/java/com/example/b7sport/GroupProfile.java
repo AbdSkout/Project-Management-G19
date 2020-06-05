@@ -32,7 +32,7 @@ public class GroupProfile extends AppCompatActivity {
     DatabaseReference databaseReference1;
 
 
-    Button showmap;
+    Button showpart,showmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -65,6 +65,7 @@ public class GroupProfile extends AppCompatActivity {
         isprivate = findViewById(R.id.sg_isprivate3);
 
         mJoinGroup = findViewById(R.id.JoinpGroup);
+        showpart =findViewById(R.id.showParticipants);
         showmap =findViewById(R.id.showmap);
 
         textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
@@ -181,7 +182,12 @@ public class GroupProfile extends AppCompatActivity {
         });
 
 
-
+        showpart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                     startActivity(new Intent(getApplicationContext(), ShowParticipants.class));
+            }
+        });
 
 
         showmap.setOnClickListener(new View.OnClickListener() {
