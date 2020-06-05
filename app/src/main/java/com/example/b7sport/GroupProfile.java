@@ -32,6 +32,7 @@ public class GroupProfile extends AppCompatActivity {
     DatabaseReference databaseReference1;
 
 
+    Button showmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,7 +65,7 @@ public class GroupProfile extends AppCompatActivity {
         isprivate = findViewById(R.id.sg_isprivate3);
 
         mJoinGroup = findViewById(R.id.JoinpGroup);
-
+        showmap =findViewById(R.id.showmap);
 
         textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
         textName.setText("שם מגרש : " + GroupAdapter.selected_group.getArenaname());
@@ -176,6 +177,17 @@ public class GroupProfile extends AppCompatActivity {
 
 
 
+            }
+        });
+
+
+
+
+
+        showmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ArenaMapsActivity.class));
             }
         });
     }
