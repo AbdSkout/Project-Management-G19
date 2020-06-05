@@ -47,14 +47,18 @@ public class CreatePublicGroupActivity extends AppCompatActivity implements Time
     RadioButton publicG;
     Arena arena;
     int id;
-    final FirebaseDatabase data = FirebaseDatabase.getInstance();
+     FirebaseDatabase data;
 
     ArrayList<helper> helpers;
+    public CreatePublicGroupActivity()
+    {
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_public_group);
-
+        data = FirebaseDatabase.getInstance();
 
         textName = findViewById(R.id.gr_name1);
         textType = findViewById(R.id.gr_type1);
