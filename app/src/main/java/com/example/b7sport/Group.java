@@ -17,6 +17,23 @@ public class Group {
     private double arenalat;
     private boolean isprivate;
     private String nodeKey;
+    private String starthour,endhour;
+
+    public String getEndhour() {
+        return endhour;
+    }
+
+    public void setEndhour(String endhour) {
+        this.endhour = endhour;
+    }
+
+    public String getStarthour() {
+        return starthour;
+    }
+
+    public void setStarthour(String starthour) {
+        this.starthour = starthour;
+    }
 
     public String getSecretcode() {
         return secretcode;
@@ -55,13 +72,6 @@ public class Group {
         return groupname;
     }
 
-    public String getNodeKey() {
-        return nodeKey;
-    }
-    public void setNodeKey(String nodekey) {
-        this.nodeKey = nodekey;
-    }
-
     public void setGroupname(String groupname) {
         this.groupname = groupname;
     }
@@ -96,6 +106,14 @@ public class Group {
 
     public void setArenaname(String arenaname) {
         this.arenaname = arenaname;
+    }
+
+    public String getNodeKey() {
+        return nodeKey;
+    }
+
+    public void setNodeKey(String nodeKey) {
+        this.nodeKey = nodeKey;
     }
 
     public String getArenatype() {
@@ -177,6 +195,4 @@ public class Group {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
-
 }
-

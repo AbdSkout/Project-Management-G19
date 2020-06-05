@@ -1,47 +1,55 @@
 package com.example.b7sport;
 
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+import android.app.TimePickerDialog;
+import android.app.DialogFragment;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
-public class CreatePublicGroupActivity extends AppCompatActivity {
+public class CreatePublicGroupActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
     DatabaseReference firebaseDatabase;
 
     public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,secretcode;//I dont know if I must add the lat and lon
-    Button selctgrbtn;
+    Button selctgrbtn,starthour,endhour;
     TextView secretTextView;
     EditText group_p_number,group_name;
-
+    TextView textView ;
     RadioButton privateG;
     RadioButton publicG;
     Arena arena;
     int id;
-    static boolean result = true;
-    private FirebaseDatabase database;
+    final FirebaseDatabase data = FirebaseDatabase.getInstance();
 
-    private Query UserRef;
-
-
+    ArrayList<helper> helpers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +73,29 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         secretTextView= findViewById(R.id.secrettext);
 
 
-        database = FirebaseDatabase.getInstance();
-       // UserRef = database.getReference("Groups");
+        starthour = findViewById(R.id.starthour);
+        endhour = findViewById(R.id.endhour);
+        Date d = new Date();
+        starthour.setText( "00:00");
+        endhour.setText( "00:00");
+        starthour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView=starthour;
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getFragmentManager(), "time picker");
+            }
+        });
 
+        endhour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView=endhour;
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getFragmentManager(), "time picker");
+            }
+        });
+    getDataFromFireBaseidstarth();
         //put the values ...
         privateG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -97,101 +125,15 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         textid.setVisibility(View.INVISIBLE);
 
 
-
-        //firebaseDatabase = FirebaseDatabase.getInstance().getReference("Groups");
-
-        selctgrbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               final String name =group_name.getText().toString();
-                String n = group_p_number.getText().toString();
-                if(CheckGrName(name)==true && CheckNumber(n)==true) {
-                    int number = Integer.parseInt( group_p_number.getText().toString());
-                    boolean isPrivate=!(publicG.isChecked());
-                    Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
-
-                    //                    synchronized (firebaseDatabase) {}
-                    if(isPrivate)
-                        g.setSecretcode(secretcode.getText().toString());
-                    else g.setSecretcode("");
-
-                    FirebaseDatabase fbase = FirebaseDatabase.getInstance();
-                    UserRef = FirebaseDatabase.getInstance().getReference("Groups");
-                   // reference.addValueEventListener(new ValueEventListener() {
-              //      ChechValidName(name);
-             //       show(name);
-                    /*
-                    UserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot data : dataSnapshot.getChildren()){
-                                if(data.child("groupname").getValue().toString().equals(name)){
-                                    result =  false;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-*/
-                    CheckGroupName(name);
-                    if(result){
-                        firebaseDatabase = FirebaseDatabase.getInstance().getReference("Groups");
-                        firebaseDatabase.push().setValue(g);
-                    Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
-                    Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("emailadd",MainActivity.emailID);
-                    startActivity(intent);
-                    }else{
-                        Toast.makeText(CreatePublicGroupActivity.this, "Group with same name!", Toast.LENGTH_LONG).show();
-
-                    }
-                }
-//                else startActivity();
-            }
-        });
-
-    }/*
-=======
         firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
 
->>>>>>> master
         selctgrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name =group_name.getText().toString();
                 String n = group_p_number.getText().toString();
                 if(CheckGrName(name)==true && CheckNumber(n)==true) {
-<<<<<<< HEAD
-
-                    final FirebaseDatabase data = FirebaseDatabase.getInstance();
-                    //final DatabaseReference ref1 = data.getReference("Groups");
-                    final DatabaseReference ref = data.getReference("Groups");
-                    ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                                if (group_name.getText().toString().equals(data1.child("groupname").getValue().toString())) {
-                                    Toast.makeText(CreatePublicGroupActivity.this, "There is group with the same name!", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-
-                    });
-
-                    //ref.setValue(Integer.toString(id+1));
-                  //  getId();
-=======
                     getId();
->>>>>>> master
                     int number = Integer.parseInt( group_p_number.getText().toString());
                     boolean isPrivate=!(publicG.isChecked());
                     Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
@@ -200,25 +142,119 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                     if(isPrivate)
                         g.setSecretcode(secretcode.getText().toString());
                     else g.setSecretcode("");
+                    g.setStarthour(starthour.getText().toString());
+                    g.setEndhour(endhour.getText().toString());
+                    if(!checkhour(g.getStarthour(),g.getEndhour()))
+                    {
+                        selctgrbtn.setError("או שהמגרש שמור בשעות אלה או שיש שגיאה בנתונים שהכנסת!!");
+                        return;
+                    }
+
+
 
                     firebaseDatabase.push().setValue(g);
                     Toast.makeText(CreatePublicGroupActivity.this, "Data inserted successfully", Toast.LENGTH_LONG).show();
-                    Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+
+                    Intent intent =new Intent(getApplicationContext(),RecyclerViewGroup.class);
                     startActivity(intent);
                 }
 //                else startActivity();
             }
         });
 
-<<<<<<< HEAD
-    }*/
+    }
+    private void getDataFromFireBaseidstarth() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+
+        final DatabaseReference ref = data.getReference("Groups");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                int arenaid;
+                String starth, endh;
+                helpers = new ArrayList<>();
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    if(d.getKey().equals("id")) break;
+
+                    arenaid = Integer.parseInt(d.child("arenaid").getValue().toString());
+                    starth = d.child("starthour").getValue().toString();
+                    endh = d.child("endhour").getValue().toString();
+                    if(arenaid==arena.getId())
+                    {
+                        helpers.add(new helper(starth,endh,arenaid));
+                    }
+                }
+
+                int []a=new int[2];
+        //        parsehour("12:30",a);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+    }
+
+public boolean checkhour(String starth,String endh)
+{
+    int []sth=new int[2];//start hour
+    int []enh=new int[2];//end hour
+    parsehour(starth,sth);
+    parsehour(endh,enh);
+//    if(sth[0]>enh[0] ||(sth[0]==enh[0] && sth[1]>=enh[1]))
+    int otherstartm,startm=calcminutes(sth);
+    int otherendm,endm =calcminutes(enh);
+    if(startm >= endm)
+    {
+        Toast.makeText(CreatePublicGroupActivity.this, "שעת התחלה חייבת להיות לפני שעת סיום", Toast.LENGTH_LONG).show();
+        return false;
+    }
+    int []sth1=new int[2];//start hour
+    int []enh1=new int[2];//end hour
+
+//if(helpers!=null)
+    helper h ;
+    for (int i=0; i< helpers.size();i++)
+    {
+        h=helpers.get(i);
+        parsehour(h.starthour,sth1);
+        parsehour(h.endhour,enh1);
+
+        otherstartm = calcminutes(sth1);
+        otherendm = calcminutes(enh1);
+        if(((startm>otherstartm && startm< otherendm ) || (endm>otherstartm && endm < otherendm)))
+        {
+            //error try another time this arena already reserved
+            Toast.makeText(CreatePublicGroupActivity.this, "בזמן זה שבחרת קיימת קבוצה אחרת תנשה זמן אחר", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+    return true;
+}
+
+
+public int calcminutes(int[] a)
+{
+    return a[0]*60+a[1];
+}
+public int[] parsehour(String sh,int hour[])
+{
+
+    String []s =sh.split(":");
+    hour[0]=Integer.parseInt(s[0]);
+    hour[1]=Integer.parseInt(s[1]);
+
+    return hour;
+}
 
     public boolean CheckGrName(String name)
     {
         if(name.equals("") || name == null)
         {
-            //   group_name.setError("חובה למלות שדה זה");
-         //   group_name.setError("חובה למלות שדה זה");
+            group_name.setError("חובה למלות שדה זה");
             return false;
         }
         else
@@ -237,66 +273,17 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
                 return true;
             else
             {
-                //     group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
-           //     group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+                group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
                 return false;
             }
         }
         else {
-            //group_p_number.setError("חייב למלא השדה הזה ");
+            group_p_number.setError("חייב למלא השדה הזה ");
             return false;
         }
 
     }
 
-    public void ChechValidName(final String groupname){
-        FirebaseDatabase fbase = FirebaseDatabase.getInstance();
-        DatabaseReference reference = fbase.getReference().child("Groups");
-
-
-        
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data1:dataSnapshot.getChildren()){
-                    ArrayList<String> cityList = new ArrayList<>();
-                    cityList.add(data1.getKey());
-                    if(groupname.equals( data1.child("groupname").getValue().toString())){
-                        result = false;
-                        break;
-                    }
-                }
-                /*
-                databaseReference.child("Participants").push().setValue(map);
-                Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
-*/
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-    public void CheckGroupName(final String newname){
-        DatabaseReference ref;
-        ref=database.getReference("Groups");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    if(newname.equals(data.child("groupname").getValue().toString())){
-                        result = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
     public void getId()
     {
         final FirebaseDatabase data = FirebaseDatabase.getInstance();
@@ -305,14 +292,12 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                    if (MainActivity.emailID.equals(data1.child("groupname").getValue().toString())) {
-                           Toast.makeText(CreatePublicGroupActivity.this, "Already in Group!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
+
                     id = Integer.parseInt(dataSnapshot.getValue().toString());
-                }
+
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -323,49 +308,29 @@ public class CreatePublicGroupActivity extends AppCompatActivity {
 
     }
 
-    public void show(final String email) {
-        UserRef = FirebaseDatabase.getInstance().getReference().child("Groups");
-        UserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String new_adsress = textName.getText().toString().trim();
-                String name1="";
-                String name2;
-                for (DataSnapshot d : dataSnapshot.getChildren())
-                {
-                    name2=d.child("groupname").getValue().toString();
-                    if(email.equals(name2))
-                    {
-                        result = false;
-                        Toast.makeText(CreatePublicGroupActivity.this, "Already in Group!", Toast.LENGTH_SHORT).show();
-                        /*
-                        name1=d.getKey().toString();
-                        ref1.child(name1).child("address").setValue(new_adsress);
-                        Toast.makeText(Update_Adress.this, "Address Updated!", Toast.LENGTH_SHORT).show();
-                        */
-                        break;
-                    }
-                }
-                //startActivity(new Intent(getApplicationContext(),Profile.class));
-
-                    id = Integer.parseInt(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String h="";
+        String m="";
+        if(hourOfDay<10)
+            h="0";
+        h+=Integer.toString( hourOfDay);
+        if(minute<10)
+            m="0";
+        m+=Integer.toString( minute);
+        textView.setText(h + ":" + m);
     }
+}
 
 
+    class helper
+    {
+       public String starthour, endhour;
+       public int arenaid;
 
-    //    });
-    //    ref.setValue(Integer.toString(id+1));
-
+        public helper(String starthour, String endhour, int arenaid) {
+            this.starthour = starthour;
+            this.endhour = endhour;
+            this.arenaid = arenaid;
+        }
     }
-
-
-
-
-
