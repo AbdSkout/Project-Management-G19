@@ -147,6 +147,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity implements Time
                     if(!checkhour(g.getStarthour(),g.getEndhour()))
                     {
                         selctgrbtn.setError("או שהמגרש שמור בשעות אלה או שיש שגיאה בנתונים שהכנסת!!");
+                        errorwork();
                         return;
                     }
 
@@ -210,6 +211,8 @@ public boolean checkhour(String starth,String endh)
     if(startm >= endm)
     {
         Toast.makeText(CreatePublicGroupActivity.this, "שעת התחלה חייבת להיות לפני שעת סיום", Toast.LENGTH_LONG).show();
+        flag=4;
+        //starthour.setError("שעת התחלה חייבת להיות לפני שעת סיום");
         return false;
     }
     int []sth1=new int[2];//start hour
@@ -228,7 +231,11 @@ public boolean checkhour(String starth,String endh)
         if(((startm>otherstartm && startm< otherendm ) || (endm>otherstartm && endm < otherendm)))
         {
             //error try another time this arena already reserved
-            Toast.makeText(CreatePublicGroupActivity.this, "בזמן זה שבחרת קיימת קבוצה אחרת תנשה זמן אחר", Toast.LENGTH_LONG).show();
+           Toast.makeText(CreatePublicGroupActivity.this, "בזמן זה שבחרת קיימת קבוצה אחרת תנשה זמן אחר", Toast.LENGTH_LONG).show();
+           flag=5;
+//                       starthour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
+//                       endhour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
+
             return false;
         }
     }
@@ -249,12 +256,15 @@ public int[] parsehour(String sh,int hour[])
 
     return hour;
 }
+int flag;
+
 
     public boolean CheckGrName(String name)
     {
         if(name.equals("") || name == null)
         {
-            group_name.setError("חובה למלות שדה זה");
+            flag=0;
+            //group_name.setError("חובה למלות שדה זה");
             return false;
         }
         else
@@ -264,6 +274,25 @@ public int[] parsehour(String sh,int hour[])
 
     }
 
+    public void errorwork()
+    {
+        if(flag==0)
+            group_name.setError("חובה למלות שדה זה");
+        if(flag==1)
+            group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+        if(flag==2)
+            group_p_number.setError("חייב למלא השדה הזה ");
+        if(flag==4)
+            starthour.setError("שעת התחלה חייבת להיות לפני שעת סיום");
+        if(flag==5) {
+            starthour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
+            endhour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
+
+        }
+        else
+            selctgrbtn.setError("או שהמגרש שמור בשעות אלה או שיש שגיאה בנתונים שהכנסת!!");
+
+    }
     public boolean CheckNumber(String num)
     {
         if(!num.equals("") && num !=null)
@@ -273,12 +302,14 @@ public int[] parsehour(String sh,int hour[])
                 return true;
             else
             {
-                group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+                flag=1;
+//                group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
                 return false;
             }
         }
         else {
-            group_p_number.setError("חייב למלא השדה הזה ");
+            flag=2;
+//            group_p_number.setError("חייב למלא השדה הזה ");
             return false;
         }
 
