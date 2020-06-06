@@ -36,7 +36,10 @@ public class GroupProfile extends AppCompatActivity {
     static  Group selectedgl;
     static String key;
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference1;
+    DatabaseReference databaseReference1,databaseReference2;
+
+    Button showpart,showmap;
+
 
 
     @Override
@@ -71,7 +74,8 @@ public class GroupProfile extends AppCompatActivity {
         isprivate = findViewById(R.id.sg_isprivate3);
 
         mJoinGroup = findViewById(R.id.JoinpGroup);
-
+        showpart =findViewById(R.id.showParticipants);
+        showmap =findViewById(R.id.showmap);
 
         textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
         textName.setText("שם מגרש : " + GroupAdapter.selected_group.getArenaname());
@@ -98,7 +102,7 @@ public class GroupProfile extends AppCompatActivity {
         String GroupPath = "Groups" +"/"+ groupp;
         databaseReference = firebaseDatabase.getReference(GroupPath);
         databaseReference1 = firebaseDatabase.getReference(GroupPath +"/Participants");
-
+        databaseReference2 = firebaseDatabase.getReference();
 
         mCancelJpinGroup=findViewById(R.id.CancelJoin);
         mJoinGroup = findViewById(R.id.JoinpGroup);
@@ -110,6 +114,22 @@ public class GroupProfile extends AppCompatActivity {
                 finish();
             }
         });
+
+        showpart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ShowParticipants.class));
+            }
+        });
+
+
+        showmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ArenaMapsActivity.class));
+            }
+        });
+
         mJoinGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -133,13 +153,13 @@ public class GroupProfile extends AppCompatActivity {
 
                         }
                         if(GroupAdapter.selected_group.isIsprivate()){
-                          //  if(true){
+                            //  if(true){
 
-                                final String groupPassword = GroupAdapter.selected_group.getSecretcode();
+                            final String groupPassword = GroupAdapter.selected_group.getSecretcode();
 
                             final EditText resetEmail = new EditText((v.getContext()));
                             resetEmail.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                       //     resetEmail.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            //     resetEmail.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                             AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
                             passwordResetDialog.setTitle("Group Password");
                             passwordResetDialog.setMessage("Password of the group");
@@ -151,13 +171,14 @@ public class GroupProfile extends AppCompatActivity {
                                     //Extracting the email
                                     String mail = resetEmail.getText().toString();
                                     try{
-                                    if(mail.equals(groupPassword)){
-                                        Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
-                                        databaseReference.child("Participants").push().setValue(map);
-                                        Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
-                                    }
+                                        if(mail.equals(groupPassword)){
+                                            Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
+                                            databaseReference.child("Participants").push().setValue(map);
+                                            databaseReference2.child("INGROUP").push().setValue(map);
+                                            Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
+                                        }
                                     }catch(Exception ex){
                                         ex.printStackTrace();
                                     }
@@ -175,6 +196,7 @@ public class GroupProfile extends AppCompatActivity {
                             passwordResetDialog.create().show();
                         }else{
                             databaseReference.child("Participants").push().setValue(map);
+                            databaseReference2.child("INGROUP").push().setValue(map);
                             Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
                         }
                     }

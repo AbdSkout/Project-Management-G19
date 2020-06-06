@@ -78,6 +78,7 @@ public class Update_Adress extends AppCompatActivity {
                             }
                         }
                         startActivity(new Intent(getApplicationContext(),Profile.class));
+                        finish();
                     }
 
                     @Override

@@ -25,9 +25,10 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     private Context context;
     private ArrayList<Group> list;
     private ArrayList<Group> fulllist;
-
+    static int c=0;
     private Group group;
     static int id;
+    boolean flag=true;
     static Group selected_group;
 
     public GroupAdapter(Context context, ArrayList<Group> list) {
@@ -50,7 +51,8 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         group = list.get(position);
 
-        holder.textid.setText(String.valueOf(group.getArenaid()));
+        holder.textid.setText(String.valueOf(position));
+
         holder.textName.setText("שם מגרש : " + group.getArenaname());
         holder.textType.setText("סוג מגרש : " +String.valueOf(group.getArenatype()));
         holder.textStreet.setText("כביש : " +String.valueOf(group.getArenastreet()));
@@ -72,7 +74,10 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
                 int x =Integer.parseInt(holder.textid.getText().toString());
                 Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
                 id=x;
-                selected_group=group;
+
+                selected_group=list.get(x);
+                String s = selected_group.getGroupname();
+
                 Intent intent  = new Intent(context,GroupProfile.class);
                 context.startActivity(intent);
 
@@ -146,6 +151,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             groupname = itemView.findViewById(R.id.sg_grname);
             numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
             isprivate=itemView.findViewById(R.id.sg_isprivate);
+
 
         }
     }
