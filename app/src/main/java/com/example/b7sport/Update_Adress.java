@@ -46,7 +46,7 @@ public class Update_Adress extends AppCompatActivity {
         final DatabaseReference ref1 = data.getReference("EDMT_FIREBASE");
 
         Bundle bundle = getIntent().getExtras();
-        final String email = bundle.getString("Address");
+        final String email = MainActivity.emailID;
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

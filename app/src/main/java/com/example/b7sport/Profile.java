@@ -43,9 +43,9 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Bundle bundle = getIntent().getExtras();
+       // Bundle bundle = getIntent().getExtras();
 
-        final String userID1 = bundle.getString("emailadd");
+        final String userID1 =MainActivity.emailID;
 
 
         pd = new ProgressDialog(this);

@@ -119,6 +119,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
 
                     group = Group.makeGroup(grname, d.child("groupid").getValue().toString(), playernum, isPrivate, arena);
                     group.setNodeKey(d.getKey().toString());
+                    group.setSecretcode(d.child("secretcode").getValue().toString());
 
 
                     groupList.add(group);
