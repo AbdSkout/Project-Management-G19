@@ -19,13 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.grpc.internal.AbstractReadableBuffer;
+
 
 public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder> implements Filterable {
+    public static int flag;
     public AppCompatActivity z = new AppCompatActivity();
     private Context context;
     private ArrayList<Group> list;
     private ArrayList<Group> fulllist;
-
+    static int c=0;
     private Group group;
     static int id;
     static Group selected_group;
@@ -49,8 +52,10 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         group = list.get(position);
+        if (flag==3&& !group.isIsprivate())
+            return;
+        holder.textid.setText(String.valueOf(position));
 
-        holder.textid.setText(String.valueOf(group.getArenaid()));
         holder.textName.setText("שם מגרש : " + group.getArenaname());
         holder.textType.setText("סוג מגרש : " +String.valueOf(group.getArenatype()));
         holder.textStreet.setText("כביש : " +String.valueOf(group.getArenastreet()));
@@ -70,9 +75,12 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             @Override
             public void onClick(View v) {
                 int x =Integer.parseInt(holder.textid.getText().toString());
-                Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "קבוצה מספר " + x +" נבחרה..", Toast.LENGTH_SHORT).show();
                 id=x;
-                selected_group=group;
+
+                selected_group=list.get(x);
+                String s = selected_group.getGroupname();
+
                 Intent intent  = new Intent(context,GroupProfile.class);
                 context.startActivity(intent);
 
@@ -103,9 +111,27 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Group item : fulllist) {
-                    if (item.getGroupname().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
+                    if (flag==0) {
+                        if (item.getGroupname().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
                     }
+                    if(flag==1) {
+                        if (item.getArenatype().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                    if(flag==2) {
+                        if (item.getArenaname().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                    if(flag==3) {
+                        if (item.getArenasport_type().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+
                 }
             }
             FilterResults results = new FilterResults();
@@ -146,6 +172,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             groupname = itemView.findViewById(R.id.sg_grname);
             numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
             isprivate=itemView.findViewById(R.id.sg_isprivate);
+
 
         }
     }
