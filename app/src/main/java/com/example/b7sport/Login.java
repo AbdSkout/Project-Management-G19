@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity {
 
                 dialog.setMessage("Loging in...");
                 dialog.show();
-                final Intent myIntent = new Intent(view.getContext(),welcome_pag.class);
+                final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("emailadd",email);
 
                 if (TextUtils.isEmpty(email)) {

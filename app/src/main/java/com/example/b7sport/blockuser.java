@@ -117,7 +117,6 @@ public class blockuser extends AppCompatActivity {
                         if(flag==1) {
 
                             ref1.child(name1).removeValue();
-                            Log.d("", "user is here");
 
 
                         }
@@ -175,7 +174,6 @@ public class blockuser extends AppCompatActivity {
 
 
                         startActivity(new Intent(getApplicationContext(),adminpage.class));
-                        return;
                     }
 
 

@@ -2,6 +2,7 @@ package com.example.b7sport;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         group = list.get(position);
 
         holder.textid.setText(String.valueOf(group.getArenaid()));
@@ -77,8 +78,9 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                group = list.get(position);
                 delte(group.key);
-
+                Log.v("INfo",String.valueOf(position));
 
             }
         });
