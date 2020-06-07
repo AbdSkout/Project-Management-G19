@@ -8,27 +8,38 @@
 
     <Button
         android:id="@+id/update_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:background="@drawable/buttonshape"
         android:fontFamily="@font/david_libre"
-        android:text="עדכון פרטים"
+        android:text="עדכון כתובת"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/ProfilePictureBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Photo"
+
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#5BA8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text=" תמונת פרופיל"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_address"
         app:layout_constraintVertical_bias="0.054" />
+        />
 
     <TextView
         android:id="@+id/Email"
@@ -197,5 +208,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu_navigation" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
