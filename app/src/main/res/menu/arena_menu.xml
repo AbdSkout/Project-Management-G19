@@ -8,4 +8,16 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView"
         />
+    <item android:id="@+id/byname"
+        android:title="חיפוש לפי שם מגרש"
+        app:showAsAction="never"/>
+    <item android:id="@+id/byarenatype"
+        android:title="חיפוש לפי סוג מגרש"
+        app:showAsAction="never"/>
+    <item android:id="@+id/bysporttype"
+        android:title="חיפוש סוג ספרט"
+        app:showAsAction="never"/>
+
+
+
 </menu>

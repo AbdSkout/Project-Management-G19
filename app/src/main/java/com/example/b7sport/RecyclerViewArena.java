@@ -240,6 +240,7 @@ public class RecyclerViewArena extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -263,7 +264,25 @@ public class RecyclerViewArena extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.byname:
+                ArenaAdapter.flag=0;
+                return true;
+            case R.id.byarenatype:
+                ArenaAdapter.flag=1;
+                return true;
+            case R.id.bysporttype:
+                ArenaAdapter.flag=2;
+                return true;
+            default:
+                ArenaAdapter.flag=0;
+                return super.onOptionsItemSelected(item);
 
+
+        }
+    }
 //}
 }
 

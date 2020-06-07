@@ -45,6 +45,9 @@ public class Group {
 
     public String secretcode;
 
+    public Group() {
+    }
+
     public Group(String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
         this.groupname = groupname;
         this.groupid = groupid;
