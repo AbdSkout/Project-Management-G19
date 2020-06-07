@@ -4,14 +4,15 @@
     <item
         android:id="@+id/profile"
         android:fontFamily="@font/david_libre"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/person_white"
         android:title="פרופיל" />
 
     <item
         android:id="@+id/home"
         android:title="בית"
         android:fontFamily="@font/david_libre"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_home"
+        />
 
     <item
         android:id="@+id/games"
