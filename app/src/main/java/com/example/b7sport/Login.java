@@ -23,6 +23,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,13 +40,20 @@ public class Login extends AppCompatActivity {
     Button mLoginButton;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
+     FirebaseDatabase data;
+     public  static String  Email;
+
     Logic l = new Logic();
     final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final int[] flag = {0};
         setContentView(R.layout.activity_login);
+         data = FirebaseDatabase.getInstance();
+         final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
+
 
         dialog = new ProgressDialog(this);
 
@@ -67,7 +79,9 @@ public class Login extends AppCompatActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
 
-                String email = mEmail.getText().toString().trim();
+                final String email = mEmail.getText().toString().trim();
+                Email=email;
+
 
                 String password = mPassword.getText().toString().trim();
                 if (EmailisEmpty(email) && PasswordIsEmpty(password)) return;
@@ -79,7 +93,7 @@ public class Login extends AppCompatActivity {
 
                 dialog.setMessage("Loging in...");
                 dialog.show();
-                final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
+                final Intent myIntent = new Intent(view.getContext(),welcome_pag.class);
                 myIntent.putExtra("emailadd",email);
 
                 if (TextUtils.isEmpty(email)) {
@@ -104,27 +118,43 @@ public class Login extends AppCompatActivity {
 //                    mPassword.setError("Password Must be longer than 6 chars!");
 //                    return;
 //                }
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
+
+
+
+
+
+
+
+
+
+                    if(true)
+                    {
+                     fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            dialog.dismiss();
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                dialog.dismiss();
 
-                            Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
-                            startActivity(myIntent);
-                            finish();
+                                Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
+                                startActivity(myIntent);
+                                finish();
 
-                            //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }else{
-                            dialog.dismiss();
-                            Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                        }
+                                //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }else{
+                                dialog.dismiss();
+                                Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            }
                     }
-                });
+                });}
+                    else
+                        Toast.makeText(Login.this,"this user is Bloced",Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
+
         mRegisterActivity.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -177,6 +207,9 @@ public class Login extends AppCompatActivity {
         });
 
     }
+
+
+
     public boolean EmailisEmpty(String email){
         if(TextUtils.isEmpty(email)){
             mEmail.setError("חובה למלות שדה זה");
@@ -200,5 +233,8 @@ public class Login extends AppCompatActivity {
         }
         return false;
     }
+
+
+
 
 }

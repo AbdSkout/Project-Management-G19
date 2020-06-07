@@ -21,7 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowParticipants"></activity>
+        <activity android:name=".welcome_pag"></activity>
+        <activity android:name=".Reply_to_messages" />
+        <activity android:name=".Cardadmin" />
+        <activity android:name=".singleAdmingroup" />
+        <activity android:name=".ShowParticipants" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,8 +46,7 @@
         <activity android:name=".Update_Adress" />
         <activity android:name=".GroupProfile" />
         <activity android:name=".AllUsers" />
-        <activity android:name=".Profile" />
-        <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
+        <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +61,6 @@
         <activity android:name=".ChangePassword" />
         <activity android:name=".CreatePublicGroupActivity" />
         <activity android:name=".RecyclerViewArena" />
-
         <activity android:name=".Card" />
         <activity android:name=".showReport" />
         <activity android:name=".Mesg" />

@@ -140,7 +140,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity implements Time
                     getId();
                     int number = Integer.parseInt( group_p_number.getText().toString());
                     boolean isPrivate=!(publicG.isChecked());
-                    Group g = Group.makeGroup(name, Integer.toString(id) , number, isPrivate, arena);
+                    Group g = Group.makeGroup("-1",name, Integer.toString(id) , number, isPrivate, arena);
 
                     //                    synchronized (firebaseDatabase) {}
                     if(isPrivate)
