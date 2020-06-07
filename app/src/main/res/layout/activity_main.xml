@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,65 +24,98 @@
 
     <Button
         android:id="@+id/LogOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="328dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/Creaegroupbtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="יצירת קבוצה"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
-
-    <Button
-        android:id="@+id/chanpassmainv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="שנה סיסמא"
-        android:textSize="18sp"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/redbutton_ic"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#A8A8A8"
+        android:text="התנתק"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Creaegroupbtn"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <Button
-        android:id="@+id/showGroups"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="הצג כל הקבוצות"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Creaegroupbtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/msg_admin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="תלונה"
+        android:id="@+id/Creaegroupbtn"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#5BA8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text=" יצירת קבוצה "
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showGroups"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/chanpassmainv"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#5BA8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="0"
+        android:text=" שינוי סיסמה "
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Creaegroupbtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/showGroups"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#5BA8A8"
+        android:text=" הצג כל הקבוצות"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/msg_admin"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/david_libre"
+        android:shadowColor="#5BA8A8"
+        android:text=" שלח תלונה "
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chanpassmainv"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView10"
