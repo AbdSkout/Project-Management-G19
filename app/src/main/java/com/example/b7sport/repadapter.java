@@ -44,6 +44,15 @@ public class repadapter extends  RecyclerView.Adapter<repadapter.ViewHolder> {
         holder.textemail.setText(String.valueOf(arena.email));
         holder.texttxt.setText(arena.text);
 
+        holder.linear1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(context,Reply_to_messages.class);
+                intent.putExtra("email",String.valueOf(arena.email));
+                context.startActivity(intent);
+
+            }
+        });
 
 
 
