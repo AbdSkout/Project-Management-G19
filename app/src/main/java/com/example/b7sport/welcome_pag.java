@@ -28,6 +28,7 @@ public class welcome_pag extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                      String name2;
+                     String glag;
 
                 for (DataSnapshot d : dataSnapshot.getChildren())
                 {
