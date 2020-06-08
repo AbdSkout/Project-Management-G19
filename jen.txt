@@ -32,9 +32,9 @@ pipeline {
     }
     stage('Static Code Analysis') {
       steps {
-	echo 'Run Lint'
+	echo "Run Lint"
         sh './gradlew :app:lint'
-	echo 'run Check Style 
+	echo "run Sheck Style"
         sh './gradlew checkstyleMain'
       }
     }
