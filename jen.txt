@@ -34,6 +34,8 @@ pipeline {
       steps {
 	echo 'Run Lint'
         sh './gradlew :app:lint'
+	echo 'run Check Style 
+        sh './gradlew checkstyleMain'
       }
     }
     stage('Build APP') {
@@ -49,6 +51,12 @@ post {
                 unstableTotalAll: 120,
                 failedTotalAll: 220
             )
+            recordIssues(
+                tool: checkStyle(pattern: 'app/build/reports/checkstyle/checkstyle-report.xml'),
+                unstableTotalAll: 160,
+                failedTotalAll: 320
+            )
+            
             echo 'Sending email.'
             
             emailext(
