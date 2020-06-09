@@ -2,6 +2,7 @@ package com.example.b7sport;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class repadapter extends  RecyclerView.Adapter<repadapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         arena = list.get(position);
         holder.textemail.setText(String.valueOf(arena.email));
         holder.texttxt.setText(arena.text);
@@ -47,8 +48,10 @@ public class repadapter extends  RecyclerView.Adapter<repadapter.ViewHolder> {
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arena = list.get(position);
                 Intent intent  = new Intent(context,Reply_to_messages.class);
                 intent.putExtra("email",String.valueOf(arena.email));
+                Log.d("Email",String.valueOf(arena.email));
                 context.startActivity(intent);
 
             }

@@ -39,9 +39,10 @@ public class Login extends AppCompatActivity {
     TextView mRegisterActivity,mPasswordRecovery;
     Button mLoginButton;
     FirebaseAuth fAuth;
+    int flag=-1;
     ProgressDialog dialog;
-     FirebaseDatabase data;
      public  static String  Email;
+
 
     Logic l = new Logic();
     final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -49,14 +50,13 @@ public class Login extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final int[] flag = {0};
+
         setContentView(R.layout.activity_login);
-         data = FirebaseDatabase.getInstance();
-         final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
 
 
         dialog = new ProgressDialog(this);
-
+        final FirebaseDatabase data = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
         mEmail = findViewById(R.id.EmailText);
         mPassword = findViewById(R.id.PasswordText);
         mRegisterActivity = findViewById(R.id.RegisterLink);
@@ -68,39 +68,21 @@ public class Login extends AppCompatActivity {
         Intent intent2 = new Intent(Login.this,MainActivity.class);
 
         String emailas  = mEmail.getText().toString();
-        intent1.putExtra("emailadd",emailas);
+       intent1.putExtra("emailadd",emailas);
 
-        if(fAuth.getCurrentUser()!=null){
-            intent2.putExtra("emailadd",fAuth.getCurrentUser().getEmail().toString());
-            startActivity(intent2);
-            finish();
-        }
 
         mLoginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-
+                flag=-1;
                 final String email = mEmail.getText().toString().trim();
                 Email=email;
-
-
-                String password = mPassword.getText().toString().trim();
-                if (EmailisEmpty(email) && PasswordIsEmpty(password)) return;
-               /* if(l.EmailRegex(email)){
-                    mEmail.setError("The Format of the email must be example@example.com");
-                    return;
-                }*/
-                //if (PasswordIsEmpty(password)) return;
-
-                dialog.setMessage("Loging in...");
-                dialog.show();
+                final String password = mPassword.getText().toString().trim();
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 myIntent.putExtra("emailadd",email);
-
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Required");
                     return;
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is Required");
                     return;
@@ -112,48 +94,51 @@ public class Login extends AppCompatActivity {
                     finish();
 
                 }
-                else{
+                else {
+                    final String[] Email = new String[1];
+                    final String[] Password = new String[1];
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                           @Override
+                           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                               for(DataSnapshot d :  dataSnapshot.getChildren())
+                               {
+                                   Email[0] =d.child("email").getValue().toString();
+                                   Password[0] =d.child("password").getValue().toString();
+                                   if(Email[0].equals(email) && Password[0].equals(password) )
+                                   {
+                                       if(d.child("flag").getValue().equals("0")) {
+                                           Toast.makeText(getApplicationContext(), "Sign-in successful", Toast.LENGTH_LONG).show();
+                                           startActivity(myIntent);
+                                           return;
+                                       }
+                                       else
+                                       {
+                                           Toast.makeText(getApplicationContext(),"YOU ARE BLOCKED",Toast.LENGTH_LONG).show();
+                                           return;
+                                       }
 
-//                if (password.length() <= 6) {
-//                    mPassword.setError("Password Must be longer than 6 chars!");
-//                    return;
-//                }
+                                   }
+                               }
+                               if(flag==-1)
+                               {
+                                   Toast.makeText(getApplicationContext(),"this user not Existing",Toast.LENGTH_LONG).show();
+                               }
 
+                           }
 
+                           @Override
+                           public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                           }
+                       });
 
-
-
-
-
-
-
-
-                    if(true)
-                    {
-                     fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                dialog.dismiss();
-
-                                Toast.makeText(Login.this,"Loged in Successfully.",Toast.LENGTH_SHORT).show();
-                                startActivity(myIntent);
-                                finish();
-
-                                //                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            }else{
-                                dialog.dismiss();
-                                Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                });}
-                    else
-                        Toast.makeText(Login.this,"this user is Bloced",Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
+
+
+
 
         mRegisterActivity.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -233,7 +218,39 @@ public class Login extends AppCompatActivity {
         }
         return false;
     }
+  public void  isblock(final String email)
+  {
+      FirebaseDatabase data;
+      data = FirebaseDatabase.getInstance();
+      final DatabaseReference ref = data.getReference("Block");
 
+      ref.addListenerForSingleValueEvent(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              for(DataSnapshot d :dataSnapshot.getChildren())
+              {
+
+                  Log.d("info",d.getValue().toString());
+                  if(email.equals(d.getValue().toString())) {
+                      flag = 1;
+                      Log.d("info","we enter");
+                      break;
+                  }
+
+
+
+
+              }
+              flag=0;
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+          }
+      });
+
+  }
 
 
 
