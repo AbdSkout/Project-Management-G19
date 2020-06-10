@@ -31,6 +31,8 @@ public class ShowParticipants extends AppCompatActivity {
     private List<String> exampleList;
     final FirebaseDatabase data = FirebaseDatabase.getInstance();
     static ArrayList<user> users;
+    //static Group selected_group1 = GroupAdapter.selected_group;
+    static String groupIDDD = GroupAdapter.select_group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class ShowParticipants extends AppCompatActivity {
     private void fillExampleList() {
 
         exampleList = new ArrayList<>();
-        getDataFromFireBase();
+        getDataFromFireBase(groupIDDD);
     }
 
     private void setUpRecyclerView() {
@@ -85,12 +87,11 @@ public class ShowParticipants extends AppCompatActivity {
     }
 
 
-    private void getDataFromFireBase() {
+    private void getDataFromFireBase(String groupID) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-
-        final DatabaseReference ref = data.getReference("Groups/"+GroupAdapter.selected_group.getNodeKey()+"/Participants");
+        final DatabaseReference ref = data.getReference("Groups/"+groupID+"/Participants");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -128,7 +129,7 @@ public class ShowParticipants extends AppCompatActivity {
                 user u = new user("1");
                 String email1;
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-//                    if (d.getKey().equals("id")) break;
+                    if (d.getKey().equals("Friends")) break;
 //                    email1 = d.child("email").getValue().toString();
 //                    if (email1.equals(email)) {
                      u = new user("1");

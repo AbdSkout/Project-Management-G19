@@ -77,7 +77,7 @@ public class GroupProfile extends AppCompatActivity {
         showpart =findViewById(R.id.showParticipants);
         showmap =findViewById(R.id.showmap);
 
-        textid.setText(String.valueOf(GroupAdapter.selected_group.getArenaid()));
+        textid.setText(String.valueOf(GroupAdapter.arienaID));
         textName.setText("שם מגרש : " + GroupAdapter.selected_group.getArenaname());
         textType.setText("סוג מגרש : " +String.valueOf(GroupAdapter.selected_group.getArenatype()));
         textStreet.setText("כביש : " +String.valueOf(GroupAdapter.selected_group.getArenastreet()));
