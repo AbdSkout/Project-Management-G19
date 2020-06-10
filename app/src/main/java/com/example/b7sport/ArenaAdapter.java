@@ -26,8 +26,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
     private Context context;
     private List<Arena> list;
     private List<Arena> arenaListFull;
-
-
     static int  flag=0;
 
     private Arena arena;
@@ -88,10 +86,6 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Arena item : arenaListFull) {
-
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-
                     if (flag==0) {
                         if (item.getName().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
@@ -101,12 +95,11 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
                         if (item.getType().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }
-                    if (flag == 2) {
-                        if (item.getSport_type().toLowerCase().contains(filterPattern)) {
-                            filteredList.add(item);
+                        if (flag == 2) {
+                            if (item.getSport_type().toLowerCase().contains(filterPattern)) {
+                                filteredList.add(item);
+                            }
                         }
-                    }
-
                     }
                 }
             }
@@ -146,4 +139,3 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
     }
 
 }
-
