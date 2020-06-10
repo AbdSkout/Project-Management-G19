@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -35,6 +38,7 @@ public class Register extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseFirestore fStore;
     String UserID;
+    int flag=0;
     public final String TAG = "TAG";
 
     String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -52,22 +56,15 @@ public class Register extends AppCompatActivity {
         alreadyRegistered = findViewById(R.id.alreadyRegistred);
         mAddress = findViewById(R.id.address);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("EDMT_FIREBASE");
+        final FirebaseDatabase data = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-
-//        if(fAuth.getCurrentUser()!=null){
-//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//            finish();
-//        }
 
         mRegisterbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
-               // Info info = new Info(email,PhoneNumber,Name,password);
-            //    databaseReference.push().setValue(info);
+                flag=0;
                 final Intent myIntent = new Intent(view.getContext(),MainActivity.class);
                 final String email = mEmail.getText().toString().trim();
                 final String password = mPassword.getText().toString().trim();
@@ -84,61 +81,42 @@ public class Register extends AppCompatActivity {
                     return;
                 }
                 if(l.CheckName(Name)) return;
-
-                //Info info = new Info(email,PhoneNumber,Name,password,Address,"0","0");
-
                 if(l.EmailRegex(email)) return;
                 if(l.CheckName(Name)) return;
-
-
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                final Info INfo =new Info(email,PhoneNumber,Name,password,"0","0");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-//                            Info info = new Info(email,PhoneNumber,Name,password,"0","0");
-//                            databaseReference.push().setValue(info);
-                            Map<String,Object> map = new HashMap<String,Object>();
-                            map.put("email",email);
-                            map.put("PhoneNumber",PhoneNumber);
-                            map.put("FullName",Name);
-                            map.put("password",password);
-                            map.put("address",Address);
-                            map.put("UserID",0);
-                            map.put("flag",0);
-
-                            databaseReference.push().setValue(map);
-                            Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
-                            UserID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentrefernce = fStore.collection("users").document(UserID);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("FullName", Name);
-                            user.put("Address",Address);
-                            user.put("Email", email);
-                            user.put("PhoneNumber", PhoneNumber);
-                            user.put("Password", password);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot d: dataSnapshot.getChildren())
+                        {
+                             if(d.child("email").getValue().toString().equals(email))
+                             {
+                                 flag=1;
+                             }
 
 
-                            documentrefernce.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG,"onSuccess : user Profile is created for" + UserID);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: "+ e.toString());
-                                }
-                            });
-
-                            startActivity(myIntent);
-                            finish();
-//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
-                            Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                    if(flag==1)
+                    {
+
+                        Toast.makeText(getApplicationContext(),"this user already exist",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        ref.push().setValue(INfo);
+                        Toast.makeText(getApplicationContext(),"User created",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getApplicationContext(),Login.class));
+                    }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
+
+
             }
         });
         alreadyRegistered.setOnClickListener(new View.OnClickListener(){

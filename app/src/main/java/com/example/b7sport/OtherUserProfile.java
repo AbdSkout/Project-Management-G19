@@ -1,16 +1,18 @@
 package com.example.b7sport;
 
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.b7sport.Update_Adress;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class Profile extends AppCompatActivity {
+public class OtherUserProfile extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber,mAddress;
     Button mUpdateAdrressbtn,mUploadProfilePic;
     private FirebaseDatabase database;
@@ -46,7 +49,7 @@ public class Profile extends AppCompatActivity {
     FirebaseFirestore fStore;
     ImageView mProfilePictore;
     StorageReference storageReference;
-   // static String photoProvider = MainActivity.emailID;
+    // static String photoProvider = MainActivity.emailID;
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
@@ -54,18 +57,18 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_other_user_profile);
 
         Bundle bundle = getIntent().getExtras();
 
-       // final String userID1 = bundle.getString("emailadd");
+        // final String userID1 = bundle.getString("emailadd");
 
-        final String userID1 = MainActivity.emailID;
+        final String userID1 = EmailAdapter.selecteduser.userEmail;
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
-        final Intent myIntent = new Intent(Profile.this,MainActivity.class);
-        final Intent Address_intent = new Intent(Profile.this,Update_Adress.class);
+        final Intent myIntent = new Intent(OtherUserProfile.this,MainActivity.class);
+        final Intent Address_intent = new Intent(OtherUserProfile.this, Update_Adress.class);
 
         myIntent.putExtra("emailadd",userID1);
         mUpdateAdrressbtn = findViewById(R.id.update_address);
@@ -87,34 +90,6 @@ public class Profile extends AppCompatActivity {
         show(userID1);
 
 
-/*
-        fStore.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for(DocumentSnapshot doc: task.getResult()){
-                            String dbuser = doc.getString("Email").toString().trim();
-                            if(dbuser.equals(userID1)){
-                                mName.setText(doc.getString("FullName"));
-                                mEmail.setText(doc.getString("Email"));
-                                mPhonenumber.setText(doc.getString("PhoneNumber"));
-                                mAddress.setText(doc.getString("Address"));
-                                Address_intent.putExtra("Address",doc.getString("Email"));
-                                pd.dismiss();
-                                break;
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(Profile.this,"שגיאה בטעינת נתונים!",Toast.LENGTH_SHORT).show();
-                    }
-                }) ;
-*/
         mUpdateAdrressbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,8 +99,8 @@ public class Profile extends AppCompatActivity {
         mUploadProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            //    startActivityForResult(openGallaryIntent,1000);
+                //    Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //    startActivityForResult(openGallaryIntent,1000);
                 Intent choosePictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 choosePictureIntent.setType("image/*");
                 startActivityForResult(choosePictureIntent, 1);
@@ -133,27 +108,27 @@ public class Profile extends AppCompatActivity {
         });
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.profile);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        startActivity(myIntent);
-                        finish();
-                        overridePendingTransition(0,0);
-                        return true;
-//                    case R.id.games:
-//                        startActivity(new Intent(getApplicationContext(),About.class));
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.setSelectedItemId(R.id.profile);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.home:
+//                        startActivity(myIntent);
+//                        finish();
 //                        overridePendingTransition(0,0);
 //                        return true;
-                    case R.id.profile:
-                        return true;
-                }
-                return false;
-            }
-        });
+////                    case R.id.games:
+////                        startActivity(new Intent(getApplicationContext(),About.class));
+////                        overridePendingTransition(0,0);
+////                        return true;
+//                    case R.id.profile:
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
 
 
     }
@@ -162,36 +137,36 @@ public class Profile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode==RESULT_OK){
-                Uri imageUri = data.getData();
-              //  mProfilePictore.setImageURI(imageUri);
+            Uri imageUri = data.getData();
+            //  mProfilePictore.setImageURI(imageUri);
 
-                uploadProfilePhoto(imageUri);
-            }
+            uploadProfilePhoto(imageUri);
         }
+    }
 
     public void uploadProfilePhoto(Uri imageUri){
         final StorageReference fileRef = storageReference.child(fAuth.getCurrentUser().getUid());
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-           //     Toast.makeText(Profile.this,"תמונה הועליתה בהצלחה!",Toast.LENGTH_SHORT).show();
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Picasso.get().load(uri).into(mProfilePictore);
-                        }
-                    });
+                //     Toast.makeText(Profile.this,"תמונה הועליתה בהצלחה!",Toast.LENGTH_SHORT).show();
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(mProfilePictore);
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Profile.this,"Faild for some reason!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtherUserProfile.this,"Faild for some reason!",Toast.LENGTH_SHORT).show();
 
             }
         });
     }
     public void show(final String email) {
-          StorageReference profileRef = storageReference.child(fAuth.getCurrentUser().getUid());
+        StorageReference profileRef = storageReference.child(fAuth.getCurrentUser().getUid());
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

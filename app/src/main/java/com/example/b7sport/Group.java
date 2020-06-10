@@ -17,7 +17,24 @@ public class Group {
     private double arenalat;
     private boolean isprivate;
     private String nodeKey;
-    public String secretcode;
+    private String starthour,endhour;
+    public String key;
+
+    public String getEndhour() {
+        return endhour;
+    }
+
+    public void setEndhour(String endhour) {
+        this.endhour = endhour;
+    }
+
+    public String getStarthour() {
+        return starthour;
+    }
+
+    public void setStarthour(String starthour) {
+        this.starthour = starthour;
+    }
 
     public String getSecretcode() {
         return secretcode;
@@ -27,8 +44,9 @@ public class Group {
         this.secretcode = secretcode;
     }
 
+    public String secretcode;
 
-    public Group(String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
+    public Group(String key,String groupname, String groupid, int playersnumber, int arenaid, String arenaname, String arenatype, String arenastreet, Double arenahousenumber, String arenaneighbor, String arenaactivity, String arenalighing, String arenasport_type, double arenalon, double arenalat, boolean isprivate) {
         this.groupname = groupname;
         this.groupid = groupid;
         this.playersnumber = playersnumber;
@@ -44,22 +62,16 @@ public class Group {
         this.arenalon = arenalon;
         this.arenalat = arenalat;
         this.isprivate = isprivate;
+        this.key=key;
     }
 
-    static Group makeGroup(String groupname, String groupid, int playersnumber , boolean isprivate , Arena arena)
+    static Group makeGroup(String key,String groupname, String groupid, int playersnumber , boolean isprivate , Arena arena)
     {
-        return new Group(groupname,groupid,playersnumber,arena.getId(),arena.getName(),arena.getType(),arena.getStreet(),arena.getHousenumber(),arena.getNeighbor(),arena.getActivity(),arena.getLighing(),arena.getSport_type(),arena.getLon(),arena.getLat(),isprivate);
+        return new Group(key,groupname,groupid,playersnumber,arena.getId(),arena.getName(),arena.getType(),arena.getStreet(),arena.getHousenumber(),arena.getNeighbor(),arena.getActivity(),arena.getLighing(),arena.getSport_type(),arena.getLon(),arena.getLat(),isprivate);
     }
 
     public String getGroupname() {
         return groupname;
-    }
-
-    public String getNodeKey() {
-        return nodeKey;
-    }
-    public void setNodeKey(String nodekey) {
-        this.nodeKey = nodekey;
     }
 
     public void setGroupname(String groupname) {
@@ -96,6 +108,14 @@ public class Group {
 
     public void setArenaname(String arenaname) {
         this.arenaname = arenaname;
+    }
+
+    public String getNodeKey() {
+        return nodeKey;
+    }
+
+    public void setNodeKey(String nodeKey) {
+        this.nodeKey = nodeKey;
     }
 
     public String getArenatype() {
@@ -177,6 +197,4 @@ public class Group {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
-
 }
-

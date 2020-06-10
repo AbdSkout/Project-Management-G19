@@ -29,6 +29,7 @@ public class blockuser extends AppCompatActivity {
     Button btn_delete;
     Button btn_unblock;
     String Name1;
+    int suc;
     final FirebaseDatabase data = FirebaseDatabase.getInstance();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class blockuser extends AppCompatActivity {
         but_block.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                suc=-1;
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,6 +61,7 @@ public class blockuser extends AppCompatActivity {
 
                             if(name2.equals(Name1) )
                             {
+                                suc=1;
                                 flag=1;
                                 name1=d.getKey().toString();
                                 ref1.child(name1).child("flag").setValue("1");
@@ -66,8 +69,11 @@ public class blockuser extends AppCompatActivity {
                             }
 
                         }
-
+                       if(suc==1)
                         startActivity(new Intent(getApplicationContext(),adminpage.class));
+                    else
+                        Toast.makeText(getApplicationContext(),"This email is not in the database",Toast.LENGTH_LONG).show();
+
                     }
 
 
@@ -78,18 +84,10 @@ public class blockuser extends AppCompatActivity {
 
 
                 });
-
-
-
-
-
             }
 
 
         });
-
-
-
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,16 +115,16 @@ public class blockuser extends AppCompatActivity {
                         if(flag==1) {
 
                             ref1.child(name1).removeValue();
-                            Log.d("", "user is here");
+                            Toast.makeText(getApplicationContext(),"Deletion successful",Toast.LENGTH_LONG).show();
 
-
+                            startActivity(new Intent(getApplicationContext(),adminpage.class));
                         }
-
                         else
-                            Log.d("","falied");
+                            Toast.makeText(getApplicationContext(),"This email is not in the database",Toast.LENGTH_LONG).show();
 
 
-                        startActivity(new Intent(getApplicationContext(),adminpage.class));
+
+
 
 
                     }
@@ -139,12 +137,6 @@ public class blockuser extends AppCompatActivity {
 
 
                 });
-
-
-
-
-
-
             }
         });
 
@@ -166,6 +158,7 @@ public class blockuser extends AppCompatActivity {
 
                             if(name2.equals(Name1) )
                             {
+                                flag=1;
                                 name1=d.getKey().toString();
                                 ref1.child(name1).child("flag").setValue("0");
                                 Toast.makeText(blockuser.this, "User UNBlocked!", Toast.LENGTH_SHORT).show();
@@ -173,9 +166,14 @@ public class blockuser extends AppCompatActivity {
 
                         }
 
+                      if(flag==1) {
+                          startActivity(new Intent(getApplicationContext(), adminpage.class));
 
-                        startActivity(new Intent(getApplicationContext(),adminpage.class));
-                        return;
+                      }
+                      else
+                        Toast.makeText(getApplicationContext(),"This email is not in the database",Toast.LENGTH_LONG).show();
+
+
                     }
 
 

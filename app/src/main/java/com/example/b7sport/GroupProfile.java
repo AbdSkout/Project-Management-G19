@@ -36,8 +36,7 @@ public class GroupProfile extends AppCompatActivity {
     static  Group selectedgl;
     static String key;
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference1,databaseReference2;
-
+    DatabaseReference databaseReference1;
     Button showpart,showmap;
 
 
@@ -102,7 +101,7 @@ public class GroupProfile extends AppCompatActivity {
         String GroupPath = "Groups" +"/"+ groupp;
         databaseReference = firebaseDatabase.getReference(GroupPath);
         databaseReference1 = firebaseDatabase.getReference(GroupPath +"/Participants");
-        databaseReference2 = firebaseDatabase.getReference();
+
 
         mCancelJpinGroup=findViewById(R.id.CancelJoin);
         mJoinGroup = findViewById(R.id.JoinpGroup);
@@ -174,7 +173,6 @@ public class GroupProfile extends AppCompatActivity {
                                         if(mail.equals(groupPassword)){
                                             Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
                                             databaseReference.child("Participants").push().setValue(map);
-                                            databaseReference2.child("INGROUP").push().setValue(map);
                                             Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
@@ -196,7 +194,6 @@ public class GroupProfile extends AppCompatActivity {
                             passwordResetDialog.create().show();
                         }else{
                             databaseReference.child("Participants").push().setValue(map);
-                            databaseReference2.child("INGROUP").push().setValue(map);
                             Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
                         }
                     }

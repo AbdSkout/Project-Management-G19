@@ -19,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.grpc.internal.AbstractReadableBuffer;
+
 
 public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder> implements Filterable {
+    public static int flag;
     public AppCompatActivity z = new AppCompatActivity();
     private Context context;
     private ArrayList<Group> list;
@@ -28,7 +31,6 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     static int c=0;
     private Group group;
     static int id;
-    boolean flag=true;
     static Group selected_group;
 
     public GroupAdapter(Context context, ArrayList<Group> list) {
@@ -50,7 +52,8 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         group = list.get(position);
-
+        if (flag==3&& !group.isIsprivate())
+            return;
         holder.textid.setText(String.valueOf(position));
 
         holder.textName.setText("שם מגרש : " + group.getArenaname());
@@ -72,7 +75,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             @Override
             public void onClick(View v) {
                 int x =Integer.parseInt(holder.textid.getText().toString());
-                Toast.makeText(context, "Item Number "+x +" selected..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "קבוצה מספר " + x +" נבחרה..", Toast.LENGTH_SHORT).show();
                 id=x;
 
                 selected_group=list.get(x);
@@ -108,9 +111,27 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Group item : fulllist) {
-                    if (item.getGroupname().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
+                    if (flag==0) {
+                        if (item.getGroupname().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
                     }
+                    if(flag==1) {
+                        if (item.getArenatype().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                    if(flag==2) {
+                        if (item.getArenaname().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                    if(flag==3) {
+                        if (item.getArenasport_type().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+
                 }
             }
             FilterResults results = new FilterResults();

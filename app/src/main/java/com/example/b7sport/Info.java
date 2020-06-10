@@ -10,6 +10,7 @@ public class Info {
     String flag;
     String Address;
 
+
     public String getAddress() {
         return Address;
     }

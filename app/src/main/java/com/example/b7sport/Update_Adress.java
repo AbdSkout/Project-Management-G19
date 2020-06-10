@@ -45,7 +45,7 @@ public class Update_Adress extends AppCompatActivity {
         final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
         final DatabaseReference ref1 = data.getReference("EDMT_FIREBASE");
 
-        Bundle bundle = getIntent().getExtras();
+        //Bundle bundle = getIntent().getExtras();
         final String email = MainActivity.emailID;
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,6 @@ public class Update_Adress extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),Profile.class));
                         finish();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
