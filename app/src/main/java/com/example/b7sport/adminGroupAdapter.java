@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.startActivity;
+
 
 public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.ViewHolder> implements Filterable {
 
@@ -80,7 +84,10 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
             public void onClick(View v) {
                 group = list.get(position);
                 delte(group.key);
-                Log.v("INfo",String.valueOf(position));
+                Intent intent  = new Intent(context,adminpage.class);
+                context.startActivity(intent);
+
+
 
             }
         });

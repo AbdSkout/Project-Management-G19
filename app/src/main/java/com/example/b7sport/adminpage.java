@@ -36,7 +36,6 @@ public class adminpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 startActivity(new Intent(getApplicationContext(), Mesg.class));
             }
         });

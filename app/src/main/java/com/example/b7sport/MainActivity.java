@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         //Intialazing
         //mRecyclerView= findViewById(R.id.recyclerView);
         //mRecyclerView.setHasFixedSize(true);
