@@ -1,3 +1,4 @@
+
 package com.example.b7sport;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,7 @@ public class Profile extends AppCompatActivity {
     FirebaseFirestore fStore;
     ImageView mProfilePictore;
     StorageReference storageReference;
-   // static String photoProvider = MainActivity.emailID;
+    // static String photoProvider = MainActivity.emailID;
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
@@ -58,16 +59,16 @@ public class Profile extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-       // final String userID1 = bundle.getString("emailadd");
+        // final String userID1 = bundle.getString("emailadd");
 
-        final String userID1 = Login.Email;
+        //final String userID1 = MainActivity.emailID;
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
         final Intent myIntent = new Intent(Profile.this,MainActivity.class);
         final Intent Address_intent = new Intent(Profile.this,Update_Adress.class);
 
-        myIntent.putExtra("emailadd",userID1);
+        myIntent.putExtra("emailadd",Login.Email);
         mUpdateAdrressbtn = findViewById(R.id.update_address);
         mName = findViewById(R.id.FullName1);
         mEmail = findViewById(R.id.Email1);
@@ -84,7 +85,7 @@ public class Profile extends AppCompatActivity {
         pd.setTitle("טוען נתונים...") ;
         pd.show();
         pd.setCancelable(false);
-        show(userID1);
+        show(Login.Email);
 
 
 /*
@@ -124,8 +125,8 @@ public class Profile extends AppCompatActivity {
         mUploadProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            //    startActivityForResult(openGallaryIntent,1000);
+                //    Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //    startActivityForResult(openGallaryIntent,1000);
                 Intent choosePictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 choosePictureIntent.setType("image/*");
                 startActivityForResult(choosePictureIntent, 1);
@@ -162,25 +163,25 @@ public class Profile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode==RESULT_OK){
-                Uri imageUri = data.getData();
-              //  mProfilePictore.setImageURI(imageUri);
+            Uri imageUri = data.getData();
+            //  mProfilePictore.setImageURI(imageUri);
 
-                uploadProfilePhoto(imageUri);
-            }
+            uploadProfilePhoto(imageUri);
         }
+    }
 
     public void uploadProfilePhoto(Uri imageUri){
         final StorageReference fileRef = storageReference.child(Login.Email);
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-           //     Toast.makeText(Profile.this,"תמונה הועליתה בהצלחה!",Toast.LENGTH_SHORT).show();
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Picasso.get().load(uri).into(mProfilePictore);
-                        }
-                    });
+                     Toast.makeText(Profile.this,"תמונה הועליתה בהצלחה!",Toast.LENGTH_SHORT).show();
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(mProfilePictore);
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -191,7 +192,7 @@ public class Profile extends AppCompatActivity {
         });
     }
     public void show(final String email) {
-          StorageReference profileRef = storageReference.child(Login.Email);
+        StorageReference profileRef = storageReference.child(Login.Email);
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

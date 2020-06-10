@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -139,8 +140,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        userID1 = bundle.getString("emailadd");
-        emailID = userID1;
+        String userID1 = Login.Email.toString();
+      //  userID1 = bundle.getString("emailadd");
+        //emailID = userID1;
         final Intent intent1 = new Intent(MainActivity.this,Complaint.class);
         intent1.putExtra("emailadd",userID1);
         //final Intent intentJoinGroup = new Intent(MainActivity.this,RecyclerViewGroup.class);
@@ -186,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
             }});
 
         mShowGroupsbtn.setOnClickListener(new View.OnClickListener() {
