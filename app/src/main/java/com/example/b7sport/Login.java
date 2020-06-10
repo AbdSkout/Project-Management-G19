@@ -151,42 +151,8 @@ public class Login extends AppCompatActivity {
         mPasswordRecovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText resetEmail = new EditText((v.getContext()));
-                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("שחזור סיסמה");
-                passwordResetDialog.setMessage("כתוב את המייל שלך כדי לקבל מייל לשחזור סיסמה.");
-                passwordResetDialog.setView(resetEmail);
+                startActivity(new Intent(getApplicationContext(),Rest_password.class));
 
-                passwordResetDialog.setPositiveButton("שלח", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Extracting the email
-                        String mail = resetEmail.getText().toString();
-                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(Login.this, "קישור שחזור סיסמה נשלח למייל!", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Login.this, "Error! Reset Link is not sent" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-                    }
-                });
-                passwordResetDialog.setNegativeButton("בטל", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Close the dialog
-
-                    }
-                });
-//                AlertDialog dialog = passwordResetDialog.create();
-//                dialog.getWindow().setGravity(Gravity.RIGHT);
-//                dialog.show();
-                passwordResetDialog.create().show();
 
             }
         });

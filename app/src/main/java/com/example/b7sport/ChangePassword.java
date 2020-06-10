@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.PrintStream;
 import java.time.Clock;
@@ -25,11 +30,14 @@ public class ChangePassword extends AppCompatActivity {
     Button mBack, mChangePass;
     FirebaseAuth auth;
     Login login;
+    final FirebaseDatabase data = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
+        final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
+
 
         NewPass = findViewById(R.id.newpass);
         ConfirmNewPass = findViewById(R.id.confirmnewpass);
@@ -50,7 +58,7 @@ public class ChangePassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String newp = NewPass.getText().toString();
+                final String newp = NewPass.getText().toString();
                 boolean flag = true;// true if the new password is ok else false
                 String cnewp = ConfirmNewPass.getText().toString();
 
@@ -58,25 +66,42 @@ public class ChangePassword extends AppCompatActivity {
                     flag = false;
                     NewPass.setError("על הסיסמה להיות לפחות 7 אותיות");
                 }
-
                 if (!newp.equals(cnewp)) {
                     flag = false;
                     ConfirmNewPass.setError("הסיסמאות איןן זהות..");
                 }
                 if (flag) {
-                    if (user != null) {
-                        user.updatePassword(NewPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ChangePassword.this, "Your password has been changed.." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    System.out.println("error");
-                                    Toast.makeText(ChangePassword.this, "Your password could not be changed..", Toast.LENGTH_LONG);
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int FLAG=0;
+                                for(DataSnapshot d : dataSnapshot.getChildren())
+                                {
+                                    if(d.child("email").getValue().toString().equals(Login.Email))
+                                    {
+                                        FLAG=1;
+                                        ref.child(d.getKey().toString()).child("password").setValue(newp);
+                                    }
+
+
                                 }
+                                if(FLAG==1)
+                                {
+                                    Toast.makeText(getApplicationContext(),"password change",Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                }
+                                else
+                                    Toast.makeText(getApplicationContext(),"ERROR",Toast.LENGTH_LONG).show();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
                             }
                         });
-                    }
+
+
                 } else {
                     Toast.makeText(ChangePassword.this, "סיסמה לא השתנה נסה שוב!!", Toast.LENGTH_LONG);
                 }
