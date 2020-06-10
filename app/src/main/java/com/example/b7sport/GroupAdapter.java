@@ -32,7 +32,8 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
     private Group group;
     static int id;
     static Group selected_group;
-
+    static String select_group;
+    static int arienaID;
     public GroupAdapter(Context context, ArrayList<Group> list) {
         this.context = context;
         this.list = list;
@@ -80,7 +81,8 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
                 selected_group=list.get(x);
                 String s = selected_group.getGroupname();
-
+                select_group = list.get(x).getNodeKey();
+                arienaID = group.getArenaid();
                 Intent intent  = new Intent(context,GroupProfile.class);
                 context.startActivity(intent);
 

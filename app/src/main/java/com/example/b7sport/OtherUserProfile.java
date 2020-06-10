@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,19 +43,25 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OtherUserProfile extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber,mAddress;
-    Button mUpdateAdrressbtn,mUploadProfilePic;
+    Button mUpdateAdrressbtn,mUploadProfilePic,mAddFriend;
     private FirebaseDatabase database;
-    private DatabaseReference UserRef;
+    private DatabaseReference UserRef,UserRef1;
     FirebaseFirestore fStore;
     ImageView mProfilePictore;
     StorageReference storageReference;
+    static String nodeKey;
+    boolean result = false;
+
     // static String photoProvider = MainActivity.emailID;
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
-
+    static String userID1 = EmailAdapter.selecteduser.userEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +71,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
         // final String userID1 = bundle.getString("emailadd");
 
-        final String userID1 = EmailAdapter.selecteduser.userEmail;
+
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
@@ -71,15 +79,15 @@ public class OtherUserProfile extends AppCompatActivity {
         final Intent Address_intent = new Intent(OtherUserProfile.this, Update_Adress.class);
 
         myIntent.putExtra("emailadd",userID1);
-        mUpdateAdrressbtn = findViewById(R.id.update_address);
         mName = findViewById(R.id.FullName1);
         mEmail = findViewById(R.id.Email1);
         mPhonenumber = findViewById(R.id.PhoneNumber1);
         mAddress = findViewById(R.id.Address1);
-        mUploadProfilePic = findViewById(R.id.ProfilePictureBTN);
-
+        mAddFriend = findViewById(R.id.add_friend);
         database = FirebaseDatabase.getInstance();
-        UserRef = database.getReference(USERS);
+
+        UserRef1 = database.getReference("EDMT_FIREBASE");
+        //UserRef = database.getReference("EDMT_FIREBASE");
         mProfilePictore = findViewById(R.id.ProfileImage);
         //Init Database
         fStore = FirebaseFirestore.getInstance();
@@ -89,48 +97,44 @@ public class OtherUserProfile extends AppCompatActivity {
         pd.setCancelable(false);
         show(userID1);
 
-
-        mUpdateAdrressbtn.setOnClickListener(new View.OnClickListener() {
+        if(CheckIfFriends()){
+            return;
+        }else{
+        final Map<String,Object> map = new HashMap<>();
+        map.put("FriendEmail",Login.Email);
+        final Map<String,Object> map1 = new HashMap<>();
+        map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
+        mAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(Address_intent);
+                UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data : dataSnapshot.getChildren()){
+
+                        if(EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())){
+                            nodeKey = data.getKey();
+                        }
+                        }
+                        UserRef1.child(nodeKey + "/Friends").push().setValue(map);
+                        for(DataSnapshot data : dataSnapshot.getChildren()) {
+
+                            if (Login.Email.equals(data.child("email").getValue().toString())) {
+                                nodeKey = data.getKey();
+                            }
+                        }
+                        UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
-        mUploadProfilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //    Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //    startActivityForResult(openGallaryIntent,1000);
-                Intent choosePictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                choosePictureIntent.setType("image/*");
-                startActivityForResult(choosePictureIntent, 1);
-            }
-        });
 
-
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setSelectedItemId(R.id.profile);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.home:
-//                        startActivity(myIntent);
-//                        finish();
-//                        overridePendingTransition(0,0);
-//                        return true;
-////                    case R.id.games:
-////                        startActivity(new Intent(getApplicationContext(),About.class));
-////                        overridePendingTransition(0,0);
-////                        return true;
-//                    case R.id.profile:
-//                        return true;
-//                }
-//                return false;
-//            }
-//        });
-
-
+        }
     }
 
     @Override
@@ -195,6 +199,51 @@ public class OtherUserProfile extends AppCompatActivity {
 
             }
         });
+    }
+    boolean CheckIfFriends(){
+         int flag = -1;
+        UserRef1 = database.getReference("EDMT_FIREBASE");
+            UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()) {
+
+                        if (Login.Email.equals(data.child("email").getValue().toString())) {
+                            nodeKey = data.getKey();
+                            flag = 1;
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        String UserID = "EDMT_FIREBASE/"+ nodeKey +"/Friends";
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(UserID);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        Log.d("asd1","TRUE");
+                        if(Login.Email.equals(data.child("FriendEmail").getValue().toString())){
+                            mAddFriend.setVisibility(View.INVISIBLE);
+                            result = true;
+                            Log.d("asd","TRUE");
+                        break;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return result;
     }
 
 }

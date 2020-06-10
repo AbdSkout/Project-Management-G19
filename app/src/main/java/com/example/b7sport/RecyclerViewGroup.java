@@ -81,7 +81,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     if(d.getKey().equals("id")) break;
 
 
-                    arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
+                    //arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
 
                     arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
                     name = d.child("arenaname").getValue().toString();
