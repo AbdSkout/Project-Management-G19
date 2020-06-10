@@ -168,7 +168,7 @@ public class CreatePublicGroupActivity extends AppCompatActivity implements Time
         });
 
     }
-    private void getDataFromFireBaseidstarth() {
+    public void getDataFromFireBaseidstarth() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
 
         final DatabaseReference ref = data.getReference("Groups");
@@ -214,7 +214,6 @@ public boolean checkhour(String starth,String endh)
     int otherendm,endm =calcminutes(enh);
     if(startm >= endm)
     {
-        Toast.makeText(CreatePublicGroupActivity.this, "שעת התחלה חייבת להיות לפני שעת סיום", Toast.LENGTH_LONG).show();
         flag=4;
         //starthour.setError("שעת התחלה חייבת להיות לפני שעת סיום");
         return false;
@@ -235,7 +234,6 @@ public boolean checkhour(String starth,String endh)
         if(((startm>otherstartm && startm< otherendm ) || (endm>otherstartm && endm < otherendm)))
         {
             //error try another time this arena already reserved
-           Toast.makeText(CreatePublicGroupActivity.this, "בזמן זה שבחרת קיימת קבוצה אחרת תנשה זמן אחר", Toast.LENGTH_LONG).show();
            flag=5;
 //                       starthour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
 //                       endhour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
@@ -281,15 +279,24 @@ int flag;
     public void errorwork()
     {
         if(flag==0)
+        {
             group_name.setError("חובה למלות שדה זה");
+        }
         if(flag==1)
+        {
             group_p_number.setError("מספר שחקנים חייב להיות גדול מאפס");
+        }
         if(flag==2)
+        {
             group_p_number.setError("חייב למלא השדה הזה ");
-        if(flag==4)
+        }
+        if(flag==4) {
             starthour.setError("שעת התחלה חייבת להיות לפני שעת סיום");
-        if(flag==5) {
-            starthour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
+            Toast.makeText(CreatePublicGroupActivity.this, "שעת התחלה חייבת להיות לפני שעת סיום", Toast.LENGTH_LONG).show();
+            }
+            if(flag==5) {
+                Toast.makeText(CreatePublicGroupActivity.this, "בזמן זה שבחרת קיימת קבוצה אחרת תנשה זמן אחר", Toast.LENGTH_LONG).show();
+                starthour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
             endhour.setError("בהזמן שנבחר קיימת קבוצה אחרת תנסה זמן אחר");
 
         }
