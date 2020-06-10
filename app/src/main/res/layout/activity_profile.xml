@@ -170,7 +170,7 @@
 
             <Button
                 android:id="@+id/ProfilePictureBTN"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="146dp"
                 android:layout_height="48dp"
                 android:background="@drawable/buttonshape"
@@ -180,6 +180,17 @@
                 android:shadowDy="0"
                 android:shadowRadius="0"
                 android:text=" תמונת פרופיל"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            <Button
+                android:id="@+id/Friends"
+                android:layout_marginTop="10dp"
+                android:layout_width="146dp"
+                android:layout_height="48dp"
+                android:background="@drawable/buttonshape"
+                android:fontFamily="@font/david_libre"
+                android:shadowColor="#5BA8A8"
+                android:text="חברים"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
             />

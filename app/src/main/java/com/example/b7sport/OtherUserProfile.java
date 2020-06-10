@@ -209,8 +209,14 @@ public class OtherUserProfile extends AppCompatActivity {
                     for(DataSnapshot data : dataSnapshot.getChildren()) {
 
                         if (Login.Email.equals(data.child("email").getValue().toString())) {
-                            nodeKey = data.getKey();
-                            flag = 1;
+                             for(DataSnapshot d : data.child("Friends").getChildren() )
+                             {
+                                    if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail));
+                                 {
+                                     mAddFriend.setVisibility(View.INVISIBLE);
+                                 }
+                             }
+
                         }
                     }
                 }
