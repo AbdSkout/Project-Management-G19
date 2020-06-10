@@ -39,7 +39,6 @@ public class Reply_to_messages extends AppCompatActivity {
                  Ans_body info=new Ans_body(email,inP.getText().toString());
                  ref.push().setValue(info);
                  startActivity(new Intent(getApplicationContext(),adminpage.class));
-
              }
          });
 

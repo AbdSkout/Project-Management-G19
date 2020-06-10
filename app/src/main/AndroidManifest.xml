@@ -28,7 +28,6 @@
         <activity android:name=".Reply_to_messages" />
         <activity android:name=".Cardadmin" />
         <activity android:name=".singleAdmingroup" />
-        <activity android:name=".ShowParticipants" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -70,29 +69,6 @@
 
 
 
-        <activity
-            android:name=".ArenaMapsActivity"
-            android:label="@string/title_activity_arena_maps" />
-        <activity android:name=".RecyclerViewGroup" />
-        <activity android:name=".Complaint" />
-        <activity android:name=".Update_Adress" />
-        <activity android:name=".GroupProfile" />
-        <activity android:name=".AllUsers" />
-        <activity android:name=".Profile" /> <!-- android:theme="@style/AppTheme.AppCompat.NoActionBar"> -->
-        <activity android:name=".Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".adminpage" />
-        <activity android:name=".blockuser" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".CreatePublicGroupActivity" />
-        <activity android:name=".RecyclerViewArena" />
 
         <activity android:name=".Card" />
         <activity android:name=".showReport" />

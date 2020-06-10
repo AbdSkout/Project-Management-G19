@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +37,9 @@ public class GroupProfile extends AppCompatActivity {
     static  Group selectedgl;
     static String key;
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference1;
+    DatabaseReference databaseReference1,databaseReference2;
     Button showpart,showmap;
-
+    int flag=-1;
 
 
     @Override
@@ -89,7 +90,7 @@ public class GroupProfile extends AppCompatActivity {
 
 
         final Intent myIntent = new Intent(GroupProfile.this, RecyclerViewGroup.class);
-        myIntent.putExtra("emailadd", MainActivity.emailID);
+        myIntent.putExtra("emailadd", Login.Email);
 
         boolean privateGroup = GroupAdapter.selected_group.isIsprivate();
         if(privateGroup)
@@ -101,7 +102,7 @@ public class GroupProfile extends AppCompatActivity {
         String GroupPath = "Groups" +"/"+ groupp;
         databaseReference = firebaseDatabase.getReference(GroupPath);
         databaseReference1 = firebaseDatabase.getReference(GroupPath +"/Participants");
-
+        databaseReference2 = firebaseDatabase.getReference("INGROUP");
 
         mCancelJpinGroup=findViewById(R.id.CancelJoin);
         mJoinGroup = findViewById(R.id.JoinpGroup);
@@ -134,14 +135,34 @@ public class GroupProfile extends AppCompatActivity {
             public void onClick(final View v) {
                 String groupid = String.valueOf(GroupAdapter.selected_group.getArenaid());
                 final Map<String, Object> map = new HashMap<String, Object>();
-                map.put("UserEmail", MainActivity.emailID);
-
-                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-
+                map.put("UserEmail", Login.Email);
+                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                            if (MainActivity.emailID.equals(data1.child("UserEmail").getValue().toString())) {
+                            if(Login.Email.equals(data1.child("UserEmail").getValue().toString())){
+                                Toast.makeText(GroupProfile.this, "You Can't Join Groups!", Toast.LENGTH_SHORT).show();
+                                flag=1;
+                                break;
+                            }
+                        }
+                        if(flag != 1)
+                            flag = 0;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+                if(flag == 0){
+
+                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                            if (Login.Email.equals(data1.child("UserEmail").getValue().toString())) {
                                 Toast.makeText(GroupProfile.this, "Already in Group!", Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -149,11 +170,9 @@ public class GroupProfile extends AppCompatActivity {
                                 Toast.makeText(GroupProfile.this, "Group is full!", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-
                         }
-                        if(GroupAdapter.selected_group.isIsprivate()){
-                            //  if(true){
 
+                        if(GroupAdapter.selected_group.isIsprivate()){
                             final String groupPassword = GroupAdapter.selected_group.getSecretcode();
 
                             final EditText resetEmail = new EditText((v.getContext()));
@@ -173,6 +192,7 @@ public class GroupProfile extends AppCompatActivity {
                                         if(mail.equals(groupPassword)){
                                             Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
                                             databaseReference.child("Participants").push().setValue(map);
+                                            databaseReference2.push().setValue(map);
                                             Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
@@ -194,6 +214,7 @@ public class GroupProfile extends AppCompatActivity {
                             passwordResetDialog.create().show();
                         }else{
                             databaseReference.child("Participants").push().setValue(map);
+                            databaseReference2.push().setValue(map);
                             Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -203,6 +224,7 @@ public class GroupProfile extends AppCompatActivity {
 
                     }
                 });
+                }
 
 /*
                 mCancelJpinGroup.setOnClickListener(new View.OnClickListener() {
