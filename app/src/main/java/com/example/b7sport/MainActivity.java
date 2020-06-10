@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mComplaint;
 
     Button mLogOutButton,mCreateGroupBtn,mShowGroupsbtn;
-    private String userID1;
+    static public String userID1;
     FirebaseAuth fAuth;
     ProgressDialog dialog;
     FirebaseDatabase database;

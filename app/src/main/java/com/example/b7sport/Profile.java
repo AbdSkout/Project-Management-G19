@@ -60,7 +60,7 @@ public class Profile extends AppCompatActivity {
 
        // final String userID1 = bundle.getString("emailadd");
 
-        final String userID1 = MainActivity.emailID;
+        final String userID1 = Login.Email;
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
@@ -170,7 +170,7 @@ public class Profile extends AppCompatActivity {
         }
 
     public void uploadProfilePhoto(Uri imageUri){
-        final StorageReference fileRef = storageReference.child(fAuth.getCurrentUser().getUid());
+        final StorageReference fileRef = storageReference.child(Login.Email);
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -191,7 +191,7 @@ public class Profile extends AppCompatActivity {
         });
     }
     public void show(final String email) {
-          StorageReference profileRef = storageReference.child(fAuth.getCurrentUser().getUid());
+          StorageReference profileRef = storageReference.child(Login.Email);
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
