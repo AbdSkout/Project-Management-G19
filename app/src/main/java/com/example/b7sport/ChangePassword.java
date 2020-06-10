@@ -30,14 +30,15 @@ public class ChangePassword extends AppCompatActivity {
     Button mBack, mChangePass;
     FirebaseAuth auth;
     Login login;
-    final FirebaseDatabase data = FirebaseDatabase.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
-        final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
+        final FirebaseDatabase data = FirebaseDatabase.getInstance();
 
+        final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
 
         NewPass = findViewById(R.id.newpass);
         ConfirmNewPass = findViewById(R.id.confirmnewpass);
