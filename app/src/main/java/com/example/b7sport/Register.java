@@ -84,6 +84,15 @@ public class Register extends AppCompatActivity {
                 if(l.EmailRegex(email)) return;
                 if(l.CheckName(Name)) return;
                 final Info INfo =new Info(email,PhoneNumber,Name,password,"0","0");
+               final Map<String,Object> map = new HashMap<>();
+
+                map.put("email",email);
+                map.put("FullName",Name);
+                map.put("UserID","0");
+                map.put("PhoneNumber",PhoneNumber);
+                map.put("flag","0");
+                map.put("password",password);
+                map.put("address",Address);
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,7 +112,7 @@ public class Register extends AppCompatActivity {
                     }
                     else
                     {
-                        ref.push().setValue(INfo);
+                        ref.push().setValue(map);
                         Toast.makeText(getApplicationContext(),"User created",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(),Login.class));
                     }

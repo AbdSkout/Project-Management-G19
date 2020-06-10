@@ -145,7 +145,7 @@ public class OtherUserProfile extends AppCompatActivity {
     }
 
     public void uploadProfilePhoto(Uri imageUri){
-        final StorageReference fileRef = storageReference.child(fAuth.getCurrentUser().getUid());
+        final StorageReference fileRef = storageReference.child(EmailAdapter.selecteduser.userEmail);
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -166,7 +166,7 @@ public class OtherUserProfile extends AppCompatActivity {
         });
     }
     public void show(final String email) {
-        StorageReference profileRef = storageReference.child(fAuth.getCurrentUser().getUid());
+        StorageReference profileRef = storageReference.child(EmailAdapter.selecteduser.userEmail);
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

@@ -4,7 +4,7 @@ public class Info {
 
     String Email;
     String PhoneNumber;
-    String Name;
+    String FullName;
     String Password;
     String UserID;
     String flag;
@@ -43,11 +43,11 @@ public class Info {
     }
 
     public String getName() {
-        return Name;
+        return FullName;
     }
 
     public void setName(String name) {
-        Name = name;
+        FullName = name;
     }
 
     public String getPassword() {
@@ -75,7 +75,7 @@ public class Info {
 //    public Info(String Email,String PhoneNumber,String Name,String Password,String Address,String UserID,String flag) {
     public Info(String Email,String PhoneNumber,String Name,String Password,String UserID,String flag) {
         this.Email = Email;
-        this.Name = Name;
+        this.FullName = Name;
         this.Password = Password;
         this.PhoneNumber = PhoneNumber;
         this.UserID = UserID;
