@@ -47,8 +47,8 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
-    static String userID1 = EmailAdapter.selecteduser.userEmail;
-
+   // static String userID1 = EmailAdapter.selecteduser.userEmail;
+    static String Email =  FriendsProfileAdapter.Email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +56,13 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        // final String userID1 = bundle.getString("emailadd");
-
-
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
         final Intent myIntent = new Intent(DeleteFriendUserProfile.this,MainActivity.class);
-        final Intent Address_intent = new Intent(DeleteFriendUserProfile.this, Update_Adress.class);
+        //final Intent Address_intent = new Intent(DeleteFriendUserProfile.this, Update_Adress.class);
 
-        myIntent.putExtra("emailadd",userID1);
+       // myIntent.putExtra("emailadd",userID1);
         mName = findViewById(R.id.FullName1);
         mEmail = findViewById(R.id.Email1);
         mPhonenumber = findViewById(R.id.PhoneNumber1);
@@ -80,15 +77,16 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
         pd.setTitle("טוען נתונים...") ;
         pd.show();
         pd.setCancelable(false);
-        show(userID1);
+        show(Email);
 
-        if(CheckIfFriends()){
-            return;
-        }else{
-            final Map<String,Object> map = new HashMap<>();
-            map.put("FriendEmail",Login.Email);
-            final Map<String,Object> map1 = new HashMap<>();
-            map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
+        //if(CheckIfFriends()){
+     //       return;
+     //   }else{
+        //    final Map<String,Object> map = new HashMap<>();
+           // map.put("FriendEmail",Login.Email);
+            //final Map<String,Object> map1 = new HashMap<>();
+            //map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
+
             mAddFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,19 +94,9 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot data : dataSnapshot.getChildren()){
-
-                                if(EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())){
-                                    nodeKey = data.getKey();
-                                }
+                                
                             }
-                            UserRef1.child(nodeKey + "/Friends").push().setValue(map);
-                            for(DataSnapshot data : dataSnapshot.getChildren()) {
 
-                                if (Login.Email.equals(data.child("email").getValue().toString())) {
-                                    nodeKey = data.getKey();
-                                }
-                            }
-                            UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
                         }
 
                         @Override
@@ -118,7 +106,7 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
                     });
                 }
             });
-        }
+      //  }
     }
 
     @Override
@@ -131,11 +119,10 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
     }
 
     public void uploadProfilePhoto(Uri imageUri){
-        final StorageReference fileRef = storageReference.child(EmailAdapter.selecteduser.userEmail);
+        final StorageReference fileRef = storageReference.child(Email);
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //     Toast.makeText(Profile.this,"תמונה הועליתה בהצלחה!",Toast.LENGTH_SHORT).show();
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -152,7 +139,7 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
         });
     }
     public void show(final String email) {
-        StorageReference profileRef = storageReference.child(EmailAdapter.selecteduser.userEmail);
+        StorageReference profileRef = storageReference.child(Email);
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -181,7 +168,7 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
 
             }
         });
-    }
+    }/*
     boolean CheckIfFriends(){
         int flag = -1;
         UserRef1 = database.getReference("EDMT_FIREBASE");
@@ -233,5 +220,5 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
 
         return result;
     }
-
+*/
 }

@@ -12,27 +12,12 @@
     app:cardUseCompatPadding="true"
     >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/FriendLinear"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/myCardView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="50dp"
-            android:layout_gravity="center"
-            >
-
-            <ImageView
-                android:id="@+id/ProfileImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circular_bordershape"
-                android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
         <TextView
             android:id="@+id/Nameid"
             android:textSize="24sp"

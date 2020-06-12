@@ -19,7 +19,7 @@ public class FriendsProfileAdapter extends RecyclerView.Adapter<FreindsProfileVi
     AllUsers listActivity;
     List<InfoFromDataBase> infolist;
     Context context;
-
+    static String Email;
     public FriendsProfileAdapter(Context listActivity,List<InfoFromDataBase> infolist){
         this.context = listActivity;
         this.infolist = infolist;
@@ -36,11 +36,20 @@ public class FriendsProfileAdapter extends RecyclerView.Adapter<FreindsProfileVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FreindsProfileViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FreindsProfileViewHolder holder, final int position) {
         holder.fullname.setText(infolist.get(position).getFullName());
         holder.phonenumber.setText(infolist.get(position).getPhoneNumber());
         holder.email.setText(infolist.get(position).getEmail());
         holder.address.setText(infolist.get(position).getAddress());
+        Email =infolist.get(position).getEmail();
+        holder.linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(context,DeleteFriendUserProfile.class);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
