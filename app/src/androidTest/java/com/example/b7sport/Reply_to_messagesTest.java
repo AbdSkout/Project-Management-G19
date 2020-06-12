@@ -3,17 +3,23 @@ package com.example.b7sport;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class Reply_to_messagesTest {
 
     Reply_to_messages R;
-    @Before
-    public  void setup()
+
+
+    @Test
+    public  void TestNameAT()
     {
-         R=new Reply_to_messages();
+        String name="heelo";
+        int x=3;
+        boolean result=true;
+        assertThat(result,is(R.check(name,x)));
+
 
     }
-  
 
 }
