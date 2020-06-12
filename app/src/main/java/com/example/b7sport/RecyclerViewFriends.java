@@ -97,7 +97,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot data1 : dataSnapshot.getChildren()){
-                            if( i == friendsemailslist.size()+1 ){
+                            if( i == friendsemailslist.size() ){
                                 break;
                             }
                             else{
