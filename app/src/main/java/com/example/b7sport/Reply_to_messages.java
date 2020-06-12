@@ -62,7 +62,7 @@ public class Reply_to_messages extends AppCompatActivity {
                if(Name.charAt(i) == x)
                    return  false;
 
-        else
+
             return true;
     }
 }
