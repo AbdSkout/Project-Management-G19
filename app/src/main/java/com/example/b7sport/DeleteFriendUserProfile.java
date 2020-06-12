@@ -118,7 +118,6 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
                     });
                 }
             });
-
         }
     }
 
