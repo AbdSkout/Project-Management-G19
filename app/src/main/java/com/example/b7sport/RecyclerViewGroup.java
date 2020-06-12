@@ -78,7 +78,7 @@ public class RecyclerViewGroup extends AppCompatActivity {
                 boolean isPrivate;
                 double lat, lon;
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    if(d.getKey().equals("id")) break;
+                    if(d.getKey().equals("id") || d.getKey().equals("Participants")) break;
 
 
                     //arena = new Arena(Integer.parseInt(d.child("arenaid").getValue().toString()));
@@ -116,7 +116,8 @@ public class RecyclerViewGroup extends AppCompatActivity {
                     group = Group.makeGroup("-1",grname, d.child("groupid").getValue().toString(), playernum, isPrivate, arena);
                     group.setNodeKey(d.getKey().toString());
                     group.setSecretcode(d.child("secretcode").getValue().toString());
-
+                    group.setEndhour(d.child("starthour").getValue().toString());
+                    group.setStarthour(d.child("endhour").getValue().toString());
                     groupList.add(group);
                 }
 

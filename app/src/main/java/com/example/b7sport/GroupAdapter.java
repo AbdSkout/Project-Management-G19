@@ -58,12 +58,12 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
         holder.textid.setText(String.valueOf(position));
 
         holder.textName.setText("שם מגרש : " + group.getArenaname());
-        holder.textType.setText("סוג מגרש : " +String.valueOf(group.getArenatype()));
-        holder.textStreet.setText("כביש : " +String.valueOf(group.getArenastreet()));
-        holder.textNeighborh.setText("שכונה : " +group.getArenaneighbor());
-        holder.textActivity.setText("פעילות : " +group.getArenaactivity());
-        holder.textLighting.setText("תאורה : " +group.getArenalighing());
-        holder.textSportType.setText("סוג ספורט : " +group.getArenasport_type());
+//        holder.textType.setText("סוג מגרש : " +String.valueOf(group.getArenatype()));
+        holder.textStarth.setText("שעת סיום: " +String.valueOf(group.getStarthour()));
+        holder.textendh.setText("שעת סיום: " +group.getEndhour());
+//        holder.textActivity.setText("פעילות : " +group.getArenaactivity());
+//        holder.textLighting.setText("תאורה : " +group.getArenalighing());
+//        holder.textSportType.setText("סוג ספורט : " +group.getArenasport_type());
         holder.groupname.setText("שם קבוצה: " + group.getGroupname());
         holder.numberofplayers.setText("מספר שחקנים בקבוצה: " + group.getPlayersnumber());
 
@@ -156,7 +156,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textid, textName, textType, textStreet,textNeighborh,textActivity,textLighting,textSportType,groupname ,numberofplayers, isprivate;//I dont know if I must add the lat and lon
+        public TextView textid, textName, textType, textStarth,textendh,textActivity,textLighting,textSportType,groupname ,numberofplayers, isprivate;//I dont know if I must add the lat and lon
         LinearLayout linear1;
 
         public ViewHolder(View itemView ) {
@@ -164,12 +164,12 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
             textName = itemView.findViewById(R.id.gr_name2);
             linear1 = itemView.findViewById(R.id.linear2);
-            textType = itemView.findViewById(R.id.gr_type2);
-            textStreet = itemView.findViewById(R.id.gr_street2);
-            textNeighborh = itemView.findViewById(R.id.gr_gr_neighbor2);
-            textActivity = itemView.findViewById(R.id.gr_activity2);
-            textSportType = itemView.findViewById(R.id.gr_sporttype2);
-            textLighting = itemView.findViewById(R.id.gr_lighting2);
+//            textType = itemView.findViewById(R.id.gr_type2);
+            textStarth = itemView.findViewById(R.id.gr_starth1);
+            textendh = itemView.findViewById(R.id.gr_endh1);
+//            textActivity = itemView.findViewById(R.id.gr_activity2);
+//            textSportType = itemView.findViewById(R.id.gr_sporttype2);
+//            textLighting = itemView.findViewById(R.id.gr_lighting2);
             textid = itemView.findViewById(R.id.gr_id2);
             groupname = itemView.findViewById(R.id.sg_grname);
             numberofplayers = itemView.findViewById(R.id.sg_playersnumber);
