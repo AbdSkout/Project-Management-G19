@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> implements Filterable {
+public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> {
 
     Dialog mydialog;
     private Context context;
@@ -70,6 +70,14 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> 
         holder.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user u;
+                selecteduser=new user(list.get(position));
+                for(int i=0 ;i<ShowParticipants.users.size();i++) {
+                    u=ShowParticipants.users.get(i);
+                    if (u.userEmail.equals(list.get(position)))
+                        selecteduser = u;
+
+                }
                 Intent intent  = new Intent(context,OtherUserProfile.class);
                 context.startActivity(intent);
 
@@ -87,35 +95,35 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.ViewHolder> 
 
 
 
-    @Override
-    public Filter getFilter() {
-        return arenaFilter;
-    }
-    private Filter arenaFilter=new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<String> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(fulllist);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (String item : fulllist) {
-                    if (item.toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            list.clear();
-            list.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
+//    @Override
+//    public Filter getFilter() {
+//        return arenaFilter;
+//    }
+//    private Filter arenaFilter=new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            List<String> filteredList = new ArrayList<>();
+//            if (constraint == null || constraint.length() == 0) {
+//                filteredList.addAll(fulllist);
+//            } else {
+//                String filterPattern = constraint.toString().toLowerCase().trim();
+//                for (String item : fulllist) {
+//                    if (item.toLowerCase().contains(filterPattern)) {
+//                        filteredList.add(item);
+//                    }
+//                }
+//            }
+//            FilterResults results = new FilterResults();
+//            results.values = filteredList;
+//            return results;
+//        }
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            list.clear();
+//            list.addAll((List) results.values);
+//            notifyDataSetChanged();
+//        }
+//    };
     public void setfullValue(ArrayList<String> groundList)
     {
         fulllist=new ArrayList<>(groundList);

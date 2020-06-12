@@ -43,7 +43,8 @@
                     android:id="@+id/ProfileImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_person_black_24dp" />
                 <!--                    android:background="@drawable/circular_bordershape"-->
             </androidx.cardview.widget.CardView>
         </LinearLayout>

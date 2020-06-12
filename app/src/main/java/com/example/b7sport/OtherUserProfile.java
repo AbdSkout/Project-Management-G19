@@ -66,7 +66,7 @@ public class OtherUserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user_profile);
-
+        userID1 = EmailAdapter.selecteduser.userEmail;
         Bundle bundle = getIntent().getExtras();
 
         // final String userID1 = bundle.getString("emailadd");
