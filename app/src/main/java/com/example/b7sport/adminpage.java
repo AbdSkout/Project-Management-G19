@@ -13,6 +13,7 @@ public class adminpage extends AppCompatActivity {
     Button mesg;
     Button re;
     Button sH;
+    Button disk;
     Button logout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class adminpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 startActivity(new Intent(getApplicationContext(), Mesg.class));
             }
         });
@@ -56,12 +58,24 @@ public class adminpage extends AppCompatActivity {
         });
 
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+       logout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               startActivity(new Intent(getApplicationContext(),Login.class));
 
-            }
-        });
+           }
+       });
+
+       nothing();
     }
+ public  void nothing()
+ {
+     String make ="hello";
+     while(make.charAt(0)=='q');
+
+
+ }
+
+
+
 }
