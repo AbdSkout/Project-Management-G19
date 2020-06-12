@@ -212,4 +212,19 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
     }
 
 
+    public int sum(int w)
+    {
+         while( w %2 !=0)
+         {
+             w=w/10;
+         }
+
+         if(w==2)
+             return 0;
+
+         else
+             return  1;
+    }
+
+
 }
