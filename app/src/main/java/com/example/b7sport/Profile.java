@@ -41,13 +41,12 @@ import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber,mAddress;
-    Button mUpdateAdrressbtn,mUploadProfilePic;
+    Button mUpdateAdrressbtn,mUploadProfilePic,mViewFriends;
     private FirebaseDatabase database;
     private DatabaseReference UserRef;
     FirebaseFirestore fStore;
     ImageView mProfilePictore;
     StorageReference storageReference;
-    // static String photoProvider = MainActivity.emailID;
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
@@ -75,7 +74,7 @@ public class Profile extends AppCompatActivity {
         mPhonenumber = findViewById(R.id.PhoneNumber1);
         mAddress = findViewById(R.id.Address1);
         mUploadProfilePic = findViewById(R.id.ProfilePictureBTN);
-
+        mViewFriends = findViewById(R.id.Friends);
         database = FirebaseDatabase.getInstance();
         UserRef = database.getReference(USERS);
         mProfilePictore = findViewById(R.id.ProfileImage);
@@ -88,34 +87,6 @@ public class Profile extends AppCompatActivity {
         show(Login.Email);
 
 
-/*
-        fStore.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for(DocumentSnapshot doc: task.getResult()){
-                            String dbuser = doc.getString("Email").toString().trim();
-                            if(dbuser.equals(userID1)){
-                                mName.setText(doc.getString("FullName"));
-                                mEmail.setText(doc.getString("Email"));
-                                mPhonenumber.setText(doc.getString("PhoneNumber"));
-                                mAddress.setText(doc.getString("Address"));
-                                Address_intent.putExtra("Address",doc.getString("Email"));
-                                pd.dismiss();
-                                break;
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(Profile.this,"שגיאה בטעינת נתונים!",Toast.LENGTH_SHORT).show();
-                    }
-                }) ;
-*/
         mUpdateAdrressbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +103,12 @@ public class Profile extends AppCompatActivity {
                 startActivityForResult(choosePictureIntent, 1);
             }
         });
+        mViewFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.profile);

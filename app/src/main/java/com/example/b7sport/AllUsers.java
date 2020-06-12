@@ -36,7 +36,7 @@ public class AllUsers extends AppCompatActivity {
     RecyclerView mRecyclerView;
     List<InfoFromDataBase> usersinfo = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
-    FirebaseFirestore fStore;
+
     UsersAdapter adapeter;
     ProgressDialog pd;
     DatabaseReference reference;
@@ -69,7 +69,7 @@ public class AllUsers extends AppCompatActivity {
 
 
     }
-
+/*
     private void showdata() {
         fStore = FirebaseFirestore.getInstance();
 
@@ -106,7 +106,7 @@ public class AllUsers extends AppCompatActivity {
                     }
                 });
     }
-
+*/
     public void show() {
         pd.setTitle("טוען נתונים...");
         pd.show();

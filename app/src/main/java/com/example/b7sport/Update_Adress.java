@@ -39,18 +39,19 @@ public class Update_Adress extends AppCompatActivity {
         mUpdate = findViewById(R.id.button2);
         mNewAddress = findViewById(R.id.new_address);
         mCancel = findViewById(R.id.cancel_btn);
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
+        //fStore = FirebaseFirestore.getInstance();
+        //fAuth = FirebaseAuth.getInstance();
 
         final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
         final DatabaseReference ref1 = data.getReference("EDMT_FIREBASE");
 
         //Bundle bundle = getIntent().getExtras();
-        final String email = MainActivity.emailID;
+        final String email = Login.Email;
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                  startActivity(new Intent(getApplicationContext(), Profile.class));
+                 finish();
             }
         });
         mUpdate.setOnClickListener(new View.OnClickListener(){
@@ -58,8 +59,9 @@ public class Update_Adress extends AppCompatActivity {
             public void onClick(View v) {
                 Map<String,Object> map = new HashMap<String,Object>();
                 map.put("Address",mNewAddress.getText().toString().trim());
+                /*
                 fStore.collection("users").document(fAuth.getUid())
-                        .update(map);
+                        .update(map);*/
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -69,7 +71,7 @@ public class Update_Adress extends AppCompatActivity {
                         for (DataSnapshot d : dataSnapshot.getChildren())
                         {
                             name2=d.child("email").getValue().toString();
-                            if(myequals(email,name2))
+                            if(email.equals(name2))
                             {
                                 name1=d.getKey().toString();
                                 ref1.child(name1).child("address").setValue(new_adsress);
