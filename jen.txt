@@ -12,6 +12,7 @@ pipeline {
   stages {
     stage ('Prepare'){
       steps {
+	//preparing for build
         sh 'chmod +x ./gradlew'
       }
     }
@@ -33,6 +34,7 @@ pipeline {
     stage('Measurement Static Code Analysis Lint') {
       steps {
 	echo "Run Lint"
+	//run the Lint 
         sh './gradlew :app:lint'
 	
       }
@@ -40,12 +42,14 @@ pipeline {
     stage('Measurement Static code Analysis CheckStyle') {
       steps {
         echo "run CheckStyle"
-        sh './gradlew checkstyleMain'
+        //run the Lint 
+	sh './gradlew checkstyleMain'
       }
     }
 
    stage('Build APP') {
       steps {
+	// Build the app
         sh './gradlew assembleDebug'
       }
     }
@@ -58,12 +62,12 @@ post {
                 failedTotalAll: 220
             )
             recordIssues(
-                tool: checkStyle(pattern: 'app/build/reports/checkstyle/checkstyle-report.xml'),
+                1tool: checkStyle(pattern: 'app/build/reports/checkstyle/checkstyle-report.xml'),
                 unstableTotalAll: 160,
                 failedTotalAll: 320
             )
             
-            echo 'Sending email.'
+            echo 'Sending Emails.'
             
             emailext(
                 to: 'yaserni@ac.sce.ac.il,abdalsk@ac.sce.ac.il,odaiwa@ac.sce.ac.il',
