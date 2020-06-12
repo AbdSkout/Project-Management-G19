@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class DeleteFriendUserProfile extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber,mAddress;
-    Button mUpdateAdrressbtn,mUploadProfilePic,mAddFriend;
+    Button mAddFriend;
     private FirebaseDatabase database;
     private DatabaseReference UserRef,UserRef1;
     FirebaseFirestore fStore;
@@ -48,10 +48,11 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
     static String userID1 = EmailAdapter.selecteduser.userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_other_user_profile);
+        setContentView(R.layout.activity_delete_friend_user_profile);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -69,13 +70,11 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
         mEmail = findViewById(R.id.Email1);
         mPhonenumber = findViewById(R.id.PhoneNumber1);
         mAddress = findViewById(R.id.Address1);
-        mAddFriend = findViewById(R.id.add_friend);
+        mAddFriend = findViewById(R.id.removeFriend);
         database = FirebaseDatabase.getInstance();
 
         UserRef1 = database.getReference("EDMT_FIREBASE");
-        //UserRef = database.getReference("EDMT_FIREBASE");
         mProfilePictore = findViewById(R.id.ProfileImage);
-        //Init Database
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         pd.setTitle("טוען נתונים...") ;
