@@ -140,5 +140,17 @@ public class Register extends AppCompatActivity {
 
     }
 
+    public Boolean number_olny(String N)
+    {
+        for(int i=0;i<N.length();i++)
+        {
+            if( '0' <= N.charAt(i) && N.charAt(i) > '9' )
+              return  true;
+        }
+
+        return  false;
+    }
+
+
 
 }
