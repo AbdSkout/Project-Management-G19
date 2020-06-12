@@ -17,11 +17,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecyclerViewFriends extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
@@ -30,6 +33,12 @@ public class RecyclerViewFriends extends AppCompatActivity {
     DatabaseReference reference;
     UsersAdapter adapeter;
     List<InfoFromDataBase> usersinfo = new ArrayList<>();
+    boolean result = false;
+    static String FriendNodekey;
+    static String LoginNodekey;
+    static List<String> friendsemailslist = new ArrayList<>();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+    int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,39 +47,85 @@ public class RecyclerViewFriends extends AppCompatActivity {
 
         pd = new ProgressDialog(this);
 
-        recyclerViewFriends = findViewById(R.id.RecyclerViewFriends);
+        recyclerViewFriends = findViewById(R.id.recyclerView);
         recyclerViewFriends.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerViewFriends.setLayoutManager(layoutManager);
 
-        show();
+        getAllFriends();
 
 
     }
 
-    public void show(){
+    public void getAllFriends(){
         pd.setTitle("טוען נתונים...");
         pd.show();
         pd.setCancelable(false);
-
-        reference = FirebaseDatabase.getInstance().getReference().child("EDMT_FIREBASE");
+        reference = FirebaseDatabase.getInstance().getReference("EDMT_FIREBASE");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    InfoFromDataBase data1 = data.getValue(InfoFromDataBase.class);
-                    usersinfo.add(data1);
+                for(DataSnapshot data4 : dataSnapshot.getChildren()){
+                    if(Login.Email.equals(data4.child("email").getValue())){
+                        LoginNodekey = data4.getKey();
+                        break;
+                    }
                 }
-                adapeter = new UsersAdapter(RecyclerViewFriends.this, usersinfo);
-                recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerViewFriends.setAdapter(adapeter);
-                pd.dismiss();
+                ref = FirebaseDatabase.getInstance().getReference("EDMT_FIREBASE/"+LoginNodekey+"/Friends");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot d : dataSnapshot.getChildren()){
+                            Map<String,Object> map = new HashMap<>();
+                            friendsemailslist.add(d.child("FriendEmail").getValue().toString());
+                        }
+                        /*
+                        adapeter = new UsersAdapter(RecyclerViewFriends.this, usersinfo);
+                        recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerViewFriends.setAdapter(adapeter);
+                        pd.dismiss();*/
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                ref = FirebaseDatabase.getInstance().getReference("EDMT_FIREBASE");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data1 : dataSnapshot.getChildren()){
+                            if( i == friendsemailslist.size()+1 ){
+                                break;
+                            }
+                            else{
+
+                                 if(data1.child("email").getValue().equals(friendsemailslist.get(i))){
+                                       InfoFromDataBase data2 = data1.getValue(InfoFromDataBase.class);
+                                       usersinfo.add(data2);
+                                       i++;
+                            }
+                            }
+                        }
+                        adapeter = new UsersAdapter(RecyclerViewFriends.this, usersinfo);
+                        recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerViewFriends.setAdapter(adapeter);
+                        pd.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RecyclerViewFriends.this, "Error Loading the Info!", Toast.LENGTH_SHORT).show();
 
             }
         });

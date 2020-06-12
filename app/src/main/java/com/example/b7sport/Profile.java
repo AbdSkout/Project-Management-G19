@@ -106,7 +106,7 @@ public class Profile extends AppCompatActivity {
         mViewFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getApplicationContext(),RecyclerViewFriends.class));
             }
         });
 
