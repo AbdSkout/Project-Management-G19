@@ -80,11 +80,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
                             Map<String,Object> map = new HashMap<>();
                             friendsemailslist.add(d.child("FriendEmail").getValue().toString());
                         }
-                        /*
-                        adapeter = new UsersAdapter(RecyclerViewFriends.this, usersinfo);
-                        recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        recyclerViewFriends.setAdapter(adapeter);
-                        pd.dismiss();*/
+
                     }
 
                     @Override
@@ -120,8 +116,6 @@ public class RecyclerViewFriends extends AppCompatActivity {
 
                     }
                 });
-
-
             }
 
             @Override
