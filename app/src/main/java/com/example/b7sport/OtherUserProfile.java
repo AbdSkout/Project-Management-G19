@@ -99,42 +99,59 @@ public class OtherUserProfile extends AppCompatActivity {
 
         if(CheckIfFriends()){
             return;
-        }else{
-        final Map<String,Object> map = new HashMap<>();
-        map.put("FriendEmail",Login.Email);
-        final Map<String,Object> map1 = new HashMap<>();
-        map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
-        mAddFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data : dataSnapshot.getChildren()){
+        }else {
+            final Map<String, Object> map = new HashMap<>();
+            map.put("FriendEmail", Login.Email);
+            final Map<String, Object> map1 = new HashMap<>();
+            map1.put("FriendEmail", EmailAdapter.selecteduser.userEmail);
 
-                        if(EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())){
-                            nodeKey = data.getKey();
-                        }
-                        }
-                        UserRef1.child(nodeKey + "/Friends").push().setValue(map);
-                        for(DataSnapshot data : dataSnapshot.getChildren()) {
-
-                            if (Login.Email.equals(data.child("email").getValue().toString())) {
-                                nodeKey = data.getKey();
-                            }
-                        }
-                        UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+            if (Login.Email.equals(EmailAdapter.selecteduser.userEmail)) {
+                mAddFriend.setVisibility(View.INVISIBLE);
+                return;
             }
-        });
+
+
+            mAddFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                                if (EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())) {
+                                    nodeKey = data.getKey();
+                                }
+                            }
+                            UserRef1.child(nodeKey + "/Friends").push().setValue(map);
+                            Toast.makeText(OtherUserProfile.this, "Friend Added!", Toast.LENGTH_SHORT).show();
+                            mAddFriend.setVisibility(View.INVISIBLE);
+
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                                if (Login.Email.equals(data.child("email").getValue().toString())) {
+                                    nodeKey = data.getKey();
+                                }
+                            }
+                            UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
+                            Toast.makeText(OtherUserProfile.this, "Friend Added!", Toast.LENGTH_SHORT).show();
+                            mAddFriend.setVisibility(View.INVISIBLE);
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+            });
 
         }
+
     }
 
     @Override

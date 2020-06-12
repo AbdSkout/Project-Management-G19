@@ -168,16 +168,6 @@
                 android:text="הוסף כחבר"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />
-            <Button
-                android:id="@+id/removeFriend"
-                android:layout_width="146dp"
-                android:layout_marginTop="10dp"
-                android:layout_height="48dp"
-                android:background="@drawable/redbutton_ic"
-                android:fontFamily="@font/david_libre"
-                android:text="מחיקת חבר"
-                android:textColor="#FFFFFF"
-                android:textSize="18dp" />
 
         </LinearLayout>
     </LinearLayout>

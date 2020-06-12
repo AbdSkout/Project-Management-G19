@@ -44,7 +44,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
     boolean result = false;
     static String FriendNodekey;
     static String LoginNodekey;
-    static List<String> friendsemailslist = new ArrayList<>();
+    List<String> friendsemailslist = new ArrayList<>();
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
     int i=0;

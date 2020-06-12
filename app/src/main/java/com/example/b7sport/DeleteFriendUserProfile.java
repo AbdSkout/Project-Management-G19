@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,13 +43,16 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
     StorageReference storageReference;
     static String nodeKey;
     boolean result = false;
-
+    final FirebaseDatabase data = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = data.getReference();
     // static String photoProvider = MainActivity.emailID;
     FirebaseAuth fAuth;
     private static final String USERS = "EDMT_FIREBASE";
     ProgressDialog pd;
    // static String userID1 = EmailAdapter.selecteduser.userEmail;
     static String Email =  FriendsProfileAdapter.Email;
+    final String LogedIn = Login.Email;
+    static String LoggedInKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +73,7 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
         mAddress = findViewById(R.id.Address1);
         mAddFriend = findViewById(R.id.removeFriend);
         database = FirebaseDatabase.getInstance();
-
+        UserRef = database.getReference();
         UserRef1 = database.getReference("EDMT_FIREBASE");
         mProfilePictore = findViewById(R.id.ProfileImage);
         fStore = FirebaseFirestore.getInstance();
@@ -79,14 +83,6 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
         pd.setCancelable(false);
         show(Email);
 
-        //if(CheckIfFriends()){
-     //       return;
-     //   }else{
-        //    final Map<String,Object> map = new HashMap<>();
-           // map.put("FriendEmail",Login.Email);
-            //final Map<String,Object> map1 = new HashMap<>();
-            //map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
-
             mAddFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,8 +90,27 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot data : dataSnapshot.getChildren()){
-                                
+                                if(LogedIn.equals(data.child("email").getValue())){
+                                    LoggedInKey = data.getKey();
+                                    break;
+                                }
                             }
+                            UserRef = database.getReference("EDMT_FIREBASE/"+LoggedInKey+"/Friends");
+                            UserRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot data1 : dataSnapshot.getChildren()){
+                                        if(data1.child("FriendEmail").getValue().toString().equals(Email)){
+                                            delete("EDMT_FIREBASE/"+LoggedInKey+"/Friends/"+data1.getKey());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
 
@@ -168,57 +183,21 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
 
             }
         });
-    }/*
-    boolean CheckIfFriends(){
-        int flag = -1;
-        UserRef1 = database.getReference("EDMT_FIREBASE");
-        UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()) {
-
-                    if (Login.Email.equals(data.child("email").getValue().toString())) {
-                        for(DataSnapshot d : data.child("Friends").getChildren() )
-                        {
-                            if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail));
-                            {
-                                mAddFriend.setVisibility(View.INVISIBLE);
-                            }
-                        }
-
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        String UserID = "EDMT_FIREBASE/"+ nodeKey +"/Friends";
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(UserID);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.d("asd1","TRUE");
-                    if(Login.Email.equals(data.child("FriendEmail").getValue().toString())){
-                        mAddFriend.setVisibility(View.INVISIBLE);
-                        result = true;
-                        Log.d("asd","TRUE");
-                        break;
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return result;
     }
-*/
+
+    public  void delete (final String key) {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ref.child(key).removeValue();
+                        startActivity(new Intent(getApplicationContext(),RecyclerViewFriends.class));
+                    }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+    }
 }

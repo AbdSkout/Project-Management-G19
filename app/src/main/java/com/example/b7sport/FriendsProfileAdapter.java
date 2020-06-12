@@ -12,6 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.lang.reflect.Array;
 import java.util.List;
 
@@ -19,6 +25,8 @@ public class FriendsProfileAdapter extends RecyclerView.Adapter<FreindsProfileVi
     AllUsers listActivity;
     List<InfoFromDataBase> infolist;
     Context context;
+    final FirebaseDatabase data = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = data.getReference("EDMT_FIREBASE");
     static String Email;
     public FriendsProfileAdapter(Context listActivity,List<InfoFromDataBase> infolist){
         this.context = listActivity;
@@ -56,4 +64,8 @@ public class FriendsProfileAdapter extends RecyclerView.Adapter<FreindsProfileVi
     public int getItemCount() {
         return infolist.size();
     }
+
+
+
+
 }
