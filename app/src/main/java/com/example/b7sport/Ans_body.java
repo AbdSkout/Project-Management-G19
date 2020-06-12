@@ -12,7 +12,7 @@ public class Ans_body {
 
 
 
-    public  int  anS(String e) {
+   static public  int  anS(String e) {
 
          if (e.length()>10)
              return  1;

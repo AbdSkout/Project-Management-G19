@@ -197,7 +197,7 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
 
     }
 
-    public  int DataBase (String  name)
+  static   public  int DataBase (String  name)
     {
         String  Names []={"Group","EDMT_FIRE","message","block"};
 
@@ -212,7 +212,7 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
     }
 
 
-    public int sum(int w)
+    static  public int sum(int w)
     {
          while( w %2 !=0)
          {
