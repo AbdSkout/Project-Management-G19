@@ -22,4 +22,16 @@ public class Reply_to_messagesTest {
 
     }
 
+    @Test
+    public  void TestNameAT2()
+    {
+        String name="hexxa";
+        int x=2;
+        boolean result=true;
+        assertThat(result,is(R.check(name,x)));
+
+
+    }
+
+
 }
