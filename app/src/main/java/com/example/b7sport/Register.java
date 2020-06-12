@@ -130,5 +130,15 @@ public class Register extends AppCompatActivity {
 
     }
 
+    public boolean emptyfiled( EditText F)
+    {
+        if(F.getText().equals(""))
+            return false;
+        else
+            return true;
+
+
+    }
+
 
 }
