@@ -33,5 +33,17 @@ public class Reply_to_messagesTest {
 
     }
 
+    @Test
+    public  void TestNameAT4()
+    {
+        String name="hello this will pass";
+        int x=4;
+        boolean result=true;
+        assertThat(result,is(R.check(name,x)));
+
+
+    }
+
+
 
 }
