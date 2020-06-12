@@ -13,6 +13,7 @@ public class adminpage extends AppCompatActivity {
     Button mesg;
     Button re;
     Button sH;
+    Button disk;
     Button logout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +65,17 @@ public class adminpage extends AppCompatActivity {
 
            }
        });
+
+       nothing();
     }
+ public  void nothing()
+ {
+     String make ="hello";
+     while(make.charAt(0)=='q');
+
+
+ }
+
+
+
 }

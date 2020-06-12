@@ -39,7 +39,7 @@ public class Login extends AppCompatActivity {
     TextView mRegisterActivity,mPasswordRecovery;
     Button mLoginButton;
     FirebaseAuth fAuth;
-    int flag=-1;
+   static int flag=-1;
     ProgressDialog dialog;
      public  static String  Email;
 
@@ -184,7 +184,7 @@ public class Login extends AppCompatActivity {
         }
         return false;
     }
-  public void  isblock(final String email)
+ static void   isblock(final String email)
   {
       FirebaseDatabase data;
       data = FirebaseDatabase.getInstance();
@@ -207,7 +207,6 @@ public class Login extends AppCompatActivity {
 
 
               }
-              flag=0;
           }
 
           @Override
