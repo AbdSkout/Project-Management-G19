@@ -34,6 +34,8 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:textSize="18sp"
+        android:textColor="#1418EA"
+
         />
 
 
@@ -42,6 +44,7 @@
         android:id="@+id/gr_starth1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#1418EA"
         android:text="start hour"
         android:textSize="18sp" />
 
@@ -49,6 +52,7 @@
         android:id="@+id/gr_endh1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#1418EA"
         android:text="end hour"
         android:textSize="18sp" />
 
@@ -56,7 +60,6 @@
         android:id="@+id/gr_id2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="id"
         android:textSize="18sp"
         android:visibility="invisible"/>
 

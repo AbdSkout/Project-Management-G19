@@ -59,7 +59,7 @@ public class GroupAdapter extends  RecyclerView.Adapter<GroupAdapter.ViewHolder>
 
         holder.textName.setText("שם מגרש : " + group.getArenaname());
 //        holder.textType.setText("סוג מגרש : " +String.valueOf(group.getArenatype()));
-        holder.textStarth.setText("שעת סיום: " +String.valueOf(group.getStarthour()));
+        holder.textStarth.setText("שעת התחלה: " +String.valueOf(group.getStarthour()));
         holder.textendh.setText("שעת סיום: " +group.getEndhour());
 //        holder.textActivity.setText("פעילות : " +group.getArenaactivity());
 //        holder.textLighting.setText("תאורה : " +group.getArenalighing());
