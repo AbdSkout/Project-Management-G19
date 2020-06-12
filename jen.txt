@@ -30,15 +30,21 @@ pipeline {
         junit '**/TEST-*.xml'
       }
     }
-    stage('Static Code Analysis') {
+    stage('Measurement Static Code Analysis Lint') {
       steps {
 	echo "Run Lint"
         sh './gradlew :app:lint'
-	echo "run Sheck Style"
+	
+      }
+    }
+    stage('Measurement Static code Analysis CheckStyle') {
+      steps {
+        echo "run CheckStyle"
         sh './gradlew checkstyleMain'
       }
     }
-    stage('Build APP') {
+
+   stage('Build APP') {
       steps {
         sh './gradlew assembleDebug'
       }
