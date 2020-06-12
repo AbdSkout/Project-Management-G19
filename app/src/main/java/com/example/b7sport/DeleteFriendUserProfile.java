@@ -1,43 +1,29 @@
 package com.example.b7sport;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.b7sport.Update_Adress;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,7 +32,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OtherUserProfile extends AppCompatActivity {
+public class DeleteFriendUserProfile extends AppCompatActivity {
     private TextView mName,mEmail,mPhonenumber,mAddress;
     Button mUpdateAdrressbtn,mUploadProfilePic,mAddFriend;
     private FirebaseDatabase database;
@@ -75,8 +61,8 @@ public class OtherUserProfile extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
 
-        final Intent myIntent = new Intent(OtherUserProfile.this,MainActivity.class);
-        final Intent Address_intent = new Intent(OtherUserProfile.this, Update_Adress.class);
+        final Intent myIntent = new Intent(DeleteFriendUserProfile.this,MainActivity.class);
+        final Intent Address_intent = new Intent(DeleteFriendUserProfile.this, Update_Adress.class);
 
         myIntent.putExtra("emailadd",userID1);
         mName = findViewById(R.id.FullName1);
@@ -100,39 +86,39 @@ public class OtherUserProfile extends AppCompatActivity {
         if(CheckIfFriends()){
             return;
         }else{
-        final Map<String,Object> map = new HashMap<>();
-        map.put("FriendEmail",Login.Email);
-        final Map<String,Object> map1 = new HashMap<>();
-        map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
-        mAddFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data : dataSnapshot.getChildren()){
+            final Map<String,Object> map = new HashMap<>();
+            map.put("FriendEmail",Login.Email);
+            final Map<String,Object> map1 = new HashMap<>();
+            map1.put("FriendEmail",EmailAdapter.selecteduser.userEmail);
+            mAddFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot data : dataSnapshot.getChildren()){
 
-                        if(EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())){
-                            nodeKey = data.getKey();
-                        }
-                        }
-                        UserRef1.child(nodeKey + "/Friends").push().setValue(map);
-                        for(DataSnapshot data : dataSnapshot.getChildren()) {
-
-                            if (Login.Email.equals(data.child("email").getValue().toString())) {
-                                nodeKey = data.getKey();
+                                if(EmailAdapter.selecteduser.userEmail.equals(data.child("email").getValue().toString())){
+                                    nodeKey = data.getKey();
+                                }
                             }
+                            UserRef1.child(nodeKey + "/Friends").push().setValue(map);
+                            for(DataSnapshot data : dataSnapshot.getChildren()) {
+
+                                if (Login.Email.equals(data.child("email").getValue().toString())) {
+                                    nodeKey = data.getKey();
+                                }
+                            }
+                            UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
                         }
-                        UserRef1.child(nodeKey + "/Friends").push().setValue(map1);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                }
+            });
 
         }
     }
@@ -162,7 +148,7 @@ public class OtherUserProfile extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(OtherUserProfile.this,"Faild for some reason!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeleteFriendUserProfile.this,"Faild for some reason!",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -199,42 +185,42 @@ public class OtherUserProfile extends AppCompatActivity {
         });
     }
     boolean CheckIfFriends(){
-         int flag = -1;
+        int flag = -1;
         UserRef1 = database.getReference("EDMT_FIREBASE");
-            UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot data : dataSnapshot.getChildren()) {
+        UserRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
 
-                        if (Login.Email.equals(data.child("email").getValue().toString())) {
-                             for(DataSnapshot d : data.child("Friends").getChildren() )
-                             {
-                                    if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail));
-                                 {
-                                     mAddFriend.setVisibility(View.INVISIBLE);
-                                 }
-                             }
-
+                    if (Login.Email.equals(data.child("email").getValue().toString())) {
+                        for(DataSnapshot d : data.child("Friends").getChildren() )
+                        {
+                            if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail));
+                            {
+                                mAddFriend.setVisibility(View.INVISIBLE);
+                            }
                         }
+
                     }
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+            }
+        });
 
         String UserID = "EDMT_FIREBASE/"+ nodeKey +"/Friends";
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(UserID);
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        Log.d("asd1","TRUE");
-                        if(Login.Email.equals(data.child("FriendEmail").getValue().toString())){
-                            mAddFriend.setVisibility(View.INVISIBLE);
-                            result = true;
-                            Log.d("asd","TRUE");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    Log.d("asd1","TRUE");
+                    if(Login.Email.equals(data.child("FriendEmail").getValue().toString())){
+                        mAddFriend.setVisibility(View.INVISIBLE);
+                        result = true;
+                        Log.d("asd","TRUE");
                         break;
                     }
                 }

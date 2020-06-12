@@ -1,8 +1,12 @@
 package com.example.b7sport;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -10,8 +14,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,13 +39,14 @@ public class RecyclerViewFriends extends AppCompatActivity {
     RecyclerView recyclerViewFriends;
     ProgressDialog pd;
     DatabaseReference reference;
-    UsersAdapter adapeter;
+    FriendsProfileAdapter adapeter;
     List<InfoFromDataBase> usersinfo = new ArrayList<>();
     boolean result = false;
     static String FriendNodekey;
     static String LoginNodekey;
     static List<String> friendsemailslist = new ArrayList<>();
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
     int i=0;
 
     @Override
@@ -105,7 +114,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
                             }
                             }
                         }
-                        adapeter = new UsersAdapter(RecyclerViewFriends.this, usersinfo);
+                        adapeter = new FriendsProfileAdapter(RecyclerViewFriends.this, usersinfo);
                         recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerViewFriends.setAdapter(adapeter);
                         pd.dismiss();
@@ -124,6 +133,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
