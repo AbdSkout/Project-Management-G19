@@ -2,7 +2,7 @@ package com.example.b7sport;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class adminGroupAdapterTest {
@@ -14,7 +14,7 @@ public class adminGroupAdapterTest {
     {
         String name="Group";
         int result=1;
-        assertThat(result,is(ad.DataBase(name)));
+        assertThat(result, is(ad.DataBase(name)));
 
 
     }
@@ -24,7 +24,7 @@ public class adminGroupAdapterTest {
     {
         String name="EDMIT_FIRE";
         int result=0;
-        assertThat(result,is(ad.DataBase(name)));
+        assertThat(result, is(ad.DataBase(name)));
 
 
     }
@@ -33,7 +33,7 @@ public class adminGroupAdapterTest {
     {
         String name="notpass";
         int result=0;
-        assertThat(result,is(ad.DataBase(name)));
+        assertThat(result, is(ad.DataBase(name)));
 
 
     }
@@ -44,7 +44,7 @@ public class adminGroupAdapterTest {
     {
         int num=10;
         int result=1;
-        assertThat(result,is(ad.sum(num)));
+        assertThat(result, is(ad.sum(num)));
 
 
     }
@@ -54,7 +54,7 @@ public class adminGroupAdapterTest {
     {
         int num=2;
         int result=0;
-        assertThat(result,is(ad.sum(num)));
+        assertThat(result, is(ad.sum(num)));
 
 
     }
@@ -65,7 +65,7 @@ public class adminGroupAdapterTest {
     {
         int num=4;
         int result=1;
-        assertThat(result,is(ad.sum(num)));
+        assertThat(result, is(ad.sum(num)));
 
 
     }

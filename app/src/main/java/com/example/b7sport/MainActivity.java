@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //get_msg();
+
        get_msg();
 
     }

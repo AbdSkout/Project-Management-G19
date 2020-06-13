@@ -3,7 +3,7 @@ package com.example.b7sport;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class Reply_to_messagesTest {
@@ -28,7 +28,7 @@ public class Reply_to_messagesTest {
         String name="hexxa";
         int x=2;
         boolean result=true;
-        assertThat(result,is(R.check(name,x)));
+        assertThat(result, is(R.check(name,x)));
 
 
     }
@@ -39,7 +39,7 @@ public class Reply_to_messagesTest {
         String name="hello this will pass";
         int x=4;
         boolean result=true;
-        assertThat(result,is(R.check(name,x)));
+        assertThat(result, is(R.check(name,x)));
 
 
     }
