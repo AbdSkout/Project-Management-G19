@@ -309,7 +309,7 @@ int flag;
         if(!num.equals("") && num !=null)
         {
             int n = Integer.parseInt(num);
-            if(n > 0)
+            if(n > 0 && n<30)
                 return true;
             else
             {
