@@ -142,6 +142,7 @@ public class GroupProfile extends AppCompatActivity {
                         for (DataSnapshot data1 : dataSnapshot.getChildren()) {
                             if(Login.Email.equals(data1.child("UserEmail").getValue().toString())){
                                 Toast.makeText(GroupProfile.this, "You Can't Join Groups!", Toast.LENGTH_SHORT).show();
+                                mJoinGroup.setEnabled(false);
                                 flag=1;
                                 break;
                             }
@@ -158,72 +159,76 @@ public class GroupProfile extends AppCompatActivity {
                 });
                 if(flag == 0){
 
-                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                            if (Login.Email.equals(data1.child("UserEmail").getValue().toString())) {
-                                Toast.makeText(GroupProfile.this, "Already in Group!", Toast.LENGTH_SHORT).show();
-                                return;
+                    databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                                if (Login.Email.equals(data1.child("UserEmail").getValue().toString())) {
+                                    Toast.makeText(GroupProfile.this, "Already in Group!", Toast.LENGTH_SHORT).show();
+                                    mJoinGroup.setEnabled(false);
+                                    return;
+                                }
+                                if (numofPlayers == (int)data1.getChildrenCount()) {
+                                    mJoinGroup.setEnabled(false);
+                                    Toast.makeText(GroupProfile.this, "Group is full!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                             }
-                            if (numofPlayers == (int)data1.getChildrenCount()) {
-                                Toast.makeText(GroupProfile.this, "Group is full!", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        }
 
-                        if(GroupAdapter.selected_group.isIsprivate()){
-                            final String groupPassword = GroupAdapter.selected_group.getSecretcode();
+                            if(GroupAdapter.selected_group.isIsprivate()){
+                                final String groupPassword = GroupAdapter.selected_group.getSecretcode();
 
-                            final EditText resetEmail = new EditText((v.getContext()));
-                            resetEmail.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            //     resetEmail.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                            passwordResetDialog.setTitle("Group Password");
-                            passwordResetDialog.setMessage("Password of the group");
-                            passwordResetDialog.setView(resetEmail);
+                                final EditText resetEmail = new EditText((v.getContext()));
+                                resetEmail.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                //     resetEmail.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                                passwordResetDialog.setTitle("Group Password");
+                                passwordResetDialog.setMessage("Password of the group");
+                                passwordResetDialog.setView(resetEmail);
 
-                            passwordResetDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //Extracting the email
-                                    String mail = resetEmail.getText().toString();
-                                    try{
-                                        if(mail.equals(groupPassword)){
-                                            Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
-                                            databaseReference.child("Participants").push().setValue(map);
-                                            databaseReference2.push().setValue(map);
-                                            Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
-                                        }else{
-                                            Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
+                                passwordResetDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //Extracting the email
+                                        String mail = resetEmail.getText().toString();
+                                        try{
+                                            if(mail.equals(groupPassword)){
+                                                Toast.makeText(GroupProfile.this, "Currect Password!", Toast.LENGTH_SHORT).show();
+                                                databaseReference.child("Participants").push().setValue(map);
+                                                databaseReference2.push().setValue(map);
+                                                mJoinGroup.setEnabled(false);
+                                                Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(GroupProfile.this, "Wronge Password!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }catch(Exception ex){
+                                            ex.printStackTrace();
                                         }
-                                    }catch(Exception ex){
-                                        ex.printStackTrace();
+
                                     }
+                                });
+                                passwordResetDialog.setNegativeButton("בטל", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //Close the dialog
 
-                                }
-                            });
-                            passwordResetDialog.setNegativeButton("בטל", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //Close the dialog
+                                    }
+                                });
 
-                                }
-                            });
-
-                            passwordResetDialog.create().show();
-                        }else{
-                            databaseReference.child("Participants").push().setValue(map);
-                            databaseReference2.push().setValue(map);
-                            Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
+                                passwordResetDialog.create().show();
+                            }else{
+                                databaseReference.child("Participants").push().setValue(map);
+                                databaseReference2.push().setValue(map);
+                                Toast.makeText(GroupProfile.this, "Joined to Group!", Toast.LENGTH_SHORT).show();
+                                mJoinGroup.setEnabled(false);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
                 }
 
 /*
