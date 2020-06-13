@@ -34,7 +34,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
     public ArenaAdapter(Context context, List<Arena> list) {
         this.context = context;
-        this.list = new ArrayList<>(list);
+        this.list = list;
 //        fulllist=new ArrayList<Arena>(list);
         arenaListFull=new ArrayList<>(list);
     }
@@ -117,6 +117,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
     public void setfullValue(ArrayList<Arena> groundList)
     {
         arenaListFull=new ArrayList<>(groundList);
+        list=new ArrayList<>(groundList);
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
