@@ -47,5 +47,10 @@ public class CreatePublicGroupActivityTest {
         boolean result = cr.CheckNumber("-1");
         assertThat(result,is(false));
     }
+    @Test
+    public void checknumber4() {
+        boolean result = cr.CheckNumber("121");
+        assertThat(result,is(false));
+    }
 
 }
