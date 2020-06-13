@@ -71,6 +71,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
         // final String userID1 = bundle.getString("emailadd");
 
+        result = false;
 
         fAuth = FirebaseAuth.getInstance();
         pd = new ProgressDialog(this);
@@ -85,6 +86,9 @@ public class OtherUserProfile extends AppCompatActivity {
         mAddress = findViewById(R.id.Address1);
         mAddFriend = findViewById(R.id.add_friend);
         database = FirebaseDatabase.getInstance();
+
+        mAddFriend.setVisibility(View.VISIBLE);
+
 
         UserRef1 = database.getReference("EDMT_FIREBASE");
         //UserRef = database.getReference("EDMT_FIREBASE");
@@ -226,7 +230,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         if (Login.Email.equals(data.child("email").getValue().toString())) {
                              for(DataSnapshot d : data.child("Friends").getChildren() )
                              {
-                                    if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail));
+                                    if(d.child("FriendEmail").getValue().toString().equals(EmailAdapter.selecteduser.userEmail))
                                  {
                                      mAddFriend.setVisibility(View.INVISIBLE);
                                  }
