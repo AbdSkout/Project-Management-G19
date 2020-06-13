@@ -9,4 +9,18 @@ public class Ans_body {
         this.ans=ans;
 
     }
+
+
+
+   static public  int  anS(String e) {
+
+         if (e.length()>10)
+             return  1;
+         else
+             return 0;
+
+    }
+
+
+
 }

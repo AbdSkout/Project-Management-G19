@@ -204,5 +204,34 @@ public class adminGroupAdapter extends  RecyclerView.Adapter<adminGroupAdapter.V
 
     }
 
+  static   public  int DataBase (String  name)
+    {
+        String  Names []={"Group","EDMT_FIRE","message","block"};
+
+        for(int i=0;i<4;i++)
+        {
+            if(Names[i].equals(name))
+                return 1;
+
+        }
+         return 0;
+
+    }
+
+
+    static  public int sum(int w)
+    {
+         while( w %2 !=0)
+         {
+             w=w/10;
+         }
+
+         if(w==2)
+             return 0;
+
+         else
+             return  1;
+    }
+
 
 }

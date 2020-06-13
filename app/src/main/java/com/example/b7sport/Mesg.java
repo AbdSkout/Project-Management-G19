@@ -50,8 +50,21 @@ public class Mesg extends AppCompatActivity {
 
 
 
+
+
+
+
     }
 
 
+    public int read(String msg)
+    {
+           int size=msg.length()-1;
+           if(msg.charAt(size) == '@')
+               return 1;
+           else
+               return 0;
+
+    }
 
 }

@@ -53,4 +53,15 @@ public class Reply_to_messages extends AppCompatActivity {
 
 
     }
+
+
+  static   public Boolean check(String Name,int x)
+    {
+           for(int i=0; i<x;i++ )
+               if(Name.charAt(i) == x)
+                   return  false;
+
+
+            return true;
+    }
 }
