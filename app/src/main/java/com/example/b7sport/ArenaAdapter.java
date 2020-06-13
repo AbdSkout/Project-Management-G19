@@ -34,7 +34,7 @@ public class ArenaAdapter extends  RecyclerView.Adapter<ArenaAdapter.ViewHolder>
 
     public ArenaAdapter(Context context, List<Arena> list) {
         this.context = context;
-        this.list = list;
+        this.list = new ArrayList<>(list);
 //        fulllist=new ArrayList<Arena>(list);
         arenaListFull=new ArrayList<>(list);
     }
