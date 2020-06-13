@@ -44,7 +44,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
     boolean result = false;
     static String FriendNodekey;
     static String LoginNodekey;
-    List<String> friendsemailslist = new ArrayList<>();
+    List<String> friendsemailslist;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
     int i=0;
@@ -53,7 +53,7 @@ public class RecyclerViewFriends extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view_friends);
-
+        friendsemailslist = new ArrayList<>();
         pd = new ProgressDialog(this);
 
         recyclerViewFriends = findViewById(R.id.recyclerView);
