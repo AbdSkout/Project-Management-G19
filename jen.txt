@@ -42,7 +42,7 @@ pipeline {
     stage('Measurement Static code Analysis CheckStyle') {
       steps {
         echo "run CheckStyle"
-        //run the Lint 
+        //run the CheckStyle
 	sh './gradlew checkstyleMain'
       }
     }
