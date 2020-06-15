@@ -190,7 +190,8 @@ public class DeleteFriendUserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         ref.child(key).removeValue();
-                        startActivity(new Intent(getApplicationContext(),RecyclerViewFriends.class));
+                        startActivity(new Intent(getApplicationContext(),Profile.class));
+                        finish();
                     }
 
             @Override
